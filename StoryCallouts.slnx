@@ -1,0 +1,9 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="StoryCallouts.csproj" Id="bb913315-484c-4b65-b41f-f8b8bd0c1808">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>
