@@ -53,8 +53,9 @@
     <Reference Include="CalloutInterfaceAPI, Version=1.0.3.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>packages\CalloutInterfaceAPI.1.0.3\lib\net48\CalloutInterfaceAPI.dll</HintPath>
     </Reference>
-    <Reference Include="LSPD First Response">
-      <HintPath>D:\Jeux\Rockstar Games\Grand Theft Auto V\plugins\LSPD First Response.dll</HintPath>
+    <Reference Include="LSPD First Response, Version=0.4.9476.26289, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\LSPD First Response.dll</HintPath>
     </Reference>
     <Reference Include="RagePluginHook, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>packages\RagePluginHook.1.124.0\lib\net472\RagePluginHook.dll</HintPath>

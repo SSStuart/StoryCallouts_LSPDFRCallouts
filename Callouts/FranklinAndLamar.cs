@@ -6,8 +6,7 @@ using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
 {
-
-    [CalloutInterfaceAPI.CalloutInterface("Franklin and Lamar", CalloutProbability.Medium, "Stolen car chase", "Code 3")]
+    [CalloutInterfaceAPI.CalloutInterface("Franklin and Lamar", CalloutProbability.Medium, "Illegal Street Race", "Code 3")]
 
     internal class FranklinAndLamar : Callout
     {
@@ -18,7 +17,7 @@ namespace StoryCallouts.Callouts
         private Ped Franklin, Lamar;
         private Object LadderBarrier;
         private WaypointsList FranklinWaypoints;
-        private bool ChaseCreated;
+        private bool NearSpawnMessageSent, ChaseCreated;
 
         public override bool OnBeforeCalloutDisplayed()
         {
@@ -26,9 +25,9 @@ namespace StoryCallouts.Callouts
             ShowCalloutAreaBlipBeforeAccepting(SpawnPoint, 30f);
             AddMinimumDistanceCheck(100f, SpawnPoint);
             AddMaximumDistanceCheck(1000f, SpawnPoint);
-            CalloutMessage = "Stolen car chase";
+            CalloutMessage = "Illegal Street Race";
             CalloutPosition = SpawnPoint;
-            Functions.PlayScannerAudioUsingPosition("\"WE_HAVE CRIME_GRAND_THEFT_AUTO IN_OR_ON_POSITION", SpawnPoint);
+            Functions.PlayScannerAudioUsingPosition("WE_HAVE CRIME_GRAND_THEFT_AUTO IN_OR_ON_POSITION", SpawnPoint);
 
             return base.OnBeforeCalloutDisplayed();
         }
@@ -68,10 +67,11 @@ namespace StoryCallouts.Callouts
             {
                 Color = Main.calloutWaypointColor,
                 IsRouteEnabled = true,
-                Name = "Stolen car chase"
+                Name = "Illegal Street Race"
             };
 
             ChaseCreated = false;
+            NearSpawnMessageSent = false;
 
             return base.OnCalloutAccepted();
         }
@@ -79,6 +79,12 @@ namespace StoryCallouts.Callouts
         public override void Process()
         {
             base.Process();
+
+            if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 150)
+            {
+                CalloutInterfaceAPI.Functions.SendMessage(this, "Parking lot guard reported seeing the two vehicles in a parking lot behind the Union Depository");
+                NearSpawnMessageSent = true;
+            }
 
             if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 50)
             {
