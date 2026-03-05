@@ -1,5 +1,4 @@
 ﻿using LSPD_First_Response.Mod.API;
-using LSPD_First_Response.Mod.Callouts;
 using Rage;
 using System;
 using System.Drawing;
@@ -48,7 +47,6 @@ namespace StoryCallouts
 
         private static void RegisterCallouts()
         {
-            // Functions.RegisterCallout(typeof(Callouts.TestCallout));
              Functions.RegisterCallout(typeof(Callouts.FranklinAndLamar));
         }
 

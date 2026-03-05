@@ -1,5 +1,4 @@
-﻿using LSPD_First_Response.Engine;
-using LSPD_First_Response.Mod.API;
+﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
 using System.Windows.Forms;
@@ -16,7 +15,7 @@ namespace StoryCallouts.Callouts
         private Vehicle FranklinVehicle, LamarVehicle;
         private Ped Franklin, Lamar;
         private Object LadderBarrier;
-        private WaypointsList FranklinWaypoints;
+        private TasksList FranklinWaypoints;
         private bool NearSpawnMessageSent, ChaseCreated;
 
         public override bool OnBeforeCalloutDisplayed()
@@ -24,7 +23,6 @@ namespace StoryCallouts.Callouts
             SpawnPoint = new Vector3(46.19795f, -642.249f, 31.26925f);
             ShowCalloutAreaBlipBeforeAccepting(SpawnPoint, 30f);
             AddMinimumDistanceCheck(100f, SpawnPoint);
-            AddMaximumDistanceCheck(1000f, SpawnPoint);
             CalloutMessage = "Illegal Street Race";
             CalloutPosition = SpawnPoint;
             Functions.PlayScannerAudioUsingPosition("WE_HAVE CRIME_GRAND_THEFT_AUTO IN_OR_ON_POSITION", SpawnPoint);
@@ -34,34 +32,46 @@ namespace StoryCallouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Franklin = new Ped("player_one", SpawnPoint, 0);
+            Franklin = new Ped(Characters.Franklin.Model, SpawnPoint, 0)
+            {
+                BlockPermanentEvents = true,
+                IsPersistent = true,
+            };
+            Functions.SetPersonaForPed(Franklin, Characters.Franklin.Persona);
             FranklinVehicle = new Vehicle("rapidgt2", SpawnPoint, -20)
             {
+                IsPersistent = true,
                 PrimaryColor = System.Drawing.Color.DarkRed,
                 ConvertibleRoofState = VehicleConvertibleRoofState.Lowered,
                 IsEngineOn = true
             };
             Franklin.WarpIntoVehicle(FranklinVehicle, -1);
-            Lamar = new Ped("ig_lamardavis", SpawnPoint + new Vector3(-5, 0, 0), 0);
+            Lamar = new Ped(Characters.Lamar.Model, SpawnPoint + new Vector3(-5, 0, 0), 0)
+            {
+                BlockPermanentEvents = true,
+                IsPersistent = true,
+            };
+            Functions.SetPersonaForPed(Lamar, Characters.Lamar.Persona);
             LamarVehicle = new Vehicle("ninef2", SpawnPoint + new Vector3(-5, 0, 0), -20)
             {
+                IsPersistent = true,
                 PrimaryColor = System.Drawing.Color.White,
                 ConvertibleRoofState = VehicleConvertibleRoofState.Lowered,
                 IsEngineOn = true
             };
             Lamar.WarpIntoVehicle(LamarVehicle, -1);
 
-            FranklinWaypoints = new WaypointsList(Franklin);
-            FranklinWaypoints.AddWaypoint(new Vector3(34.117f, -758.7211f, 31.24227f));
-            FranklinWaypoints.AddWaypoint(new Vector3(87.78441f, -818.0637f, 30.82329f));
-            FranklinWaypoints.AddWaypoint(new Vector3(76.84824f, -845.1758f, 30.41537f));
-            FranklinWaypoints.AddWaypoint(new Vector3(37.86562f, -975.2443f, 29.02815f));
-            FranklinWaypoints.AddWaypoint(new Vector3(29.2566f, -1037.328f, 28.84876f));
-            FranklinWaypoints.AddWaypoint(new Vector3(154.3781f, -1129.831f, 28.91429f), 50);
-            FranklinWaypoints.AddWaypoint(new Vector3(155.296f, -1016.29f, 29.02305f));
-            FranklinWaypoints.AddWaypoint(new Vector3(32.46893f, -1040.906f, 29.03797f));
-            FranklinWaypoints.AddWaypoint(new Vector3(-53.92566f, -1031.56f, 28.14666f));
-            FranklinWaypoints.AddWaypoint(new Vector3(-14.92295f, -1086.378f, 26.30285f));
+            FranklinWaypoints = new TasksList(Franklin);
+            FranklinWaypoints.AddDriveTask(new Vector3(34.117f, -758.7211f, 31.24227f));
+            FranklinWaypoints.AddDriveTask(new Vector3(87.78441f, -818.0637f, 30.82329f));
+            FranklinWaypoints.AddDriveTask(new Vector3(76.84824f, -845.1758f, 30.41537f));
+            FranklinWaypoints.AddDriveTask(new Vector3(37.86562f, -975.2443f, 29.02815f));
+            FranklinWaypoints.AddDriveTask(new Vector3(29.2566f, -1037.328f, 28.84876f));
+            FranklinWaypoints.AddDriveTask(new Vector3(154.3781f, -1129.831f, 28.91429f), 50);
+            FranklinWaypoints.AddDriveTask(new Vector3(155.296f, -1016.29f, 29.02305f));
+            FranklinWaypoints.AddDriveTask(new Vector3(32.46893f, -1040.906f, 29.03797f));
+            FranklinWaypoints.AddDriveTask(new Vector3(-53.92566f, -1031.56f, 28.14666f));
+            FranklinWaypoints.AddDriveTask(new Vector3(-14.92295f, -1086.378f, 26.30285f));
 
             EventBlip = new Blip(SpawnPoint)
             {
