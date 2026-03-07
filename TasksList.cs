@@ -61,7 +61,10 @@ namespace StoryCallouts
                         break;
 
                     Task currentTask = _tasks[_currentTaskIndex];
-                    DEBUGBlip.Position = currentTask.Position;
+                    if (currentTask.Position != Vector3.Zero)
+                        DEBUGBlip.Position = currentTask.Position;
+                    else
+                        DEBUGBlip.Position = _ped.Position;
                     DEBUGBlip.Sprite = _currentTaskIndex > 0 && _currentTaskIndex <= 10 ? (BlipSprite)_currentTaskIndex + 16 : BlipSprite.Darts;
 
                     Game.LogTrivial($"Executing task #{_currentTaskIndex}");

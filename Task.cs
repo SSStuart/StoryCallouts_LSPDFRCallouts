@@ -47,8 +47,8 @@ namespace StoryCallouts
     internal class WalkTo : Task
     {
         public int Speed { get; }
-        private bool _force;
-        private int _heading;
+        private readonly bool _force;
+        private readonly int _heading;
 
         public WalkTo(Ped ped, Vector3 position, int walkingSpeed, bool force, int heading)
         {
@@ -91,7 +91,7 @@ namespace StoryCallouts
         public override void Execute(int timeoutSeconds)
         {
             if (_ped.Exists())
-            _ped.Tasks.Climb().WaitForCompletion(timeoutSeconds * 1000);
+                _ped.Tasks.Climb().WaitForCompletion(timeoutSeconds * 1000);
         }
     }
 }
