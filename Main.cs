@@ -48,6 +48,7 @@ namespace StoryCallouts
         private static void RegisterCallouts()
         {
              Functions.RegisterCallout(typeof(Callouts.FranklinAndLamar));
+             Functions.RegisterCallout(typeof(Callouts.TheLongStretch));
         }
 
 
