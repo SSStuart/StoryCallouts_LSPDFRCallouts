@@ -72,6 +72,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Callouts\CasingTheJewelStore.cs" />
+    <Compile Include="Callouts\DeadManWalking.cs" />
     <Compile Include="Callouts\TheLongStretch.cs" />
     <Compile Include="Callouts\FranklinAndLamar.cs" />
     <Compile Include="Characters.cs" />

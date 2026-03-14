@@ -49,6 +49,8 @@ namespace StoryCallouts
         {
              Functions.RegisterCallout(typeof(Callouts.FranklinAndLamar));
              Functions.RegisterCallout(typeof(Callouts.TheLongStretch));
+             Functions.RegisterCallout(typeof(Callouts.CasingTheJewelStore));
+             Functions.RegisterCallout(typeof(Callouts.DeadManWalking));
         }
 
 
