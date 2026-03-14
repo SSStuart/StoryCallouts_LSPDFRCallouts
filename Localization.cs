@@ -13,12 +13,14 @@ namespace StoryCallouts
                 new Dictionary<string, string>{
                     { "updateAvailable", "~y~Update available!" },
                     { "loaded", "~g~Loaded successfully!" },
+                    { "missingPrereq", "~r~Disabled! ~o~You are missing CalloutInterfaceAPI." },
                 }
             },
             {"fr",
                 new Dictionary<string, string>{
                     { "updateAvailable", "~y~Mise à jour disponible !" },
                     { "loaded", "~g~Chargé !" },
+                    { "missingPrereq", "~r~Désactivé ! ~o~Vous n'avez pas CalloutInterfaceAPI." },
                 }
             }
         };

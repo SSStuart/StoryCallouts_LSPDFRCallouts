@@ -3,6 +3,7 @@ using Rage;
 using System;
 using System.Drawing;
 using System.Reflection;
+using System.IO;
 
 namespace StoryCallouts
 {
@@ -16,6 +17,12 @@ namespace StoryCallouts
 
         public override void Initialize()
         {
+            if (!File.Exists("CalloutInterfaceAPI.dll"))
+            {
+                Game.DisplayNotification("mpinventory", "custom_mission", pluginName, $"V {pluginVersion}", l10n.GetString("missingPrereq"));
+                return;
+            }
+
             Functions.OnOnDutyStateChanged += OnOnDutyStateChangedHandler;
 
             Game.LogTrivial($"{pluginName} v{pluginVersion} has been initialised.");

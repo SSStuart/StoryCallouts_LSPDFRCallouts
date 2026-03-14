@@ -1,5 +1,4 @@
-﻿using LSPD_First_Response.Engine.Scripting.Entities;
-using LSPD_First_Response.Mod.API;
+﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
 using System.Drawing;
@@ -7,7 +6,7 @@ using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
 {
-    [CalloutInterfaceAPI.CalloutInterface("The Long Stretch", CalloutProbability.Medium, "Gunfire", "Code 3")]
+    [CalloutInterfaceAPI.CalloutInterface("The Long Stretch", CalloutProbability.Medium, "Gunshots reported at recycling plant", "Code 3")]
 
     internal class TheLongStretch : Callout
     {
@@ -24,9 +23,8 @@ namespace StoryCallouts.Callouts
             SpawnPoint = new Vector3(-577.6483f, -1636.18f, 19.48733f);
             ShowCalloutAreaBlipBeforeAccepting(SpawnPoint, 50f);
             AddMinimumDistanceCheck(100f, SpawnPoint);
-            CalloutMessage = "Gunfire";
+            CalloutMessage = "Gunshots reported at recycling plant";
             CalloutPosition = SpawnPoint;
-            FriendlyName = "Test Friendly name";
             Functions.PlayScannerAudioUsingPosition("WE_HAVE CRIME_GUNFIRE IN_OR_ON_POSITION", SpawnPoint);
 
             return base.OnBeforeCalloutDisplayed();
@@ -82,12 +80,14 @@ namespace StoryCallouts.Callouts
 
             if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 200)
             {
-                CalloutInterfaceAPI.Functions.SendMessage(this, "...");
+                CalloutInterfaceAPI.Functions.SendMessage(this, "Potential gang activity at the recycling plant");
                 NearSpawnMessageSent = true;
             }
 
             if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 100)
             {
+                CalloutInterfaceAPI.Functions.SendMessage(this, "Three suspects seen leaving southern side of factory ");
+
                 EventBlip.Delete();
                 EscapeTasks.StartTasks();
                 Lamar.Tasks.GoToOffsetFromEntity(Franklin, 1, 0, 1.5f);
