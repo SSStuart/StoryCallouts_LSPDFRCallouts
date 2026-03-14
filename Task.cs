@@ -36,11 +36,28 @@ namespace StoryCallouts
             do
             {
                 GameFiber.Yield();
-                GameFiber.Sleep(1000);
+                GameFiber.Wait(100);
                 counterSec++;
             }
-            while (counterSec < timeoutSeconds && task != null && task.Status != TaskStatus.None && _ped.Exists() && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
-            _ped.Tasks.Clear();
+            while (counterSec < timeoutSeconds && task != null && _ped.Exists() && _ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
+            if (_ped.Exists())
+                _ped.Tasks.Clear();
+        }
+    }
+
+    internal class Chase : Task
+    {
+        private readonly Ped _target;
+
+        public Chase(Ped ped, Ped target)
+        {
+            _ped = ped;
+            _target = target;
+        }
+        public override void Execute(int timeoutSeconds)
+        {
+            if (_ped.Exists() && _target.Exists())
+                _ped.Tasks.ChaseWithGroundVehicle(_target);
         }
     }
 
