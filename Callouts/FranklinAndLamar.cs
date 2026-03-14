@@ -32,12 +32,7 @@ namespace StoryCallouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Franklin = new Ped(Characters.Franklin.Model, SpawnPoint, 0)
-            {
-                BlockPermanentEvents = true,
-                IsPersistent = true,
-            };
-            Functions.SetPersonaForPed(Franklin, Characters.Franklin.Persona);
+            Franklin = Characters.Franklin.Create(SpawnPoint, 0, this.GetType().Name);
             FranklinVehicle = new Vehicle("rapidgt2", SpawnPoint, -20)
             {
                 IsPersistent = true,
@@ -46,12 +41,8 @@ namespace StoryCallouts.Callouts
                 IsEngineOn = true
             };
             Franklin.WarpIntoVehicle(FranklinVehicle, -1);
-            Lamar = new Ped(Characters.Lamar.Model, SpawnPoint + new Vector3(-5, 0, 0), 0)
-            {
-                BlockPermanentEvents = true,
-                IsPersistent = true,
-            };
-            Functions.SetPersonaForPed(Lamar, Characters.Lamar.Persona);
+
+            Lamar = Characters.Lamar.Create(SpawnPoint + new Vector3(-5, 0, 0), 0, this.GetType().Name);
             LamarVehicle = new Vehicle("ninef2", SpawnPoint + new Vector3(-5, 0, 0), -20)
             {
                 IsPersistent = true,

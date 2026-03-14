@@ -34,18 +34,13 @@ namespace StoryCallouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Franklin = new Ped(Characters.Franklin.Model, SpawnPoint, 0);
-            Functions.SetPersonaForPed(Franklin, Characters.Franklin.Persona);
-            Lamar = new Ped(Characters.Lamar.Model, SpawnPoint + new Vector3(-1, 0, 0), 0)
-            {
-                KeepTasks = true
-            };
-            Functions.SetPersonaForPed(Lamar, Characters.Lamar.Persona);
-            Stretch = new Ped(Characters.Stretch.Model, SpawnPoint + new Vector3(-2, 0, 0), 0)
-            {
-                KeepTasks = true
-            };
-            Functions.SetPersonaForPed(Stretch, Characters.Stretch.Persona);
+            Franklin = Characters.Franklin.Create(SpawnPoint, 0, this.GetType().Name);
+            
+            Lamar = Characters.Lamar.Create(SpawnPoint + new Vector3(-1, 0, 0), 0, this.GetType().Name);
+            Lamar.KeepTasks = true;
+
+            Stretch = Characters.Stretch.Create(SpawnPoint + new Vector3(-2, 0, 0), 0, this.GetType().Name);
+            Stretch.KeepTasks = true;
 
             LamarVehicle = new Vehicle("emperor", new Vector3(-616.1136f, -1604.719f, 26.25291f), 197)
             {
