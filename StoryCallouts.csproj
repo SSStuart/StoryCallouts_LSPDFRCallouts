@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Callouts\CasingTheJewelStore.cs" />
+    <Compile Include="Callouts\PackMan.cs" />
     <Compile Include="Callouts\DeadManWalking.cs" />
     <Compile Include="Callouts\TheLongStretch.cs" />
     <Compile Include="Callouts\FranklinAndLamar.cs" />

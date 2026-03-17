@@ -157,6 +157,18 @@ namespace StoryCallouts
                     character.SetVariation(3, 19, 0);
                     break;
 
+                // PACK MAN
+                case ("PackMan", "Franklin"):
+                    // ...
+                    break;
+                case ("PackMan", "Trevor"):
+                    character.SetVariation(4, 23, 0);
+                    character.SetVariation(6, 10, 0);
+                    break;
+                case ("PackMan", "Lamar"):
+                    character.SetVariation(5, 2, 0);
+                    break;
+
                 default:
                     break;
             }
