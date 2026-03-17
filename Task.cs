@@ -39,7 +39,7 @@ namespace StoryCallouts
                 GameFiber.Wait(100);
                 counterSec++;
             }
-            while (counterSec < timeoutSeconds && task != null && _ped.Exists() && _ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
+            while (counterSec < timeoutSeconds * 10 && task != null && _ped.Exists() && _ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
             if (_ped.Exists())
                 _ped.Tasks.Clear();
         }
@@ -66,24 +66,61 @@ namespace StoryCallouts
         public int Speed { get; }
         private readonly bool _force;
         private readonly int _heading;
+        private readonly float _acceptedDistance;
 
-        public WalkTo(Ped ped, Vector3 position, int walkingSpeed, bool force, int heading)
+        public WalkTo(Ped ped, Vector3 position, int walkingSpeed, float acceptedDistance, bool force, int heading)
         {
             _ped = ped;
             Position = position;
             Speed = walkingSpeed;
             _force = force;
             _heading = heading;
+            _acceptedDistance = acceptedDistance;
         }
 
         public override void Execute(int timeoutSeconds)
         {
             if (_ped.Exists())
             {
-                _ped.Tasks.GoStraightToPosition(Position, Speed, _heading == 360 ? _ped.Heading : _heading, 1, 60000).WaitForCompletion(timeoutSeconds * 1000);
-                if (_force && _ped.DistanceTo(Position) > 1)
-                    _ped.Position = Position;
+                int counterSec = 0;
+                Rage.Task task = _ped.Tasks.GoStraightToPosition(Position, Speed, _heading == 360 ? _ped.Heading : _heading, 1, timeoutSeconds * 1000);
+
+                do
+                {
+                    GameFiber.Yield();
+                    GameFiber.Wait(100);
+                    counterSec++;
+                }
+                while (counterSec < timeoutSeconds * 10 && task != null && _ped.Exists() && _ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress && _ped.DistanceTo(Position) > _acceptedDistance && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
+                if (_ped.Exists())
+                {
+                    if (_force)
+                        _ped.Position = Position;
+                    _ped.Tasks.Clear();
+                }
             }
+        }
+    }
+
+    internal class EnterVehicle : Task
+    {
+        private readonly Vehicle _vehicle;
+        private readonly int _seatIndex;
+        private readonly float _speed;
+        private readonly EnterVehicleFlags _flags;
+        public EnterVehicle(Ped ped, Vehicle vehicle, int seatIndex, float speed, EnterVehicleFlags flags)
+        {
+            _ped = ped;
+            _vehicle = vehicle;
+            _seatIndex = seatIndex;
+            _speed = speed;
+            _flags = flags;
+        }
+
+        public override void Execute(int timeoutSeconds)
+        {
+            if (_ped.Exists() && _vehicle.Exists())
+                _ped.Tasks.EnterVehicle(_vehicle, timeoutSeconds * 1000, _seatIndex, _speed, _flags).WaitForCompletion(timeoutSeconds * 1000);
         }
     }
 

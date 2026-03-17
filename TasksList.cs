@@ -41,10 +41,15 @@ namespace StoryCallouts
             Chase chaseTask = new Chase(_ped, target);
             _tasks.Add(chaseTask);
         }
-        public void AddWalkTask(Vector3 position, int walkingSpeed = 3, bool force = false, int heading = 360)
+        public void AddWalkTask(Vector3 position, int walkingSpeed = 3, float acceptedDistance = 1, bool force = false, int heading = 360)
         {
-            WalkTo walkTask = new WalkTo(_ped, position, walkingSpeed, force, heading);
+            WalkTo walkTask = new WalkTo(_ped, position, walkingSpeed, acceptedDistance, force, heading);
             _tasks.Add(walkTask);
+        }
+        public void AddEnterVehicleTask(Vehicle vehicle, int seatIndex = -1, float speed = 1, EnterVehicleFlags flags = EnterVehicleFlags.None)
+        {
+            EnterVehicle enterVehicleTask = new EnterVehicle(_ped, vehicle, seatIndex, speed, flags);
+            _tasks.Add(enterVehicleTask);
         }
         public void AddClimbLadderTask()
         {
