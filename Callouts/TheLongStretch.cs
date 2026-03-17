@@ -22,7 +22,7 @@ namespace StoryCallouts.Callouts
         {
             SpawnPoint = new Vector3(-577.6483f, -1636.18f, 19.48733f);
             ShowCalloutAreaBlipBeforeAccepting(SpawnPoint, 50f);
-            AddMinimumDistanceCheck(100f, SpawnPoint);
+            AddMinimumDistanceCheck(200f, SpawnPoint);
             CalloutMessage = "Gunshots reported at recycling plant";
             CalloutPosition = SpawnPoint;
             Functions.PlayScannerAudioUsingPosition("WE_HAVE CRIME_GUNFIRE IN_OR_ON_POSITION", SpawnPoint);
@@ -52,11 +52,11 @@ namespace StoryCallouts.Callouts
             };
 
             EscapeTasks = new TasksList(Franklin, EndBehavior.Nothing);
-            EscapeTasks.AddWalkTask(new Vector3(-592.8911f, -1642.595f, 20.66263f), 2, true, 146);
+            EscapeTasks.AddWalkTask(new Vector3(-592.8911f, -1642.595f, 20.66263f), 2, 1, true, 146);
             EscapeTasks.AddClimbLadderTask();
-            EscapeTasks.AddWalkTask(new Vector3(-605.5242f, -1667.384f, 25.71412f), 2, true, 150);
-            EscapeTasks.AddWalkTask(new Vector3(-597.491f, -1688.984f, 26.63565f), 2, true, 213);
-            EscapeTasks.AddWalkTask(new Vector3(-602.9593f, -1697.976f, 25.04387f), 2, true, 130);
+            EscapeTasks.AddWalkTask(new Vector3(-605.5242f, -1667.384f, 25.71412f), 2, 1, true, 150);
+            EscapeTasks.AddWalkTask(new Vector3(-597.491f, -1688.984f, 26.63565f), 2, 1, true, 213);
+            EscapeTasks.AddWalkTask(new Vector3(-602.9593f, -1697.976f, 25.04387f), 2, 1, true, 130);
             EscapeTasks.AddClimbTask();
             EscapeTasks.AddWalkTask(new Vector3(-602.8781f, -1705.844f, 23.82554f), 2);
 
@@ -78,15 +78,15 @@ namespace StoryCallouts.Callouts
         {
             base.Process();
 
-            if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 200)
+            if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 300)
             {
                 CalloutInterfaceAPI.Functions.SendMessage(this, "Potential gang activity at the recycling plant");
                 NearSpawnMessageSent = true;
             }
 
-            if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 100)
+            if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 200)
             {
-                CalloutInterfaceAPI.Functions.SendMessage(this, "Three suspects seen leaving southern side of factory ");
+                CalloutInterfaceAPI.Functions.SendMessage(this, "Three suspects seen leaving southern side of factory");
 
                 EventBlip.Delete();
                 EscapeTasks.StartTasks();

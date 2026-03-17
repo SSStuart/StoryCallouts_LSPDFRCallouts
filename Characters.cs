@@ -167,7 +167,7 @@ namespace StoryCallouts
 
     public static class Characters
     {
-        public static readonly CharacterDefinition Micheal =
+        public static readonly CharacterDefinition Michael =
             new CharacterDefinition("player_zero", "Michael", "De Santa", Gender.Male, new DateTime(1962, 3, 1));
 
         public static readonly CharacterDefinition Franklin =

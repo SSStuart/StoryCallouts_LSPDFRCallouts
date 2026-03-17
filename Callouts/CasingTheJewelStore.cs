@@ -14,7 +14,7 @@ namespace StoryCallouts.Callouts
         private Blip EventBlip;
         private LHandle Pursuit;
         private Vehicle FranklinBike, DriverBike, GunmanBike, Truck, CopCar;
-        private Ped Franklin, Micheal, Hacker, Driver, Gunman, Cop;
+        private Ped Franklin, Michael, Hacker, Driver, Gunman, Cop;
         private TasksList FranklinEscape, DriverEscape, GunmanEscape, TruckEscape;
         private GameFiber DeleteDoorsFiber;
         private bool NearSpawnMessageSent, ChaseCreated, TruckChaseCreated, ScriptedChaseEnd;
@@ -75,7 +75,7 @@ namespace StoryCallouts.Callouts
             };
             Gunman.WarpIntoVehicle(GunmanBike, -1);
 
-            Micheal = Characters.Micheal.Create(new Vector3(1095.147f, -243.3691f, 57.5906f), 0, this.GetType().Name);
+            Michael = Characters.Michael.Create(new Vector3(1095.147f, -243.3691f, 57.5906f), 0, this.GetType().Name);
 
             Hacker = HackerVariant == 0 ?
                 Characters.Paige.Create(new Vector3(1091.209f, -241.3812f, 57.58831f), 0, this.GetType().Name) :
@@ -88,7 +88,7 @@ namespace StoryCallouts.Callouts
                 IsPersistent = true,
                 IsEngineOn = true
             };
-            Micheal.WarpIntoVehicle(Truck, -1);
+            Michael.WarpIntoVehicle(Truck, -1);
             Hacker.WarpIntoVehicle(Truck, 0);
 
             Cop = new Ped("s_m_y_cop_01", new Vector3(1046.576f, -278.7255f, 50.55828f), 60)
@@ -128,7 +128,7 @@ namespace StoryCallouts.Callouts
                 BikeEscape.AddDriveTask(new Vector3(637.4592f, -1843.054f, 9.25897f), 80, 30, beeLineDrivingFlags);
             }
 
-            TruckEscape = new TasksList(Micheal);
+            TruckEscape = new TasksList(Michael);
             TruckEscape.AddDriveTask(new Vector3(1022.295f, -352.8022f, 47.91706f), 80, 5, beeLineDrivingFlags);
             TruckEscape.AddDriveTask(new Vector3(881.3533f, -421.4201f, 30.84567f));
             TruckEscape.AddDriveTask(new Vector3(732.917f, -436.3146f, 17.56546f), 80, 10, beeLineDrivingFlags);
@@ -165,13 +165,13 @@ namespace StoryCallouts.Callouts
         {
             base.Process();
 
-            if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 150)
+            if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 250)
             {
                 CalloutInterfaceAPI.Functions.SendMessage(this, "Eyewitness claims to have seen three suspects on motorcycles.");
                 NearSpawnMessageSent = true;
             }
 
-            if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 100)
+            if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 200)
             {
                 EventBlip.Delete();
                 FranklinEscape.StartTasks();
@@ -193,9 +193,9 @@ namespace StoryCallouts.Callouts
             if (!TruckChaseCreated && ChaseCreated && Franklin.DistanceTo(new Vector3(1031.18f, -265.59f, 50.37f)) < 10)
             {
                 TruckEscape.StartTasks();
-                Functions.AddPedToPursuit(Pursuit, Micheal);
+                Functions.AddPedToPursuit(Pursuit, Michael);
                 Functions.AddPedToPursuit(Pursuit, Hacker);
-                Functions.SetPursuitDisableAIForPed(Micheal, true);
+                Functions.SetPursuitDisableAIForPed(Michael, true);
                 Functions.SetPursuitDisableAIForPed(Hacker, true);
 
                 TruckChaseCreated = true;
@@ -209,7 +209,7 @@ namespace StoryCallouts.Callouts
                 Functions.SetPursuitDisableAIForPed(Franklin, false);
                 Functions.SetPursuitDisableAIForPed(Driver, false);
                 Functions.SetPursuitDisableAIForPed(Gunman, false);
-                Functions.SetPursuitDisableAIForPed(Micheal, false);
+                Functions.SetPursuitDisableAIForPed(Michael, false);
                 Functions.SetPursuitDisableAIForPed(Hacker, false);
 
                 // Delete doors at the end
@@ -252,8 +252,8 @@ namespace StoryCallouts.Callouts
                 Driver.Dismiss();
             if (Gunman.Exists())
                 Gunman.Dismiss();
-            if (Micheal.Exists())
-                Micheal.Dismiss();
+            if (Michael.Exists())
+                Michael.Dismiss();
             if (Hacker.Exists())
                 Hacker.Dismiss();
 
