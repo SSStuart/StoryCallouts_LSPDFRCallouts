@@ -13,17 +13,17 @@ namespace StoryCallouts
 
     internal class DriveTo : Task
     {
-        public int Speed { get; }
-        public VehicleDrivingFlags DrivingFlags { get; }
-        public int AcceptedDistance { get; }
+        private readonly int _speed;
+        private readonly VehicleDrivingFlags _flags;
+        private readonly int _acceptedDistance;
 
         public DriveTo(Ped ped, Vector3 position, int drivingSpeed, VehicleDrivingFlags drivingFlags, int acceptedDistance)
         {
             _ped = ped;
             Position = position;
-            Speed = drivingSpeed;
-            DrivingFlags = drivingFlags;
-            AcceptedDistance = acceptedDistance;
+            _speed = drivingSpeed;
+            _flags = drivingFlags;
+            _acceptedDistance = acceptedDistance;
         }
 
         public override void Execute(int timeoutSeconds)
@@ -31,7 +31,7 @@ namespace StoryCallouts
             int counterSec = 0;
             if (!_ped.IsInAnyVehicle(false))
                 return;
-            Rage.Task task = _ped.Tasks.DriveToPosition(Position, Speed, DrivingFlags, AcceptedDistance);
+            Rage.Task task = _ped.Tasks.DriveToPosition(Position, _speed, _flags, _acceptedDistance);
 
             do
             {
@@ -63,19 +63,19 @@ namespace StoryCallouts
 
     internal class WalkTo : Task
     {
-        public int Speed { get; }
+        private readonly int _speed;
+        private readonly float _acceptedDistance;
         private readonly bool _force;
         private readonly int _heading;
-        private readonly float _acceptedDistance;
 
         public WalkTo(Ped ped, Vector3 position, int walkingSpeed, float acceptedDistance, bool force, int heading)
         {
             _ped = ped;
             Position = position;
-            Speed = walkingSpeed;
+            _speed = walkingSpeed;
+            _acceptedDistance = acceptedDistance;
             _force = force;
             _heading = heading;
-            _acceptedDistance = acceptedDistance;
         }
 
         public override void Execute(int timeoutSeconds)
@@ -83,7 +83,7 @@ namespace StoryCallouts
             if (_ped.Exists())
             {
                 int counterSec = 0;
-                Rage.Task task = _ped.Tasks.GoStraightToPosition(Position, Speed, _heading == 360 ? _ped.Heading : _heading, 1, timeoutSeconds * 1000);
+                Rage.Task task = _ped.Tasks.GoStraightToPosition(Position, _speed, _heading == 360 ? _ped.Heading : _heading, 1, timeoutSeconds * 1000);
 
                 do
                 {
@@ -98,6 +98,45 @@ namespace StoryCallouts
                         _ped.Position = Position;
                     _ped.Tasks.Clear();
                 }
+            }
+        }
+    }
+
+    internal class WalkToAiming : Task
+    {
+        private readonly Entity _targetEntity;
+        private readonly float _speed;
+        private readonly float _acceptedDistance;
+        private readonly bool _fireWeapon;
+        private readonly FiringPattern _firingPattern;
+
+        public WalkToAiming(Ped ped, Vector3 position, Entity targetEntity, float speed, float acceptedDistance,  bool fireWeapon, FiringPattern firingPattern)
+        {
+            _ped = ped;
+            Position = position;
+            _targetEntity = targetEntity;
+            _speed = speed;
+            _acceptedDistance = acceptedDistance;
+            _fireWeapon = fireWeapon;
+            _firingPattern = firingPattern;
+        }
+
+        public override void Execute(int timeoutSeconds)
+        {
+            if (_ped.Exists())
+            {
+                int counterSec = 0;
+                Rage.Task task = _ped.Tasks.GoToWhileAiming(Position, _targetEntity, _acceptedDistance, _speed, _fireWeapon, _firingPattern);
+
+                do
+                {
+                    GameFiber.Yield();
+                    GameFiber.Wait(100);
+                    counterSec++;
+                }
+                while (counterSec < timeoutSeconds * 10 && task != null && _ped.Exists() && _ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress && _ped.DistanceTo(Position) > _acceptedDistance && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
+                if (_ped.Exists())
+                    _ped.Tasks.Clear();
             }
         }
     }

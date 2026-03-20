@@ -46,6 +46,11 @@ namespace StoryCallouts
             WalkTo walkTask = new WalkTo(_ped, position, walkingSpeed, acceptedDistance, force, heading);
             _tasks.Add(walkTask);
         }
+        public void AddWalkAimingTask(Vector3 position, Entity entityToAimAt, float acceptedDistance = 1, int walkingSpeed = 3, FiringPattern firingPattern = FiringPattern.BurstFire)
+        {
+            WalkToAiming walkAimingTask = new WalkToAiming(_ped, position, entityToAimAt, walkingSpeed, acceptedDistance, true, firingPattern);
+            _tasks.Add(walkAimingTask);
+        }
         public void AddEnterVehicleTask(Vehicle vehicle, int seatIndex = -1, float speed = 1, EnterVehicleFlags flags = EnterVehicleFlags.None)
         {
             EnterVehicle enterVehicleTask = new EnterVehicle(_ped, vehicle, seatIndex, speed, flags);

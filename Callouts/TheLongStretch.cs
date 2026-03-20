@@ -58,7 +58,7 @@ namespace StoryCallouts.Callouts
             EscapeTasks.AddWalkTask(new Vector3(-597.491f, -1688.984f, 26.63565f), 2, 1, true, 213);
             EscapeTasks.AddWalkTask(new Vector3(-602.9593f, -1697.976f, 25.04387f), 2, 1, true, 130);
             EscapeTasks.AddClimbTask();
-            EscapeTasks.AddWalkTask(new Vector3(-602.8781f, -1705.844f, 23.82554f), 2);
+            EscapeTasks.AddWalkAimingTask(new Vector3(-595.0407f, -1712.682f, 23.30997f), Game.LocalPlayer.Character, 3, 3, FiringPattern.BurstFirePumpShotgun);
 
             EventBlip = new Blip(SpawnPoint)
             {
