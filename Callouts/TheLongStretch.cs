@@ -33,19 +33,22 @@ namespace StoryCallouts.Callouts
         public override bool OnCalloutAccepted()
         {
             Franklin = Characters.Franklin.Create(SpawnPoint, 0, this.GetType().Name);
+            Franklin.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_PUMPSHOTGUN"), 200, true);
             
             Lamar = Characters.Lamar.Create(SpawnPoint + new Vector3(-1, 0, 0), 0, this.GetType().Name);
             Lamar.KeepTasks = true;
+            Lamar.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_PUMPSHOTGUN"), 200, true);
 
             Stretch = Characters.Stretch.Create(SpawnPoint + new Vector3(-2, 0, 0), 0, this.GetType().Name);
             Stretch.KeepTasks = true;
+            Stretch.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_PISTOL"), 300, true);
 
             LamarVehicle = new Vehicle("emperor", new Vector3(-616.1136f, -1604.719f, 26.25291f), 197)
             {
                 IsPersistent = true,
                 PrimaryColor = Color.FromArgb(0, 16, 41),
             };
-            EscapeVehicle = new Vehicle("jackal", new Vector3(-600.2733f, -1707.121f, 23.45673f), 55)
+            EscapeVehicle = new Vehicle("jackal", new Vector3(-593.7469f, -1711.722f, 23.18381f), 55)
             {
                 IsPersistent = true,
                 PrimaryColor = Color.FromArgb(8, 8, 8),
@@ -59,6 +62,7 @@ namespace StoryCallouts.Callouts
             EscapeTasks.AddWalkTask(new Vector3(-602.9593f, -1697.976f, 25.04387f), 2, 1, true, 130);
             EscapeTasks.AddClimbTask();
             EscapeTasks.AddWalkAimingTask(new Vector3(-595.0407f, -1712.682f, 23.30997f), Game.LocalPlayer.Character, 3, 3, FiringPattern.BurstFirePumpShotgun);
+            EscapeTasks.AddEnterVehicleTask(EscapeVehicle, -1, 2);
 
             EventBlip = new Blip(SpawnPoint)
             {
@@ -105,13 +109,9 @@ namespace StoryCallouts.Callouts
                 ChaseCreated = true;
             }
 
-            if (ChaseCreated && !TaskDrive && Game.LocalPlayer.Character.DistanceTo(Franklin) > 10 && Franklin.DistanceTo(EscapeVehicle) < 5)
+            if (ChaseCreated && !TaskDrive && Game.LocalPlayer.Character.DistanceTo(Franklin) > 10 && Franklin.DistanceTo(EscapeVehicle) < 2)
             {
-                if (!Functions.IsPedGettingArrested(Franklin) && !Functions.IsPedArrested(Franklin))
-                {
-                    Franklin.Tasks.Clear();
-                    Franklin.Tasks.EnterVehicle(EscapeVehicle, 20000, -1, 2);
-                }
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Waiting for peds to be close to the escape vehicle");
 
                 do
                 {
@@ -121,12 +121,12 @@ namespace StoryCallouts.Callouts
                     if (EscapeVehicle.HasDriver && !EscapeVehicle.IsEngineStarting && !EscapeVehicle.IsEngineOn)
                         EscapeVehicle.IsEngineOn = true;
 
-                    if (Lamar.DistanceTo(EscapeVehicle) < 5 && !Lamar.IsInVehicle(EscapeVehicle, true) && !Functions.IsPedGettingArrested(Lamar) && !Functions.IsPedArrested(Lamar))
+                    if (Lamar.DistanceTo(EscapeVehicle) < 8 && !Lamar.IsInVehicle(EscapeVehicle, true) && !Functions.IsPedGettingArrested(Lamar) && !Functions.IsPedArrested(Lamar))
                         Lamar.Tasks.EnterVehicle(EscapeVehicle, 20000, 0, 2);
-                    if (Stretch.DistanceTo(EscapeVehicle) < 5 && !Stretch.IsInVehicle(EscapeVehicle, true) && !Functions.IsPedGettingArrested(Stretch) && !Functions.IsPedArrested(Stretch))
+                    if (Stretch.DistanceTo(EscapeVehicle) < 8 && !Stretch.IsInVehicle(EscapeVehicle, true) && !Functions.IsPedGettingArrested(Stretch) && !Functions.IsPedArrested(Stretch))
                         Stretch.Tasks.EnterVehicle(EscapeVehicle, 20000, 2, 2);
 
-                    if (Functions.IsPedArrested(Franklin) || Functions.IsPedArrested(Lamar) || Functions.IsPedArrested(Stretch) || Game.LocalPlayer.Character.DistanceTo(EscapeVehicle) < 10)
+                    if (Functions.IsPedArrested(Franklin) || Franklin.IsDead || Functions.IsPedArrested(Lamar) || Functions.IsPedArrested(Stretch) || Game.LocalPlayer.Character.DistanceTo(EscapeVehicle) < 10)
                         break;
                 }
                 while (!Franklin.IsInVehicle(EscapeVehicle, false) || !Lamar.IsInVehicle(EscapeVehicle, false) || !Stretch.IsInVehicle(EscapeVehicle, false));
@@ -153,8 +153,6 @@ namespace StoryCallouts.Callouts
 
                 TaskDrive = true;
             }
-
-
 
                 if (Game.IsKeyDown(Keys.End)
                 || (ChaseCreated && !Functions.IsPursuitStillRunning(Pursuit)))
