@@ -38,10 +38,13 @@ namespace StoryCallouts
             {
                 // PROLOGUE
                 case ("Prologue", "Michael") :
-                    character.SetVariation(3, 8, 0);
-                    character.SetVariation(4, 8, 0);
-                    character.SetVariation(6, 6, 0);
-                    character.SetVariation(8, 14, 0);
+                    character.SetVariation(0, 0, 3);
+                    character.SetVariation(2, 5, 0);
+                    character.SetVariation(3, 31, 0);
+                    character.SetVariation(4, 26, 0);
+                    character.SetVariation(5, 5, 0);
+                    character.SetVariation(6, 14, 0);
+                    character.SetVariation(9, 12, 0);
                     break;
                 case ("Prologue", "Trevor") :
                     character.SetVariation(0, 0, 5);
@@ -51,6 +54,11 @@ namespace StoryCallouts
                     character.SetVariation(5, 4, 0);
                     character.SetVariation(6, 12, 0);
                     character.SetVariation(8, 13, 0);
+                    character.SetVariation(9, 1, 0);
+                    break;
+                case ("Prologue", "Brad"):
+                    character.SetVariation(2, 1, 0);
+                    character.SetVariation(6, 1, 0);
                     character.SetVariation(9, 1, 0);
                     break;
 
@@ -187,7 +195,10 @@ namespace StoryCallouts
         
         public static readonly CharacterDefinition Trevor =
             new CharacterDefinition("player_two", "Trevor", "Philips", Gender.Male, new DateTime(1, 1, 1));
-        
+
+        public static readonly CharacterDefinition Brad =
+            new CharacterDefinition("ig_brad", "Bradley", "Snider", Gender.Male, new DateTime(1, 1, 1));
+
         public static readonly CharacterDefinition Lamar =
             new CharacterDefinition("ig_lamardavis", "Lamar", "Davis", Gender.Male, new DateTime(1, 1, 1));
         
