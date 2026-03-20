@@ -84,14 +84,17 @@ namespace StoryCallouts.Callouts
 
             if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 500)
             {
-                Trevor.Tasks.CruiseWithVehicle(70, VehicleDrivingFlags.FollowTraffic);
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message & Driving task");
 
                 CalloutInterfaceAPI.Functions.SendMessage(this, "..................");
+                Trevor.Tasks.CruiseWithVehicle(70, VehicleDrivingFlags.FollowTraffic);
                 NearSpawnMessageSent = true;
             }
 
             if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(Truck) < 100)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting chase & JB700 logic loop");
+
                 EventBlip.Delete();
 
                 GameFiber.StartNew(JB700Logic);
@@ -113,6 +116,8 @@ namespace StoryCallouts.Callouts
 
         public override void End()
         {
+            Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Ending callout");
+
             base.End();
 
             if (EventBlip.Exists())
@@ -168,6 +173,7 @@ namespace StoryCallouts.Callouts
                 if (JB700.Speed > 30)
                     continue;
 
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Spawning spike");
                 Object newSpike = new Object("prop_tyre_spike_01", JB700.Position)
                 {
                     CollisionIgnoredEntity = JB700,
@@ -201,10 +207,12 @@ namespace StoryCallouts.Callouts
 
         private void MountedGunFiring()
         {
+            Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting JB700 mounted gun loop");
+
             uint firingStart = 0;
             List<Entity> copVehiclesInFront = new List<Entity>();
 
-            while (Franklin.IsInVehicle(JB700, false))
+            while (Franklin.IsInVehicle(JB700, false) && Franklin.IsAlive)
             {
                 GameFiber.Yield();
 

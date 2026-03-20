@@ -34,7 +34,7 @@ namespace StoryCallouts.Callouts
         {
             Franklin = Characters.Franklin.Create(SpawnPoint, 0, this.GetType().Name);
             Franklin.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_PUMPSHOTGUN"), 200, true);
-            
+
             Lamar = Characters.Lamar.Create(SpawnPoint + new Vector3(-1, 0, 0), 0, this.GetType().Name);
             Lamar.KeepTasks = true;
             Lamar.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_PUMPSHOTGUN"), 200, true);
@@ -84,12 +84,16 @@ namespace StoryCallouts.Callouts
 
             if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 300)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message");
+
                 CalloutInterfaceAPI.Functions.SendMessage(this, "Potential gang activity at the recycling plant");
                 NearSpawnMessageSent = true;
             }
 
             if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 200)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting pursuit");
+
                 CalloutInterfaceAPI.Functions.SendMessage(this, "Three suspects seen leaving southern side of factory");
 
                 EventBlip.Delete();
@@ -130,8 +134,8 @@ namespace StoryCallouts.Callouts
                         break;
                 }
                 while (!Franklin.IsInVehicle(EscapeVehicle, false) || !Lamar.IsInVehicle(EscapeVehicle, false) || !Stretch.IsInVehicle(EscapeVehicle, false));
-                Game.LogTrivial("exit while");
 
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting chase (if driver existing)");
                 if (EscapeVehicle.HasDriver)
                 {
                     EscapeVehicle.Driver.Tasks.CruiseWithVehicle(80, VehicleDrivingFlags.Emergency);
@@ -144,6 +148,8 @@ namespace StoryCallouts.Callouts
             }
             if (ChaseCreated && !TaskDrive && Game.LocalPlayer.Character.DistanceTo(Franklin) < 10)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Player too close, canceling tasks & restoring peds IA");
+
                 Franklin.Tasks.Clear();
                 Lamar.Tasks.Clear();
                 Stretch.Tasks.Clear();
@@ -154,13 +160,15 @@ namespace StoryCallouts.Callouts
                 TaskDrive = true;
             }
 
-                if (Game.IsKeyDown(Keys.End)
+            if (Game.IsKeyDown(Keys.End)
                 || (ChaseCreated && !Functions.IsPursuitStillRunning(Pursuit)))
                 End();
         }
 
         public override void End()
         {
+            Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Ending callout");
+
             base.End();
 
             if (EventBlip.Exists())

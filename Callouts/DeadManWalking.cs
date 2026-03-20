@@ -54,12 +54,16 @@ namespace StoryCallouts.Callouts
 
             if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 150)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message");
+
                 CalloutInterfaceAPI.Functions.SendMessage(this, "Suspect escaped through a window on the north-west side and is believed to be armed.");
                 NearSpawnMessageSent = true;
             }
 
             if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 100)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting chase");
+
                 EventBlip.Delete();
                 Pursuit = Functions.CreatePursuit();
                 Functions.AddPedToPursuit(Pursuit, Michael);
@@ -75,6 +79,8 @@ namespace StoryCallouts.Callouts
 
         public override void End()
         {
+            Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Ending callout");
+
             base.End();
 
             if (EventBlip.Exists())

@@ -83,12 +83,16 @@ namespace StoryCallouts.Callouts
 
             if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 150)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message");
+
                 CalloutInterfaceAPI.Functions.SendMessage(this, "Parking lot guard reported seeing the two vehicles in a parking lot behind the Union Depository");
                 NearSpawnMessageSent = true;
             }
 
             if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 50)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting chase");
+
                 EventBlip.Delete();
                 FranklinWaypoints.StartTasks();
                 Pursuit = Functions.CreatePursuit();
@@ -109,6 +113,8 @@ namespace StoryCallouts.Callouts
 
         public override void End()
         {
+            Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Ending callout");
+
             base.End();
 
             if (EventBlip.Exists())

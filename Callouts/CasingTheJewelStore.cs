@@ -1,7 +1,6 @@
 ﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
-using Rage.Native;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
@@ -167,12 +166,16 @@ namespace StoryCallouts.Callouts
 
             if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 250)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message");
+
                 CalloutInterfaceAPI.Functions.SendMessage(this, "Eyewitness claims to have seen three suspects on motorcycles.");
                 NearSpawnMessageSent = true;
             }
 
             if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 200)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting bikes chase");
+
                 EventBlip.Delete();
                 FranklinEscape.StartTasks();
                 DriverEscape.StartTasks();
@@ -192,6 +195,8 @@ namespace StoryCallouts.Callouts
 
             if (!TruckChaseCreated && ChaseCreated && Franklin.DistanceTo(new Vector3(1031.18f, -265.59f, 50.37f)) < 10)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting truck chase");
+                
                 TruckEscape.StartTasks();
                 Functions.AddPedToPursuit(Pursuit, Michael);
                 Functions.AddPedToPursuit(Pursuit, Hacker);
@@ -202,6 +207,8 @@ namespace StoryCallouts.Callouts
             }
 
             if (!ScriptedChaseEnd && Franklin.DistanceTo(new Vector3(637.4592f, -1843.054f, 9.25897f)) < 20) {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Ending scripted chase, restoring ped AI");
+
                 TruckEscape.AbortTasks();
                 Driver.CanBeKnockedOffBikes = true;
                 Gunman.CanBeKnockedOffBikes = true;
@@ -224,7 +231,7 @@ namespace StoryCallouts.Callouts
                         {
                             if (entity.Model.Name.Contains("PROP_FACGATE_01"))
                             {
-                                Game.LogTrivial($"[{Main.pluginName}] Deleting door");
+                                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Deleting door");
                                 entity.Delete();
                             }
                         }
@@ -242,6 +249,8 @@ namespace StoryCallouts.Callouts
 
         public override void End()
         {
+            Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Ending callout");
+
             base.End();
 
             if (EventBlip.Exists())
