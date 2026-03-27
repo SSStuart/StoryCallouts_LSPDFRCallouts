@@ -56,7 +56,7 @@ namespace StoryCallouts.Callouts
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message");
 
-                CalloutInterfaceAPI.Functions.SendMessage(this, "Suspect escaped through a window on the north-west side and is believed to be armed.");
+                CalloutInterfaceAPI.Functions.SendMessage(this, "Suspect escaped through a window on the north-west side and is believed to be armed");
                 NearSpawnMessageSent = true;
             }
 

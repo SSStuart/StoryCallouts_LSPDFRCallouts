@@ -11,7 +11,7 @@ namespace StoryCallouts.Callouts
     internal class BugstarsEquipment : Callout
     {
         private Vector3 SpawnPoint;
-        private Blip EventBlip;
+        private Blip EventBlip, BugstarsEmployeeBlip;
         private LHandle Pursuit;
         private Ped Michael, BugstarsEmployee, TaxiDriver;
         private Vehicle BugstarsVan, Taxi;
@@ -60,7 +60,7 @@ namespace StoryCallouts.Callouts
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message");
 
-                CalloutInterfaceAPI.Functions.SendMessage(this, "Bugstars employees have reported that one of their vans was stolen.");
+                CalloutInterfaceAPI.Functions.SendMessage(this, "Bugstars employees have reported that one of their vans was stolen");
                 NearSpawnMessageSent = true;
             }
 
@@ -115,13 +115,25 @@ namespace StoryCallouts.Callouts
             }
             else
             {
+                CalloutInterfaceAPI.Functions.SendMessage(this, "Bugstars has been informed of the van's location. An employee will retrieve it. ");
+
                 if (BugstarsVan.DistanceTo2D(SpawnPoint) < 300)
                 {
                     Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Van near warehouse, spawning employee on foot");
-                    BugstarsEmployee = new Ped("s_m_y_pestcont_01", World.GetNextPositionOnStreet(BugstarsVan.Position.Around2D(100)), 0);
+                    BugstarsEmployee = new Ped("s_m_y_pestcont_01", SpawnPoint, 0)
+                    {
+                        BlockPermanentEvents = true,
+                    };
+                    BugstarsEmployeeBlip = new Blip(BugstarsEmployee)
+                    {
+                        Color = System.Drawing.Color.LightBlue,
+                        Scale = 0.75f,
+                        Name = "Bugstars employee"
+                    };
                     BugstarsEmployee.Tasks.FollowNavigationMeshToPosition(BugstarsVan.Position, BugstarsVan.Heading, 2, 5f).WaitForCompletion();
                     if (BugstarsEmployee.Exists() && BugstarsVan.Exists())
                         BugstarsEmployee.Tasks.EnterVehicle(BugstarsVan, -1).WaitForCompletion(15000);
+                    BugstarsEmployeeBlip.Delete();
                     if (BugstarsEmployee.Exists() && BugstarsVan.Exists())
                         BugstarsEmployee.Tasks.DriveToPosition(BugstarsVan, new Vector3(142.006f, -3089.013f, 5.508811f), 50, VehicleDrivingFlags.Normal | VehicleDrivingFlags.StopAtDestination, 5);
                 }
@@ -131,12 +143,21 @@ namespace StoryCallouts.Callouts
                     Taxi = new Vehicle("taxi", World.GetNextPositionOnStreet(BugstarsVan.Position.Around2D(200)));
                     TaxiDriver = new Ped("a_m_y_beachvesp_02", Taxi.GetOffsetPositionFront(5), 0);
                     TaxiDriver.WarpIntoVehicle(Taxi, -1);
-                    BugstarsEmployee = new Ped("s_m_y_pestcont_01", Taxi.GetOffsetPositionFront(4), 0);
+                    BugstarsEmployee = new Ped("s_m_y_pestcont_01", Taxi.GetOffsetPositionFront(4), 0)
+                    {
+                        BlockPermanentEvents = true,
+                    };
+                    BugstarsEmployeeBlip = new Blip(BugstarsEmployee)
+                    {
+                        Color = System.Drawing.Color.LightBlue,
+                        Scale = 0.75f,
+                        Name = "Bugstars employee"
+                    };
                     BugstarsEmployee.WarpIntoVehicle(Taxi, 1);
                     TaxiDriver.Tasks.DriveToPosition(BugstarsVan.Position, 50, VehicleDrivingFlags.AllowMedianCrossing | VehicleDrivingFlags.AllowWrongWay, 40).WaitForCompletion(240000);
                     GameFiber.Yield();
                     GameFiber.Wait(3000);
-                    if (BugstarsEmployee.Exists() && BugstarsVan.Exists() && BugstarsEmployee.DistanceTo(BugstarsVan) < 100)
+                    if (BugstarsEmployee.Exists() && Taxi.Exists() && BugstarsVan.Exists() && BugstarsEmployee.DistanceTo(BugstarsVan) < 100)
                     {
                         BugstarsEmployee.Tasks.LeaveVehicle(LeaveVehicleFlags.None).WaitForCompletion(5000);
                         BugstarsEmployee.Tasks.FollowNavigationMeshToPosition(BugstarsVan.GetOffsetPositionRight(-2), BugstarsVan.Heading, 2, 5f).WaitForCompletion(30000);
@@ -157,6 +178,8 @@ namespace StoryCallouts.Callouts
                     BugstarsVan.Dismiss();
                 if (BugstarsEmployee.Exists())
                     BugstarsEmployee.Dismiss();
+                if (BugstarsEmployeeBlip.Exists())
+                    BugstarsEmployeeBlip.Delete();
 
                 if (TaxiDriver.Exists())
                     TaxiDriver.Dismiss();

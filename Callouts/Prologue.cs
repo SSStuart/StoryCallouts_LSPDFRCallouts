@@ -128,7 +128,7 @@ namespace StoryCallouts.Callouts
 
             if (!EnteredVehicle && Michael.DistanceTo(EscapeVehicle) < 5)
             {
-                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Micheal close to escape vehicle");
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Michael close to escape vehicle");
 
                 Functions.AddPedToPursuit(Pursuit, LocalYokel);
                 Functions.SetPursuitDisableAIForPed(LocalYokel, true);

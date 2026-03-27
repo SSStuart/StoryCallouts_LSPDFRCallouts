@@ -19,6 +19,7 @@ namespace StoryCallouts
         {
             if (!File.Exists("CalloutInterfaceAPI.dll"))
             {
+                Game.LogTrivial($"{pluginName} loading has been aborted: CalloutInterfaceAPI.dll is missing!");
                 Game.DisplayNotification("mpinventory", "custom_mission", pluginName, $"V {pluginVersion}", l10n.GetString("missingPrereq"));
                 return;
             }

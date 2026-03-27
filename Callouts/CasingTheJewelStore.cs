@@ -154,7 +154,7 @@ namespace StoryCallouts.Callouts
 
             GameFiber.StartNew(delegate {
                 GameFiber.Wait(5000);
-                CalloutInterfaceAPI.Functions.SendMessage(this, "Suspects escaped through tunnels. They are expected to exit the sewers into the LS River, where a suspicious truck was spotted.");
+                CalloutInterfaceAPI.Functions.SendMessage(this, "Suspects escaped through tunnels. They are expected to exit the sewers into the LS River, where a suspicious truck was spotted");
             });
 
             return base.OnCalloutAccepted();
@@ -168,7 +168,7 @@ namespace StoryCallouts.Callouts
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message");
 
-                CalloutInterfaceAPI.Functions.SendMessage(this, "Eyewitness claims to have seen three suspects on motorcycles.");
+                CalloutInterfaceAPI.Functions.SendMessage(this, "Eyewitness claims to have seen three suspects on motorcycles");
                 NearSpawnMessageSent = true;
             }
 
@@ -274,6 +274,10 @@ namespace StoryCallouts.Callouts
                 GunmanBike.Dismiss();
             if (Truck.Exists())
                 Truck.Dismiss();
+            if (Cop.Exists())
+                Cop.Dismiss();
+            if (CopCar.Exists())
+                CopCar.Dismiss();
 
             if (DeleteDoorsFiber.IsAlive)
                 DeleteDoorsFiber.Abort();
