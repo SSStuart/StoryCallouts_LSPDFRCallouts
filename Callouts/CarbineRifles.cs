@@ -90,12 +90,8 @@ namespace StoryCallouts.Callouts
             Michael.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_MICROSMG"), 100, true);
             Michael.Health = 300;
 
-            MichaelCar = new Vehicle("tailgater", SwatTruck.GetOffsetPositionFront(-15), SpawnHeading)
-            {
-                IsEngineOn = true,
-                PrimaryColor = Color.FromArgb(8, 8, 8)
-            };
-            Michael.WarpIntoVehicle(MichaelCar, -1);
+            MichaelCar = Vehicles.MichaelCar.CreateWithDriver(SwatTruck.GetOffsetPositionFront(-15), SpawnHeading, Michael);
+            MichaelCar.IsEngineOn = true;
 
             EventBlip = new Blip(SpawnPoint)
             {

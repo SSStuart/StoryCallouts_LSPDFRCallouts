@@ -4,6 +4,7 @@ using LSPD_First_Response.Engine.Scripting.Entities;
 using LSPD_First_Response.Mod.API;
 using Rage;
 using System;
+using System.Drawing;
 
 namespace StoryCallouts
 {
@@ -230,4 +231,62 @@ namespace StoryCallouts
             new CharacterDefinition("ig_lifeinvad_01", "Rickie", "Lukens", Gender.Male, new DateTime(1, 1, 1));
     }
 
+
+
+    public class VehicleDefinition
+    {
+        public string Model { get; }
+        public Color PrimaryColor { get; }
+        public Color SecondaryColor { get; }
+        public Color PearlescentColor { get; }
+
+        public VehicleDefinition(string model, Color primaryColor, Color secondaryColor, Color pearlescentColor)
+        {
+            Model = model;
+            PrimaryColor = primaryColor;
+            SecondaryColor = secondaryColor;
+            PearlescentColor = pearlescentColor;
+        }
+
+        public Vehicle Create(Vector3 postion, int heading)
+        {
+            Vehicle vehicle = new Vehicle(Model, postion, heading)
+            {
+                IsPersistent = true,
+                PrimaryColor = PrimaryColor,
+                SecondaryColor = SecondaryColor,
+                PearlescentColor = PearlescentColor
+            };
+
+            return vehicle;
+        }
+        public Vehicle CreateWithDriver(Vector3 postion, int heading, Ped driver)
+        {
+            Vehicle vehicle = new Vehicle(Model, postion, heading)
+            {
+                IsPersistent = true,
+                PrimaryColor = PrimaryColor,
+                SecondaryColor = SecondaryColor,
+                PearlescentColor = PearlescentColor
+            };
+            driver.WarpIntoVehicle(vehicle, -1);
+
+            return vehicle;
+        }
+    }
+
+    public static class Vehicles
+    {
+        public static readonly VehicleDefinition FranklinCar =
+            new VehicleDefinition("BUFFALO2", Color.FromArgb(240, 240, 240), Color.FromArgb(240, 240, 240), Color.FromArgb(0, 8, 8, 8));
+
+        public static readonly VehicleDefinition FranklinBike =
+            new VehicleDefinition("BAGGER", Color.FromArgb(0, 56, 5), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 42, 54, 37));
+
+        public static readonly VehicleDefinition MichaelCar =
+            new VehicleDefinition("TAILGATER", Color.FromArgb(8, 8, 8), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 8, 8, 8));
+
+        public static readonly VehicleDefinition TrevorCar =
+            new VehicleDefinition("BODHI2", Color.FromArgb(71, 14, 14), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 8, 8, 8));
+    }
 }
