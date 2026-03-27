@@ -1,5 +1,6 @@
 ﻿using LSPD_First_Response.Mod.API;
 using Rage;
+using Rage.Native;
 
 namespace StoryCallouts
 {
@@ -58,6 +59,27 @@ namespace StoryCallouts
         {
             if (_ped.Exists() && _target.Exists())
                 _ped.Tasks.ChaseWithGroundVehicle(_target);
+        }
+    }
+
+    internal class FollowInVehicle : Task
+    {
+        private readonly Ped _target;
+
+        public FollowInVehicle(Ped ped, Ped target)
+        {
+            _ped = ped;
+            _target = target;
+        }
+
+        public override void Execute(int timeoutSeconds)
+        {
+            if (_ped.Exists() && _target.Exists())
+            {
+                NativeFunction.Natives.TASK_VEHICLE_CHASE(_ped, _target);
+                NativeFunction.Natives.SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG(_ped, 32, true);
+                _ped.KeepTasks = true;
+            }
         }
     }
 

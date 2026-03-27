@@ -9,6 +9,7 @@ namespace StoryCallouts
         Nothing,
         Auto,
         Drive,
+        Cruise,
         Fight
     }
 
@@ -35,11 +36,15 @@ namespace StoryCallouts
             DriveTo drivetask = new DriveTo(_ped, position, drivingSpeed, drivingFlags, acceptedDistance);
             _tasks.Add(drivetask);
         }
-
         public void AddChaseTask(Ped target)
         {
             Chase chaseTask = new Chase(_ped, target);
             _tasks.Add(chaseTask);
+        }
+        public void AddFollowInVehicleTask(Ped target)
+        {
+            FollowInVehicle followInVehicleTask = new FollowInVehicle(_ped, target);
+            _tasks.Add(followInVehicleTask);
         }
         public void AddWalkTask(Vector3 position, int walkingSpeed = 3, float acceptedDistance = 1, bool force = false, int heading = 360)
         {
@@ -122,6 +127,14 @@ namespace StoryCallouts
                             break;
                         }
                         _ped.Tasks.CruiseWithVehicle(80, VehicleDrivingFlags.Emergency);
+                        break;
+                    case EndBehavior.Cruise:
+                        if (!_ped.IsInAnyVehicle(false))
+                        {
+                            _ped.Tasks.Clear();
+                            break;
+                        }
+                        _ped.Tasks.CruiseWithVehicle(50);
                         break;
                     case EndBehavior.Fight:
                         if (!_ped.IsInAnyVehicle(false))
