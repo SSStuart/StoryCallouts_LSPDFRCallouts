@@ -60,8 +60,10 @@ namespace StoryCallouts
             Functions.RegisterCallout(typeof(Callouts.TheLongStretch));
             Functions.RegisterCallout(typeof(Callouts.CarbineRifles));
             Functions.RegisterCallout(typeof(Callouts.BugstarsEquipment));
+            Functions.RegisterCallout(typeof(Callouts.BZGasGrenades));
             Functions.RegisterCallout(typeof(Callouts.CasingTheJewelStore));
             Functions.RegisterCallout(typeof(Callouts.DeadManWalking));
+            Functions.RegisterCallout(typeof(Callouts.TheHotelAssassination));
             Functions.RegisterCallout(typeof(Callouts.PackMan));
         }
 

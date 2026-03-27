@@ -166,6 +166,13 @@ namespace StoryCallouts
                     character.SetVariation(3, 19, 0);
                     break;
 
+                // THE HOTEL ASSASSINATION
+                case ("TheHotelAssassination", "Franklin"):
+                    character.SetVariation(3, 13, 0);
+                    character.SetVariation(4, 8, 0);
+                    character.SetVariation(8, 14, 0);
+                    break;
+
                 // PACK MAN
                 case ("PackMan", "Franklin"):
                     // ...

@@ -75,6 +75,8 @@
     <Compile Include="Callouts\CasingTheJewelStore.cs" />
     <Compile Include="Callouts\CarbineRifles.cs" />
     <Compile Include="Callouts\BugstarsEquipment.cs" />
+    <Compile Include="Callouts\BZGasGrenades.cs" />
+    <Compile Include="Callouts\TheHotelAssassination.cs" />
     <Compile Include="Callouts\PackMan.cs" />
     <Compile Include="Callouts\Prologue.cs" />
     <Compile Include="Callouts\DeadManWalking.cs" />
