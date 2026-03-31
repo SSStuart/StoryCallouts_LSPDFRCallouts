@@ -15,7 +15,7 @@ namespace StoryCallouts
         public string Surname { get; }
         public Gender Gender { get; }
         public DateTime Birthdate { get; }
-
+        
         public CharacterDefinition(string model, string forename, string surname, Gender gender, DateTime birthdate)
         {
             Model = model;
@@ -173,6 +173,26 @@ namespace StoryCallouts
                     character.SetVariation(8, 14, 0);
                     break;
 
+                // HOOD SAFARI
+                case ("HoodSafari", "Franklin"):
+                    character.SetVariation(3, 13, 2);
+                    character.SetVariation(4, 8, 0);
+                    character.SetVariation(6, 6, 0);
+                    character.SetVariation(8, 14, 0);
+                    break;
+                case ("HoodSafari", "Trevor"):
+                    character.SetVariation(3, 0, 2);
+                    character.SetVariation(4, 18, 0);
+                    character.SetVariation(6, 1, 0);
+                    break;
+                case ("HoodSafari", "Lamar"):
+                    character.SetVariation(3, 2, 1);
+                    character.SetVariation(4, 5, 0);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(9, 1, 0);
+                    character.SetVariation(10, 1, 2);
+                    break;
+
                 // PACK MAN
                 case ("PackMan", "Franklin"):
                     // ...
@@ -236,6 +256,9 @@ namespace StoryCallouts
 
         public static readonly CharacterDefinition Rickie =
             new CharacterDefinition("ig_lifeinvad_01", "Rickie", "Lukens", Gender.Male, new DateTime(1, 1, 1));
+
+        public static readonly CharacterDefinition MCClip =
+            new CharacterDefinition("ig_claypain", "Curtis", "Cray", Gender.Male, new DateTime(1, 1, 1));
     }
 
 

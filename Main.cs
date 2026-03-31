@@ -63,6 +63,7 @@ namespace StoryCallouts
             Functions.RegisterCallout(typeof(Callouts.BZGasGrenades));
             Functions.RegisterCallout(typeof(Callouts.CasingTheJewelStore));
             Functions.RegisterCallout(typeof(Callouts.DeadManWalking));
+            Functions.RegisterCallout(typeof(Callouts.HoodSafari));
             Functions.RegisterCallout(typeof(Callouts.TheHotelAssassination));
             Functions.RegisterCallout(typeof(Callouts.PackMan));
         }
