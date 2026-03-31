@@ -31,9 +31,9 @@ namespace StoryCallouts
             _endBehavior = endBehavior;
         }
 
-        public void AddDriveTask(Vector3 position, int drivingSpeed = 80, int acceptedDistance = 20, VehicleDrivingFlags drivingFlags = VehicleDrivingFlags.Emergency)
+        public void AddDriveTask(Vector3 position, int drivingSpeed = 80, int acceptedDistance = 20, VehicleDrivingFlags drivingFlags = VehicleDrivingFlags.Emergency, int timeoutSec = 60)
         {
-            DriveTo drivetask = new DriveTo(_ped, position, drivingSpeed, drivingFlags, acceptedDistance);
+            DriveTo drivetask = new DriveTo(_ped, position, drivingSpeed, drivingFlags, acceptedDistance, timeoutSec);
             _tasks.Add(drivetask);
         }
         public void AddChaseTask(Ped target)
@@ -46,29 +46,34 @@ namespace StoryCallouts
             FollowInVehicle followInVehicleTask = new FollowInVehicle(_ped, target);
             _tasks.Add(followInVehicleTask);
         }
-        public void AddWalkTask(Vector3 position, int walkingSpeed = 3, float acceptedDistance = 1, bool force = false, int heading = 360)
+        public void AddWalkTask(Vector3 position, int walkingSpeed = 3, float acceptedDistance = 1, bool force = false, int heading = 360, int timeoutSec = 60)
         {
-            WalkTo walkTask = new WalkTo(_ped, position, walkingSpeed, acceptedDistance, force, heading);
+            WalkTo walkTask = new WalkTo(_ped, position, walkingSpeed, acceptedDistance, force, heading, timeoutSec);
             _tasks.Add(walkTask);
         }
-        public void AddWalkAimingTask(Vector3 position, Entity entityToAimAt, float acceptedDistance = 1, int walkingSpeed = 3, FiringPattern firingPattern = FiringPattern.BurstFire)
+        public void AddWalkAimingTask(Vector3 position, Entity entityToAimAt, float acceptedDistance = 1, int walkingSpeed = 3, FiringPattern firingPattern = FiringPattern.BurstFire, int timeoutSec = 60)
         {
-            WalkToAiming walkAimingTask = new WalkToAiming(_ped, position, entityToAimAt, walkingSpeed, acceptedDistance, true, firingPattern);
+            WalkToAiming walkAimingTask = new WalkToAiming(_ped, position, entityToAimAt, walkingSpeed, acceptedDistance, true, firingPattern, timeoutSec);
             _tasks.Add(walkAimingTask);
         }
-        public void AddEnterVehicleTask(Vehicle vehicle, int seatIndex = -1, float speed = 1, EnterVehicleFlags flags = EnterVehicleFlags.None)
+        public void AddEnterVehicleTask(Vehicle vehicle, int seatIndex = -1, float speed = 1, EnterVehicleFlags flags = EnterVehicleFlags.None, int timeoutSec = 60)
         {
-            EnterVehicle enterVehicleTask = new EnterVehicle(_ped, vehicle, seatIndex, speed, flags);
+            EnterVehicle enterVehicleTask = new EnterVehicle(_ped, vehicle, seatIndex, speed, flags, timeoutSec);
             _tasks.Add(enterVehicleTask);
         }
-        public void AddClimbLadderTask()
+        public void AddExitVehicleTask(LeaveVehicleFlags flags = LeaveVehicleFlags.None, int timeoutSec = 60)
         {
-            ClimbLadder climbLadderTask = new ClimbLadder(_ped);
+            ExitVehicle exitVehicleTask = new ExitVehicle(_ped, flags, timeoutSec);
+            _tasks.Add(exitVehicleTask);
+        }
+        public void AddClimbLadderTask(int timeoutSec = 60)
+        {
+            ClimbLadder climbLadderTask = new ClimbLadder(_ped, timeoutSec);
             _tasks.Add(climbLadderTask);
         }
-        public void AddClimbTask()
+        public void AddClimbTask(int timeoutSec = 60)
         {
-            Climb climbTask = new Climb(_ped);
+            Climb climbTask = new Climb(_ped, timeoutSec);
             _tasks.Add(climbTask);
         }
 
@@ -111,50 +116,59 @@ namespace StoryCallouts
                     return;
                 }
 
-                Game.LogTrivial("End Behaviour logic...");
-                switch (_endBehavior)
-                {
-                    case EndBehavior.Nothing:
-                        break;
-                    case EndBehavior.Auto:
-                        _ped.Tasks.Clear();
-                        Functions.SetPursuitDisableAIForPed(_ped, false);
-                        break;
-                    case EndBehavior.Drive:
-                        if (!_ped.IsInAnyVehicle(false))
-                        {
-                            _ped.Tasks.Clear();
-                            break;
-                        }
-                        _ped.Tasks.CruiseWithVehicle(80, VehicleDrivingFlags.Emergency);
-                        break;
-                    case EndBehavior.Cruise:
-                        if (!_ped.IsInAnyVehicle(false))
-                        {
-                            _ped.Tasks.Clear();
-                            break;
-                        }
-                        _ped.Tasks.CruiseWithVehicle(50);
-                        break;
-                    case EndBehavior.Fight:
-                        if (!_ped.IsInAnyVehicle(false))
-                        {
-                            Game.LogTrivial("Reenabling Ped IA");
-                            _ped.Tasks.Clear();
-                            Functions.SetPursuitDisableAIForPed(_ped, false);
-                            break;
-                        }
-                        Game.LogTrivial("Leaving Vehicle");
-                        _ped.Tasks.Clear();
-                        _ped.Tasks.LeaveVehicle(LeaveVehicleFlags.LeaveDoorOpen).WaitForCompletion();
-                        Game.LogTrivial("Reenabling Ped IA");
-                        Functions.SetPursuitDisableAIForPed(_ped, false);
-                        break;
-                    default:
-                        break;
-                }
-                TaskFinished = true;
+                ExecuteEndBehavior();
             });
+        }
+
+        public void ExecuteEndBehavior()
+        {
+            if (TaskFinished)
+                return;
+
+            Game.LogTrivial("End Behaviour logic...");
+            switch (_endBehavior)
+            {
+                case EndBehavior.Nothing:
+                    break;
+                case EndBehavior.Auto:
+                    _ped.Tasks.Clear();
+                    Functions.SetPursuitDisableAIForPed(_ped, false);
+                    break;
+                case EndBehavior.Drive:
+                    if (!_ped.IsInAnyVehicle(false))
+                    {
+                        _ped.Tasks.Clear();
+                        break;
+                    }
+                    _ped.Tasks.CruiseWithVehicle(80, VehicleDrivingFlags.Emergency);
+                    break;
+                case EndBehavior.Cruise:
+                    if (!_ped.IsInAnyVehicle(false))
+                    {
+                        _ped.Tasks.Clear();
+                        break;
+                    }
+                    _ped.Tasks.CruiseWithVehicle(50);
+                    break;
+                case EndBehavior.Fight:
+                    if (!_ped.IsInAnyVehicle(false))
+                    {
+                        Game.LogTrivial("Reenabling Ped IA");
+                        _ped.Tasks.Clear();
+                        Functions.SetPursuitDisableAIForPed(_ped, false);
+                        break;
+                    }
+                    Game.LogTrivial("Leaving Vehicle");
+                    _ped.Tasks.Clear();
+                    _ped.Tasks.LeaveVehicle(LeaveVehicleFlags.LeaveDoorOpen).WaitForCompletion();
+                    Game.LogTrivial("Reenabling Ped IA");
+                    Functions.SetPursuitDisableAIForPed(_ped, false);
+                    break;
+                default:
+                    break;
+            }
+
+            TaskFinished = true;
         }
 
         public void AbortTasks()
