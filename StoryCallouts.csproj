@@ -76,6 +76,9 @@
     <Compile Include="Callouts\CarbineRifles.cs" />
     <Compile Include="Callouts\BugstarsEquipment.cs" />
     <Compile Include="Callouts\BZGasGrenades.cs" />
+    <Compile Include="Callouts\BlitzPlay.cs" />
+    <Compile Include="Callouts\MilitaryHardware.cs" />
+    <Compile Include="Callouts\GrassRoots_ThePickup.cs" />
     <Compile Include="Callouts\TheHotelAssassination.cs" />
     <Compile Include="Callouts\HoodSafari.cs" />
     <Compile Include="Callouts\PackMan.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="Localization.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="UpdateChecker.cs" />
     <Compile Include="TasksList.cs" />

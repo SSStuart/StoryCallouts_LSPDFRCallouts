@@ -4,6 +4,7 @@ using LSPD_First_Response.Engine.Scripting.Entities;
 using LSPD_First_Response.Mod.API;
 using Rage;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace StoryCallouts
@@ -15,7 +16,22 @@ namespace StoryCallouts
         public string Surname { get; }
         public Gender Gender { get; }
         public DateTime Birthdate { get; }
-        
+
+        private readonly List<string> PedModels = new List<string>() {
+            "g_m_y_azteca_01",
+            "g_m_y_famfor_01",
+            "g_m_y_korean_02",
+            "g_m_y_lost_03",
+            "g_m_y_mexgoon_02",
+            "g_m_y_pologoon_01",
+            "g_m_y_salvagoon_01",
+            "g_f_y_ballas_01",
+            "g_f_y_families_01",
+            "g_f_y_vagos_01",
+        };
+
+
+
         public CharacterDefinition(string model, string forename, string surname, Gender gender, DateTime birthdate)
         {
             Model = model;
@@ -26,6 +42,16 @@ namespace StoryCallouts
         }
         public Ped Create(Vector3 postion, int heading, string callout, bool blockPermanentEvents = true)
         {
+            if (!Settings.useStoryModeCharacters)
+            {
+                Ped randomPed = new Ped(PedModels[MathHelper.GetRandomInteger(PedModels.Count)], postion, heading)
+                {
+                    IsPersistent = true,
+                    BlockPermanentEvents = blockPermanentEvents,
+                };
+
+                return randomPed;
+            }
             Ped character = new Ped(Model, postion, heading)
             {
                 IsPersistent = true,
@@ -193,6 +219,29 @@ namespace StoryCallouts
                     character.SetVariation(10, 1, 2);
                     break;
 
+                // BLITZ PLAY
+                case ("BlitzPlay", "Michael"):
+                    character.SetVariation(2, 1, 0);
+                    character.SetVariation(3, 12, 4);
+                    character.SetVariation(4, 11, 4);
+                    character.SetVariation(6, 1, 0);
+                    break;
+                case ("BlitzPlay", "Franklin"):
+                    character.SetVariation(2, 4, 0);
+                    character.SetVariation(3, 1, 3);
+                    character.SetVariation(4, 1, 3);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(8, 14, 0);
+                    break;
+                case ("BlitzPlay", "Trevor"):
+                    character.SetVariation(2, 1, 0);
+                    character.SetVariation(3, 5, 4);
+                    character.SetVariation(4, 5, 4);
+                    character.SetVariation(6, 5, 0);
+                    character.SetVariation(8, 14, 0);
+                    break;
+
+
                 // PACK MAN
                 case ("PackMan", "Franklin"):
                     // ...
@@ -270,6 +319,58 @@ namespace StoryCallouts
         public Color SecondaryColor { get; }
         public Color PearlescentColor { get; }
 
+        private readonly List<string> VehicleModels = new List<string>()
+        {
+            "issi2",
+            "prairie",
+            "asterope",
+            "emperor",
+            "fugitive",
+            "intruder",
+            "primo",
+            "schafter2",
+            "stanier",
+            "tailgater",
+            "baller",
+            "baller2",
+            "baller3",
+            "cavalcade",
+            "gresley",
+            "huntley",
+            "landstalker",
+            "seminole",
+            "xls",
+            "exemplar",
+            "jackal",
+            "zion",
+            "buccaneer",
+            "dominator",
+            "faction",
+            "greenwood",
+            "phoenix",
+            "stalion",
+            "virgo",
+            "monroe",
+            "peyote",
+            "blista2",
+            "carbonizzare",
+            "elegy",
+            "fusilade",
+            "jester",
+            "ninef",
+            "rapidgt",
+            "surano",
+            "infernus",
+            "sultanrs",
+            "vacca",
+            "dloader",
+            "rebel2",
+            "sandking",
+            "bison3",
+            "burrito3",
+            "surfer"
+        };
+
         public VehicleDefinition(string model, Color primaryColor, Color secondaryColor, Color pearlescentColor)
         {
             Model = model;
@@ -280,6 +381,15 @@ namespace StoryCallouts
 
         public Vehicle Create(Vector3 postion, int heading)
         {
+            if (!Settings.useStoryModeCharacters)
+            {
+                Vehicle randomVehicle = new Vehicle(VehicleModels[MathHelper.GetRandomInteger(VehicleModels.Count)], postion, heading)
+                {
+                    IsPersistent = true,
+                };
+
+                return randomVehicle;
+            }
             Vehicle vehicle = new Vehicle(Model, postion, heading)
             {
                 IsPersistent = true,
@@ -292,6 +402,16 @@ namespace StoryCallouts
         }
         public Vehicle CreateWithDriver(Vector3 postion, int heading, Ped driver)
         {
+            if (!Settings.useStoryModeCharacters)
+            {
+                Vehicle randomVehicle = new Vehicle(VehicleModels[MathHelper.GetRandomInteger(VehicleModels.Count)], postion, heading)
+                {
+                    IsPersistent = true,
+                };
+                driver.WarpIntoVehicle(randomVehicle, -1);
+
+                return randomVehicle;
+            }
             Vehicle vehicle = new Vehicle(Model, postion, heading)
             {
                 IsPersistent = true,

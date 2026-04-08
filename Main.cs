@@ -27,12 +27,7 @@ namespace StoryCallouts
             Functions.OnOnDutyStateChanged += OnOnDutyStateChangedHandler;
 
             Game.LogTrivial($"{pluginName} v{pluginVersion} has been initialised.");
-            //Settings.LoadSettings();
-            //ENABLE_OVERLAY = Settings.EnableOverlay;
-            //WARP_PLAYER = Settings.WarpPlayerInHeli;
-            //PLAYER_BEHAVIOUR = Settings.PlayerBehaviour;
-            //HELI_TYPE = Settings.HeliType;
-            //ON_PED_ARREST_BEHAVIOR = Settings.OnPedArrestBehavior;
+            Settings.LoadSettings();
             Game.LogTrivial($"Go on duty to fully load {pluginName}.");
 
             UpdateChecker.CheckForUpdates();
@@ -55,17 +50,34 @@ namespace StoryCallouts
 
         private static void RegisterCallouts()
         {
-            Functions.RegisterCallout(typeof(Callouts.Prologue));
-            Functions.RegisterCallout(typeof(Callouts.FranklinAndLamar));
-            Functions.RegisterCallout(typeof(Callouts.TheLongStretch));
-            Functions.RegisterCallout(typeof(Callouts.CarbineRifles));
-            Functions.RegisterCallout(typeof(Callouts.BugstarsEquipment));
-            Functions.RegisterCallout(typeof(Callouts.BZGasGrenades));
-            Functions.RegisterCallout(typeof(Callouts.CasingTheJewelStore));
-            Functions.RegisterCallout(typeof(Callouts.DeadManWalking));
-            Functions.RegisterCallout(typeof(Callouts.HoodSafari));
-            Functions.RegisterCallout(typeof(Callouts.TheHotelAssassination));
-            Functions.RegisterCallout(typeof(Callouts.PackMan));
+            if (Settings.callout_Prologue)
+                Functions.RegisterCallout(typeof(Callouts.Prologue));
+            if (Settings.callout_FranklinAndLamar)
+                Functions.RegisterCallout(typeof(Callouts.FranklinAndLamar));
+            if (Settings.callout_TheLongStretch)
+                Functions.RegisterCallout(typeof(Callouts.TheLongStretch));
+            if (Settings.callout_CarbineRifles)
+                Functions.RegisterCallout(typeof(Callouts.CarbineRifles));
+            if (Settings.callout_BugstarsEquipment)
+                Functions.RegisterCallout(typeof(Callouts.BugstarsEquipment));
+            if (Settings.callout_BZGasGrenades)
+                Functions.RegisterCallout(typeof(Callouts.BZGasGrenades));
+            if (Settings.callout_CasingTheJewelStore)
+                Functions.RegisterCallout(typeof(Callouts.CasingTheJewelStore));
+            if (Settings.callout_DeadManWalking)
+                Functions.RegisterCallout(typeof(Callouts.DeadManWalking));
+            if (Settings.callout_HoodSafari)
+                Functions.RegisterCallout(typeof(Callouts.HoodSafari));
+            if (Settings.callout_TheHotelAssassination)
+                Functions.RegisterCallout(typeof(Callouts.TheHotelAssassination));
+            if (Settings.callout_GrassRoots_ThePickup)
+                Functions.RegisterCallout(typeof(Callouts.GrassRoots_ThePickup));
+            if (Settings.callout_BlitzPlay)
+                Functions.RegisterCallout(typeof(Callouts.BlitzPlay));
+            if (Settings.callout_MilitaryHardware)
+                Functions.RegisterCallout(typeof(Callouts.MilitaryHardware));
+            if (Settings.callout_PackMan)
+                Functions.RegisterCallout(typeof(Callouts.PackMan));
         }
 
 
