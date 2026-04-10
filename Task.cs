@@ -122,7 +122,7 @@ namespace StoryCallouts
                     GameFiber.Wait(100);
                     counterSec++;
                 }
-                while (counterSec < _timeoutSec * 10 && task != null && _ped.Exists() && _ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress && _ped.DistanceTo(Position) > _acceptedDistance && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
+                while (counterSec < _timeoutSec * 10 && task != null && _ped.Exists() && (_ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress || _ped.Tasks.CurrentTaskStatus == TaskStatus.Interrupted) && _ped.DistanceTo(Position) > _acceptedDistance && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
                 if (_ped.Exists())
                 {
                     if (_force)

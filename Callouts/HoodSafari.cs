@@ -65,7 +65,7 @@ namespace StoryCallouts.Callouts
             foreach (TasksList JetskiEscape in new[] { FranklinTasks, TrevorTasks, LamarTasks })
             {
                 JetskiEscape.AddDriveTask(new Vector3(-67.95099f, -1919.967f, 0.9416156f), 20, 5);
-                JetskiEscape.AddDriveTask(new Vector3(-10.58898f, -1968.144f, 0.03371241f), 40, 3);
+                JetskiEscape.AddDriveTask(new Vector3(-10.58898f, -1968.144f, 0.03371241f), 40, 5);
                 JetskiEscape.AddDriveTask(new Vector3(27.81363f, -1999.19f, -0.03704061f), 20, 5); // start trun
                 JetskiEscape.AddDriveTask(new Vector3(49.92439f, -2027.256f, 0.01080674f), 20, 5); // turn
                 JetskiEscape.AddDriveTask(new Vector3(60.56663f, -2051.656f, 0.0231747f), 20, 5); // turn
@@ -88,7 +88,7 @@ namespace StoryCallouts.Callouts
                 case 1:
                     FranklinTasks.AddFollowInVehicleTask(Trevor);
                     FranklinTasks.AddExitVehicleTask();
-                    FranklinTasks.AddWalkTask(new Vector3(767.1197f, -2919.813f, 0.07052082f), 2, 1, true, 180);
+                    FranklinTasks.AddWalkTask(new Vector3(767.1197f, -2919.813f, 0.07052082f), 2, 1, false, 180);
                     FranklinTasks.AddClimbLadderTask();
                     break;
 
@@ -109,7 +109,7 @@ namespace StoryCallouts.Callouts
             TrevorTasks.AddDriveTask(new Vector3(796.9094f, -2715.086f, 0.3374312f));
             TrevorTasks.AddDriveTask(new Vector3(757.7037f, -2915.058f, 0.4871701f));
             TrevorTasks.AddExitVehicleTask();
-            TrevorTasks.AddWalkTask(new Vector3(767.1197f, -2919.813f, 0.07052082f), 2, 1, true, 180);
+            TrevorTasks.AddWalkTask(new Vector3(767.1197f, -2919.813f, 0.07052082f), 2, 1, false, 180);
             TrevorTasks.AddClimbLadderTask();
             TrevorTasks.AddWalkTask(new Vector3(775.9891f, -2959.658f, 5.800721f), 3, 5);
 
@@ -159,7 +159,7 @@ namespace StoryCallouts.Callouts
         {
             base.Process();
 
-            if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 200)
+            if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 400)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message & starting fight");
                 Ballas1.Tasks.FireWeaponAt(Trevor, 30000, FiringPattern.BurstFireShortBursts);
@@ -169,7 +169,7 @@ namespace StoryCallouts.Callouts
                 NearSpawnMessageSent = true;
             }
 
-            if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 100)
+            if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 200)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting chase");
 
@@ -199,7 +199,7 @@ namespace StoryCallouts.Callouts
                 ChaseCreated = true;
             }
 
-            if (ChaseCreated && !MCClipFleeing && Franklin.DistanceTo(MCClip) < 10)
+            if (ChaseCreated && !MCClipFleeing && Franklin.DistanceTo(MCClip) < 20)
             {
                 GameFiber.StartNew(delegate
                 {
