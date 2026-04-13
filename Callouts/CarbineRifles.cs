@@ -90,7 +90,7 @@ namespace StoryCallouts.Callouts
             Michael.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_MICROSMG"), 100, true);
             Michael.Health = 300;
 
-            MichaelCar = Vehicles.MichaelCar.CreateWithDriver(SwatTruck.GetOffsetPositionFront(-15), SpawnHeading, Michael);
+            MichaelCar = Vehicles.MichaelCar.Create(SwatTruck.GetOffsetPositionFront(-15), SpawnHeading, Michael);
             MichaelCar.IsEngineOn = true;
 
             EventBlip = new Blip(SpawnPoint)

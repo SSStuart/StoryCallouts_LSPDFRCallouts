@@ -62,7 +62,7 @@ namespace StoryCallouts.Callouts
             Vector3 TrevorSpawn = World.GetNextPositionOnStreet(SpawnPoint.Around2D(50));
 
             Trevor = Characters.Trevor.Create(TrevorSpawn, SpawnHeading, this.GetType().Name);
-            TrevorCar = Vehicles.TrevorCar.CreateWithDriver(TrevorSpawn, SpawnHeading, Trevor);
+            TrevorCar = Vehicles.TrevorCar.Create(TrevorSpawn, SpawnHeading, Trevor);
 
             MilitaryTruck = new Vehicle("BARRACKS", SpawnPoint, SpawnHeading)
             {

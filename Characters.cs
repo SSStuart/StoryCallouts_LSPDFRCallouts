@@ -318,6 +318,7 @@ namespace StoryCallouts
         public Color PrimaryColor { get; }
         public Color SecondaryColor { get; }
         public Color PearlescentColor { get; }
+        public string Plate { get; }
 
         private readonly List<string> VehicleModels = new List<string>()
         {
@@ -371,54 +372,39 @@ namespace StoryCallouts
             "surfer"
         };
 
-        public VehicleDefinition(string model, Color primaryColor, Color secondaryColor, Color pearlescentColor)
+        public VehicleDefinition(string model, Color primaryColor, Color secondaryColor, Color pearlescentColor, string plate)
         {
             Model = model;
             PrimaryColor = primaryColor;
             SecondaryColor = secondaryColor;
             PearlescentColor = pearlescentColor;
+            Plate = plate;
         }
 
-        public Vehicle Create(Vector3 postion, int heading)
+        public Vehicle Create(Vector3 postion, int heading, Ped driver = null)
         {
             if (!Settings.useStoryModeCharacters)
             {
                 Vehicle randomVehicle = new Vehicle(VehicleModels[MathHelper.GetRandomInteger(VehicleModels.Count)], postion, heading)
                 {
                     IsPersistent = true,
-                };
-
-                return randomVehicle;
-            }
-            Vehicle vehicle = new Vehicle(Model, postion, heading)
-            {
-                IsPersistent = true,
-                PrimaryColor = PrimaryColor,
-                SecondaryColor = SecondaryColor,
-                PearlescentColor = PearlescentColor
             };
 
-            return vehicle;
-        }
-        public Vehicle CreateWithDriver(Vector3 postion, int heading, Ped driver)
-        {
-            if (!Settings.useStoryModeCharacters)
-            {
-                Vehicle randomVehicle = new Vehicle(VehicleModels[MathHelper.GetRandomInteger(VehicleModels.Count)], postion, heading)
-                {
-                    IsPersistent = true,
-                };
+                if (driver)
                 driver.WarpIntoVehicle(randomVehicle, -1);
 
                 return randomVehicle;
             }
+
             Vehicle vehicle = new Vehicle(Model, postion, heading)
             {
                 IsPersistent = true,
                 PrimaryColor = PrimaryColor,
                 SecondaryColor = SecondaryColor,
-                PearlescentColor = PearlescentColor
+                PearlescentColor = PearlescentColor,
+                LicensePlate = Plate,
             };
+            if (driver)
             driver.WarpIntoVehicle(vehicle, -1);
 
             return vehicle;
@@ -428,15 +414,15 @@ namespace StoryCallouts
     public static class Vehicles
     {
         public static readonly VehicleDefinition FranklinCar =
-            new VehicleDefinition("BUFFALO2", Color.FromArgb(240, 240, 240), Color.FromArgb(240, 240, 240), Color.FromArgb(0, 8, 8, 8));
+            new VehicleDefinition("BUFFALO2", Color.FromArgb(240, 240, 240), Color.FromArgb(240, 240, 240), Color.FromArgb(0, 8, 8, 8), "FC1988");
 
         public static readonly VehicleDefinition FranklinBike =
-            new VehicleDefinition("BAGGER", Color.FromArgb(0, 56, 5), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 42, 54, 37));
+            new VehicleDefinition("BAGGER", Color.FromArgb(0, 56, 5), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 42, 54, 37), "FC88");
 
         public static readonly VehicleDefinition MichaelCar =
-            new VehicleDefinition("TAILGATER", Color.FromArgb(8, 8, 8), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 8, 8, 8));
+            new VehicleDefinition("TAILGATER", Color.FromArgb(8, 8, 8), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 8, 8, 8), "5MDS003");
 
         public static readonly VehicleDefinition TrevorCar =
-            new VehicleDefinition("BODHI2", Color.FromArgb(71, 14, 14), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 8, 8, 8));
+            new VehicleDefinition("BODHI2", Color.FromArgb(71, 14, 14), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 8, 8, 8), "BETTY 32");
     }
 }
