@@ -3,6 +3,7 @@ using LSPD_First_Response;
 using LSPD_First_Response.Engine.Scripting.Entities;
 using LSPD_First_Response.Mod.API;
 using Rage;
+using Rage.Native;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -225,6 +226,8 @@ namespace StoryCallouts
                     character.SetVariation(3, 12, 4);
                     character.SetVariation(4, 11, 4);
                     character.SetVariation(6, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 19, 1, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
                     break;
                 case ("BlitzPlay", "Franklin"):
                     character.SetVariation(2, 4, 0);
@@ -232,6 +235,8 @@ namespace StoryCallouts
                     character.SetVariation(4, 1, 3);
                     character.SetVariation(6, 1, 0);
                     character.SetVariation(8, 14, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 13, 1, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
                     break;
                 case ("BlitzPlay", "Trevor"):
                     character.SetVariation(2, 1, 0);
@@ -239,6 +244,8 @@ namespace StoryCallouts
                     character.SetVariation(4, 5, 4);
                     character.SetVariation(6, 5, 0);
                     character.SetVariation(8, 14, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 19, 0, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
                     break;
 
                 // THE PALETO SCORE
