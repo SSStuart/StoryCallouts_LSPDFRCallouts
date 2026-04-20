@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Object = Rage.Object;
 
 namespace StoryCallouts.Callouts
 {
@@ -20,6 +21,7 @@ namespace StoryCallouts.Callouts
         private Ped Trevor, TruckDriver;
         private List<Ped> Soldiers = new List<Ped>();
         private Vehicle TrevorCar, MilitaryTruck, MilitaryEscortFront, MilitaryEscortBack;
+        private Object Crate1, Crate2;
         private bool NearSpawnMessageSent, ChaseCreated, TrevorEnterTruck, TrevorDriveAway, TrevorDriveEnd;
 
         public override bool OnBeforeCalloutDisplayed()
@@ -31,7 +33,12 @@ namespace StoryCallouts.Callouts
                 new Vector3(157.1253f, 3103.841f, 41.79741f),
                 new Vector3(-103.3369f, 2980.566f, 36.35992f),
                 new Vector3(-361.7182f, 2916.317f, 32.6874f),
-                new Vector3(-868.5275f, 2753.925f, 22.8628f)
+                new Vector3(-868.5275f, 2753.925f, 22.8628f),
+                new Vector3(672.6279f, 4245.015f, 54.15732f),
+                new Vector3(349.2637f, 4488.673f, 61.97068f),
+                new Vector3(-70.63213f, 4355.947f, 52.26504f),
+                new Vector3(-94.32536f, 3610.176f, 44.3982f),
+                new Vector3(222.6472f, 3355.527f, 39.1296f)
             };
             int[] spawnHeadings =
             {
@@ -41,10 +48,15 @@ namespace StoryCallouts.Callouts
                 103,
                 104,
                 114,
-                94
+                94,
+                94,
+                47,
+                161,
+                239,
+                196
             };
 
-            int spawnVariation = MathHelper.GetRandomInteger(7);
+            int spawnVariation = MathHelper.GetRandomInteger(12);
 
             SpawnPoint = spawnpoints[spawnVariation];
             SpawnHeading = spawnHeadings[spawnVariation];
@@ -68,6 +80,11 @@ namespace StoryCallouts.Callouts
             {
                 IsEngineOn = true
             };
+            Crate1 = new Object("prop_mil_crate_01", MilitaryTruck.GetOffsetPositionRight(2));
+            Crate1.AttachTo(MilitaryTruck, 0, new Vector3(0, -1, 1.5f), new Rotator(0, 0, 90));
+
+            Crate2 = new Object("prop_mil_crate_01", MilitaryTruck.GetOffsetPositionRight(4));
+            Crate2.AttachTo(MilitaryTruck, 0, new Vector3(0, -3, 1.5f), new Rotator(0, 0, 90));
             TruckDriver = new Ped("s_m_y_marine_03", SpawnPoint.Around2D(10), 0)
             {
                 BlockPermanentEvents = true
@@ -231,6 +248,10 @@ namespace StoryCallouts.Callouts
                 TruckDriver.Dismiss();
             if (MilitaryTruckBlip.Exists())
                 MilitaryTruckBlip.Delete();
+            if (Crate1.Exists())
+                Crate1.Dismiss();
+            if (Crate2.Exists())
+                Crate2.Dismiss();
             if (MilitaryTruck.Exists())
                 MilitaryTruck.Dismiss();
             if (MilitaryEscortFront.Exists())
