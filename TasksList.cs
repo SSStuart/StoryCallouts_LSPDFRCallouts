@@ -21,6 +21,7 @@ namespace StoryCallouts
         private readonly Ped _ped;
         private readonly EndBehavior _endBehavior;
         private GameFiber _taskFiber;
+        private Blip DEBUG_BLIP;
 
         public TasksList(Ped ped, EndBehavior endBehavior = EndBehavior.Auto)
         {
@@ -46,15 +47,20 @@ namespace StoryCallouts
             FollowInVehicle followInVehicleTask = new FollowInVehicle(_ped, target);
             _tasks.Add(followInVehicleTask);
         }
-        public void AddWalkTask(Vector3 position, int walkingSpeed = 3, float acceptedDistance = 1, bool force = false, int heading = 360, int timeoutSec = 60)
+        public void AddWalkTask(Vector3 position, int walkingSpeed = 3, float acceptedDistance = 1, bool followNavMesh = false, bool force = false, int heading = 0, int timeoutSec = 60)
         {
-            WalkTo walkTask = new WalkTo(_ped, position, walkingSpeed, acceptedDistance, force, heading, timeoutSec);
+            WalkTo walkTask = new WalkTo(_ped, position, walkingSpeed, acceptedDistance, followNavMesh, force, heading, timeoutSec);
             _tasks.Add(walkTask);
         }
         public void AddWalkAimingTask(Vector3 position, Entity entityToAimAt, float acceptedDistance = 1, int walkingSpeed = 3, FiringPattern firingPattern = FiringPattern.BurstFire, int timeoutSec = 60)
         {
             WalkToAiming walkAimingTask = new WalkToAiming(_ped, position, entityToAimAt, walkingSpeed, acceptedDistance, true, firingPattern, timeoutSec);
             _tasks.Add(walkAimingTask);
+        }
+        public void AddWalkAimingRandomEnemyTask(Vector3 position, float acceptedDistance = 1, int walkingSpeed = 3, FiringPattern firingPattern = FiringPattern.BurstFire, int timeoutSec = 60)
+        {
+            WalkToAiming walkAimingRandomEnemyTask = new WalkToAiming(_ped, position, walkingSpeed, acceptedDistance, true, firingPattern, timeoutSec);
+            _tasks.Add(walkAimingRandomEnemyTask);
         }
         public void AddEnterVehicleTask(Vehicle vehicle, int seatIndex = -1, float speed = 1, EnterVehicleFlags flags = EnterVehicleFlags.None, int timeoutSec = 60)
         {
@@ -81,7 +87,7 @@ namespace StoryCallouts
         {
             _taskFiber = GameFiber.StartNew(delegate
             {
-                Blip DEBUGBlip = new Blip(_tasks[0].Position);
+                DEBUG_BLIP = new Blip(_tasks[0].Position);
                 while (_currentTaskIndex < _tasks.Count)
                 {
                     GameFiber.Yield();
@@ -91,17 +97,18 @@ namespace StoryCallouts
 
                     Task currentTask = _tasks[_currentTaskIndex];
                     if (currentTask.Position != Vector3.Zero)
-                        DEBUGBlip.Position = currentTask.Position;
+                        DEBUG_BLIP.Position = currentTask.Position;
                     else
-                        DEBUGBlip.Position = _ped.Position;
-                    DEBUGBlip.Sprite = _currentTaskIndex > 0 && _currentTaskIndex <= 10 ? (BlipSprite)_currentTaskIndex + 16 : BlipSprite.Darts;
+                        DEBUG_BLIP.Position = _ped.Position;
+                    DEBUG_BLIP.Sprite = _currentTaskIndex > 0 && _currentTaskIndex <= 10 ? (BlipSprite)_currentTaskIndex + 16 : BlipSprite.Darts;
+                    DEBUG_BLIP.Name = $"Task #{_currentTaskIndex} {_tasks[_currentTaskIndex].GetType().Name} for {_ped.Model.Name}";
 
-                    Game.LogTrivial($"Executing task #{_currentTaskIndex} for {_ped.Model.Name}");
+                    Game.LogTrivial($"Executing task #{_currentTaskIndex} {_tasks[_currentTaskIndex].GetType().Name} for {_ped.Model.Name}");
                     currentTask.Execute();
                     _currentTaskIndex++;
                 }
                 Game.LogTrivial("Exiting tasks loop");
-                DEBUGBlip.Delete();
+                DEBUG_BLIP.Delete();
 
                 if (!_ped.Exists() || !_ped.IsAlive)
                 {
@@ -168,6 +175,9 @@ namespace StoryCallouts
                     break;
             }
 
+            if (DEBUG_BLIP.Exists())
+                DEBUG_BLIP.Delete();
+
             TaskFinished = true;
         }
 
@@ -176,6 +186,9 @@ namespace StoryCallouts
             _taskFiber.Abort();
             if (_ped.Exists())
                 _ped.Tasks.Clear();
+
+            if (DEBUG_BLIP.Exists())
+                DEBUG_BLIP.Delete();
 
             TaskFinished = true;
         }

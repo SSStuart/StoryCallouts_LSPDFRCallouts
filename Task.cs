@@ -1,6 +1,7 @@
 ﻿using LSPD_First_Response.Mod.API;
 using Rage;
 using Rage.Native;
+using System.Linq;
 
 namespace StoryCallouts
 {
@@ -42,7 +43,7 @@ namespace StoryCallouts
                 GameFiber.Wait(100);
                 counterSec++;
             }
-            while (counterSec < _timeoutSec * 10 && task != null && _ped.Exists() && _ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
+            while (counterSec < _timeoutSec * 10 && task != null && _ped.Exists() && (_ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress || _ped.Tasks.CurrentTaskStatus == TaskStatus.Interrupted) && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
             if (_ped.Exists())
                 _ped.Tasks.Clear();
         }
@@ -95,15 +96,17 @@ namespace StoryCallouts
     {
         private readonly int _speed;
         private readonly float _acceptedDistance;
+        private readonly bool _followNavMesh;
         private readonly bool _force;
         private readonly int _heading;
 
-        public WalkTo(Ped ped, Vector3 position, int walkingSpeed, float acceptedDistance, bool force, int heading, int timeoutSec)
+        public WalkTo(Ped ped, Vector3 position, int walkingSpeed, float acceptedDistance, bool followNavMesh, bool force, int heading, int timeoutSec)
         {
             _ped = ped;
             Position = position;
             _speed = walkingSpeed;
             _acceptedDistance = acceptedDistance;
+            _followNavMesh = followNavMesh;
             _force = force;
             _heading = heading;
             _timeoutSec = timeoutSec;
@@ -114,7 +117,11 @@ namespace StoryCallouts
             if (_ped.Exists())
             {
                 int counterSec = 0;
-                Rage.Task task = _ped.Tasks.GoStraightToPosition(Position, _speed, _heading == 360 ? _ped.Heading : _heading, 1, _timeoutSec * 1000);
+                Rage.Task task;
+                if (_followNavMesh)
+                    task = _ped.Tasks.FollowNavigationMeshToPosition(Position, _heading == 360 ? _ped.Heading : _heading, _speed, _acceptedDistance, _timeoutSec * 1000);
+                else
+                    task = _ped.Tasks.GoStraightToPosition(Position, _speed, _heading == 360 ? _ped.Heading : _heading, 1, _timeoutSec * 1000);
 
                 do
                 {
@@ -135,7 +142,7 @@ namespace StoryCallouts
 
     internal class WalkToAiming : Task
     {
-        private readonly Entity _targetEntity;
+        private Entity _targetEntity;
         private readonly float _speed;
         private readonly float _acceptedDistance;
         private readonly bool _fireWeapon;
@@ -153,11 +160,29 @@ namespace StoryCallouts
             _timeoutSec = timeoutSec;
         }
 
+        public WalkToAiming(Ped ped, Vector3 position, float speed, float acceptedDistance, bool fireWeapon, FiringPattern firingPattern, int timeoutSec)
+        {
+            _ped = ped;
+            Position = position;
+            _targetEntity = null;
+            _speed = speed;
+            _acceptedDistance = acceptedDistance;
+            _fireWeapon = fireWeapon;
+            _firingPattern = firingPattern;
+            _timeoutSec = timeoutSec;
+        }
+
         public override void Execute()
         {
             if (_ped.Exists())
             {
                 int counterSec = 0;
+                if (_targetEntity == null)
+                {
+                    Ped[] enemies = World.GetEntities(_ped.Position, 30, GetEntitiesFlags.ConsiderHumanPeds).OfType<Ped>().Where(ped => Functions.IsPedACop(ped) || ped.IsLocalPlayer).ToArray();
+                    _targetEntity = enemies.Length > 0 ? enemies[MathHelper.GetRandomInteger(enemies.Length)] : Game.LocalPlayer.Character;
+                }
+
                 Rage.Task task = _ped.Tasks.GoToWhileAiming(Position, _targetEntity, _acceptedDistance, _speed, _fireWeapon, _firingPattern);
 
                 do
@@ -166,7 +191,7 @@ namespace StoryCallouts
                     GameFiber.Wait(100);
                     counterSec++;
                 }
-                while (counterSec < _timeoutSec * 10 && task != null && _ped.Exists() && _ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress && _ped.DistanceTo(Position) > _acceptedDistance && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
+                while (counterSec < _timeoutSec * 10 && task != null && _ped.Exists() && (_ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress || _ped.Tasks.CurrentTaskStatus == TaskStatus.Interrupted) && _ped.DistanceTo(Position) > _acceptedDistance && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
                 if (_ped.Exists())
                     _ped.Tasks.Clear();
             }
