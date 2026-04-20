@@ -23,7 +23,7 @@ namespace StoryCallouts
         internal static bool callout_MilitaryHardware = true;
         internal static bool callout_ThePaletoScore = true;
         internal static bool callout_PackMan = true;
-
+        
         internal static bool forceInteriorsEnabled = false;
 
         internal static string path = "Plugins/LSPDFR/StoryCallouts.ini";
@@ -66,7 +66,7 @@ namespace StoryCallouts
             callout_ThePaletoScore = ini.ReadBoolean("Callouts", "ThePaletoScore", true);
             Game.LogTrivial($"- Callout 'ThePaletoScore' {(callout_ThePaletoScore ? "[x] enabled" : "[ ] disabled")}");
             callout_PackMan = ini.ReadBoolean("Callouts", "PackMan", true);
-            Game.LogTrivial($"- Callout 'PackMan' {(callout_PackMan ? "enabled" : "disabled")}");
+            Game.LogTrivial($"- Callout 'PackMan' {(callout_PackMan ? "[x] enabled" : "[ ] disabled")}");
 
             forceInteriorsEnabled = ini.ReadBoolean("Interiors", "forceEnabled", false);
             Game.LogTrivial($"- Force enable interiors : {(forceInteriorsEnabled ? "Yes" : "No")}");

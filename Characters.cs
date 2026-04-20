@@ -326,11 +326,13 @@ namespace StoryCallouts
 
                 // PACK MAN
                 case ("PackMan", "Franklin"):
-                    // ...
+                    character.SetVariation(3, 13, 0);
+                    character.SetVariation(4, 8, 0);
+                    character.SetVariation(8, 14, 0);
                     break;
                 case ("PackMan", "Trevor"):
-                    character.SetVariation(4, 23, 0);
-                    character.SetVariation(6, 10, 0);
+                    character.SetVariation(4, 18, 1);
+                    character.SetVariation(6, 1, 0);
                     break;
                 case ("PackMan", "Lamar"):
                     character.SetVariation(5, 2, 0);
@@ -476,10 +478,10 @@ namespace StoryCallouts
                 Vehicle randomVehicle = new Vehicle(VehicleModels[MathHelper.GetRandomInteger(VehicleModels.Count)], postion, heading)
                 {
                     IsPersistent = true,
-            };
+                };
 
                 if (driver)
-                driver.WarpIntoVehicle(randomVehicle, -1);
+                    driver.WarpIntoVehicle(randomVehicle, -1);
 
                 return randomVehicle;
             }
@@ -493,7 +495,7 @@ namespace StoryCallouts
                 LicensePlate = Plate,
             };
             if (driver)
-            driver.WarpIntoVehicle(vehicle, -1);
+                driver.WarpIntoVehicle(vehicle, -1);
 
             return vehicle;
         }

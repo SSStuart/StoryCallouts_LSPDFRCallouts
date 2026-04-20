@@ -19,6 +19,7 @@ namespace StoryCallouts.Callouts
         private Ped Trevor, Lamar, Franklin;
         private Vehicle Truck, Trailer, JB700, Monroe;
         private List<Object> Spikes;
+        private GameFiber SpikesFiber;
         private bool NearSpawnMessageSent, ChaseCreated;
 
         public override bool OnBeforeCalloutDisplayed()
@@ -136,6 +137,8 @@ namespace StoryCallouts.Callouts
                 Monroe.Dismiss();
             if (JB700.Exists())
                 JB700.Dismiss();
+            if (SpikesFiber.IsAlive)
+                SpikesFiber.Abort();
             foreach (Object spike in Spikes)
                 if (spike.Exists())
                     spike.Delete();
@@ -147,6 +150,7 @@ namespace StoryCallouts.Callouts
         {
             GameFiber.Wait(10000);
             Trailer.GetDoors()[1].Open(false);
+            JB700.IsEngineOn = true;
             GameFiber.Wait(2000);
             JB700.Detach();
             Franklin.Tasks.PerformDrivingManeuver(JB700, VehicleManeuver.ReverseStraight, 1000);
@@ -155,6 +159,7 @@ namespace StoryCallouts.Callouts
                 JB700.AngularVelocity = new Rotator(JB700.AngularVelocity.Pitch, 0, JB700.AngularVelocity.Yaw);
                 GameFiber.Yield();
             } while (JB700.HeightAboveGround > 1);
+            Franklin.Tasks.PerformDrivingManeuver(JB700, VehicleManeuver.GoForwardStraight, 1000);
             Franklin.KeepTasks = false;
 
             Functions.SetPursuitDisableAIForPed(Franklin, false);
@@ -166,42 +171,85 @@ namespace StoryCallouts.Callouts
             NativeFunction.Natives.SET_CURRENT_PED_VEHICLE_WEAPON<bool>(Franklin, Game.GetHashKey("VEHICLE_WEAPON_PLAYER_BULLET"));
             GameFiber.StartNew(MountedGunFiring);
 
+            SpikesFiber = GameFiber.StartNew(SpikesLogic);
+
             while (Franklin.IsInVehicle(JB700, false))
             {
                 GameFiber.Sleep(5000);
 
-                if (JB700.Speed > 30)
+                List<Object> cleanedSpikes = new List<Object>();
+                foreach (Object spike in Spikes)
+                {
+                    if (spike.DistanceTo2D(Game.LocalPlayer.Character) > 100 && spike.DistanceTo2D(JB700) > 100)
+                        spike.Delete();
+                    else
+                        cleanedSpikes.Add(spike);
+                }
+                Spikes = cleanedSpikes;
+
+                if (JB700.Speed < 20 || Spikes.Count > 10)
                     continue;
 
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Spawning spike");
                 Object newSpike = new Object("prop_tyre_spike_01", JB700.Position)
                 {
                     CollisionIgnoredEntity = JB700,
-                    IsPersistent = false,
+                    IsPersistent = true,
                 };
-                if (Spikes.Count > 10)
-                    Spikes.RemoveAt(0);
+                Blip spikeBlip = new Blip(newSpike)
+                {
+                    Sprite = (BlipSprite)913,
+                    Color = Color.Red,
+                    Alpha = 0.5f,
+                    Scale = 0.8f,
+                    Name = "Spikes"
+                };
                 Spikes.Add(newSpike);
+            }
+        }
 
-                //foreach (Object spike in Spikes)
-                //{
-                //    Game.LogTrivial("Getting player vehicle wheels");
-                //    VehicleWheelPropertyWrapper playerVehicleWheels = Game.LocalPlayer.Character.CurrentVehicle.Wheels;
-                //    for (int i = 0; i < 10; i++)
-                //    {
-                //        Game.LogTrivial("Check existing wheel at " + i);
-                //        if (playerVehicleWheels[i] != null && playerVehicleWheels[i].LastContactPoint.DistanceTo(spike) < 0.5f)
-                //        {
-                //            try
-                //            {
-                //                playerVehicleWheels[i].BurstTire();
-                //            }
-                //            catch (System.Exception)
-                //            {
-                //            }
-                //        }
-                //    }
-                //}
+        private void SpikesLogic()
+        {
+            while (true)
+            {
+                GameFiber.Yield();
+
+                Vehicle playerVehicle = Game.LocalPlayer.Character.CurrentVehicle;
+
+                VehicleWheel wheelLF = playerVehicle.Wheels[0];
+                VehicleWheel wheelRF = playerVehicle.Wheels[1];
+                VehicleWheel wheelLR = playerVehicle.Wheels[7];
+                VehicleWheel wheelRR = playerVehicle.Wheels[5];
+
+                Vector3 wheelLF_Position = playerVehicle.GetBonePosition(playerVehicle.GetBoneIndex("wheel_lf"));
+                Vector3 wheelRF_Position = playerVehicle.GetBonePosition(playerVehicle.GetBoneIndex("wheel_rf"));
+                Vector3 wheelLR_Position = playerVehicle.GetBonePosition(playerVehicle.GetBoneIndex("wheel_lr"));
+                Vector3 wheelRR_Position = playerVehicle.GetBonePosition(playerVehicle.GetBoneIndex("wheel_rr"));
+
+                foreach (Object spike in Spikes)
+                {
+                    float distanceWheelLF_X = spike.Position.X - wheelLF_Position.X;
+                    float distanceWheelLF_Y = spike.Position.Y - wheelLF_Position.Y;
+                    float distanceWheelLF = distanceWheelLF_X * distanceWheelLF_X + distanceWheelLF_Y * distanceWheelLF_Y;
+                    float distanceWheelRF_X = spike.Position.X - wheelRF_Position.X;
+                    float distanceWheelRF_Y = spike.Position.Y - wheelRF_Position.Y;
+                    float distanceWheelRF = distanceWheelRF_X * distanceWheelRF_X + distanceWheelRF_Y * distanceWheelRF_Y;
+                    float distanceWheelLR_X = spike.Position.X - wheelLR_Position.X;
+                    float distanceWheelLR_Y = spike.Position.Y - wheelLR_Position.Y;
+                    float distanceWheelLR = distanceWheelLR_X * distanceWheelLR_X + distanceWheelLR_Y * distanceWheelLR_Y;
+                    float distanceWheelRR_X = spike.Position.X - wheelRR_Position.X;
+                    float distanceWheelRR_Y = spike.Position.Y - wheelRR_Position.Y;
+                    float distanceWheelRR = distanceWheelRR_X * distanceWheelRR_X + distanceWheelRR_Y * distanceWheelRR_Y;
+
+                    if (distanceWheelLF < 0.5 && wheelLF.TireHealth == 1000)
+                        wheelLF.BurstTire();
+                    if (distanceWheelRF < 0.5 && wheelRF.TireHealth == 1000)
+                        wheelRF.BurstTire();
+                    if (distanceWheelLR < 0.5 && wheelLR.TireHealth == 1000)
+                        wheelLR.BurstTire();
+                    if (distanceWheelRR < 0.5 && wheelRR.TireHealth == 1000)
+                        wheelRR.BurstTire();
+                }
             }
         }
 
