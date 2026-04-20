@@ -76,6 +76,8 @@ namespace StoryCallouts
                 Functions.RegisterCallout(typeof(Callouts.BlitzPlay));
             if (Settings.callout_MilitaryHardware)
                 Functions.RegisterCallout(typeof(Callouts.MilitaryHardware));
+            if (Settings.callout_ThePaletoScore)
+                Functions.RegisterCallout(typeof(Callouts.ThePaletoScore));
             if (Settings.callout_PackMan)
                 Functions.RegisterCallout(typeof(Callouts.PackMan));
         }

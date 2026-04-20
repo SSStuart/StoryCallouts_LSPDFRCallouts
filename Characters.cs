@@ -241,6 +241,81 @@ namespace StoryCallouts
                     character.SetVariation(8, 14, 0);
                     break;
 
+                // THE PALETO SCORE
+                case ("ThePaletoScore", "Michael"):
+                    character.SetVariation(3, 5, 0);
+                    character.SetVariation(4, 5, 0);
+                    character.SetVariation(5, 1, 0);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(8, 5, 0);
+                    character.SetVariation(9, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 26, 0, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("ThePaletoScore", "Franklin"):
+                    character.SetVariation(3, 16, 0);
+                    character.SetVariation(4, 16, 0);
+                    character.SetVariation(5, 4, 0);
+                    character.SetVariation(6, 5, 0);
+                    character.SetVariation(8, 14, 0);
+                    break;
+                case ("ThePaletoScore", "Trevor"):
+                    character.SetVariation(3, 2, 0);
+                    character.SetVariation(4, 2, 0);
+                    character.SetVariation(5, 1, 0);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(8, 2, 0);
+                    character.SetVariation(9, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 24, 0, true, 0);
+                    break;
+                case ("ThePaletoScore", "Gustavo"):
+                    character.SetVariation(0, 4, 0);
+                    character.SetVariation(1, 1, 0);
+                    character.SetVariation(2, 1, 0);
+                    character.SetVariation(3, 1, 0);
+                    character.SetVariation(4, 1, 0);
+                    character.SetVariation(6, 4, 0);
+                    character.SetVariation(9, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 5, 0, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("ThePaletoScore", "Norm"):
+                    character.SetVariation(1, 1, 0);
+                    character.SetVariation(2, 1, 0);
+                    character.SetVariation(3, 1, 0);
+                    character.SetVariation(4, 1, 0);
+                    character.SetVariation(6, 4, 0);
+                    character.SetVariation(9, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 5, 0, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("ThePaletoScore", "Daryl"):
+                    character.SetVariation(0, 2, 0);
+                    character.SetVariation(1, 1, 0);
+                    character.SetVariation(2, 1, 0);
+                    character.SetVariation(3, 1, 0);
+                    character.SetVariation(4, 1, 0);
+                    character.SetVariation(6, 4, 0);
+                    character.SetVariation(8, 2, 0);
+                    character.SetVariation(9, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 5, 0, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("ThePaletoScore", "Chef"):
+                    character.SetVariation(0, 6, 0);
+                    character.SetVariation(1, 1, 0);
+                    character.SetVariation(2, 1, 0);
+                    character.SetVariation(3, 1, 0);
+                    character.SetVariation(4, 1, 0);
+                    character.SetVariation(6, 4, 0);
+                    character.SetVariation(9, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 5, 0, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
 
                 // PACK MAN
                 case ("PackMan", "Franklin"):
@@ -308,6 +383,12 @@ namespace StoryCallouts
 
         public static readonly CharacterDefinition MCClip =
             new CharacterDefinition("ig_claypain", "Curtis", "Cray", Gender.Male, new DateTime(1, 1, 1));
+
+        public static readonly CharacterDefinition Daryl =
+            new CharacterDefinition("hc_gunman", "Daryl", "Johns", Gender.Male, new DateTime(1, 1, 1));
+
+        public static readonly CharacterDefinition Chef =
+            new CharacterDefinition("hc_gunman", "Chef", "White", Gender.Male, new DateTime(1, 1, 1));
     }
 
 
