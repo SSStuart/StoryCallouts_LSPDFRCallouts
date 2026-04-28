@@ -203,7 +203,7 @@ namespace StoryCallouts.Callouts
             Gaz.Detach();
             HumaneVan.GetDoors()[2].Open(false);
             HumaneVan.GetDoors()[3].Open(false);
-            Michael.Tasks.DriveToPosition(HumaneVan.GetOffsetPositionFront(-5), 40, VehicleDrivingFlags.AllowWrongWay | VehicleDrivingFlags.AllowMedianCrossing).WaitForCompletion();
+            Michael.Tasks.DriveToPosition(HumaneVan.GetOffsetPositionFront(-3), 40, VehicleDrivingFlags.AllowWrongWay | VehicleDrivingFlags.AllowMedianCrossing).WaitForCompletion();
             GameFiber.Yield();
             GameFiber.Wait(2000);
             Michael.Tasks.LeaveVehicle(LeaveVehicleFlags.LeaveDoorOpen).WaitForCompletion(4000);

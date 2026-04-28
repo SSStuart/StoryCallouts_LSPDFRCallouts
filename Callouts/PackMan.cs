@@ -160,9 +160,9 @@ namespace StoryCallouts.Callouts
                 GameFiber.Yield();
             } while (JB700.HeightAboveGround > 1);
             Franklin.Tasks.PerformDrivingManeuver(JB700, VehicleManeuver.GoForwardStraight, 1000);
-            Franklin.KeepTasks = false;
 
-            Functions.SetPursuitDisableAIForPed(Franklin, false);
+            NativeFunction.Natives.TASK_VEHICLE_CHASE(Franklin, Trevor);
+            NativeFunction.Natives.SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG(Franklin, 32, true);
 
             GameFiber.Wait(10000);
             Monroe.Detach();
@@ -173,14 +173,14 @@ namespace StoryCallouts.Callouts
 
             SpikesFiber = GameFiber.StartNew(SpikesLogic);
 
-            while (Franklin.IsInVehicle(JB700, false))
+            while (Functions.IsPursuitStillRunning(Pursuit) && JB700.Exists() && Franklin.IsInVehicle(JB700, false))
             {
                 GameFiber.Sleep(5000);
 
                 List<Object> cleanedSpikes = new List<Object>();
                 foreach (Object spike in Spikes)
                 {
-                    if (spike.DistanceTo2D(Game.LocalPlayer.Character) > 100 && spike.DistanceTo2D(JB700) > 100)
+                    if (spike.DistanceTo2D(Game.LocalPlayer.Character) > 100 && JB700.Exists() && spike.DistanceTo2D(JB700) > 100)
                         spike.Delete();
                     else
                         cleanedSpikes.Add(spike);
@@ -214,6 +214,8 @@ namespace StoryCallouts.Callouts
             {
                 GameFiber.Yield();
 
+                if (!Game.LocalPlayer.Character.IsInAnyVehicle(false))
+                    continue;
                 Vehicle playerVehicle = Game.LocalPlayer.Character.CurrentVehicle;
 
                 VehicleWheel wheelLF = playerVehicle.Wheels[0];
