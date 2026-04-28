@@ -12,14 +12,14 @@ namespace StoryCallouts
             {"en",
                 new Dictionary<string, string>{
                     { "updateAvailable", "~y~Update available!" },
-                    { "loaded", "~g~Loaded successfully!" },
+                    { "loaded", "~g~Loaded successfully! - :nbCalloutsEnabled callouts enabled" },
                     { "missingPrereq", "~r~Disabled! ~o~You are missing CalloutInterfaceAPI." },
                 }
             },
             {"fr",
                 new Dictionary<string, string>{
                     { "updateAvailable", "~y~Mise à jour disponible !" },
-                    { "loaded", "~g~Chargé !" },
+                    { "loaded", "~g~Chargé ! - :nbCalloutsEnabled callouts activés" },
                     { "missingPrereq", "~r~Désactivé ! ~o~Vous n'avez pas CalloutInterfaceAPI." },
                 }
             }

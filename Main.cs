@@ -12,6 +12,7 @@ namespace StoryCallouts
         public static string pluginName = "Story Callouts";
         public static string pluginVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public static Localization l10n = new Localization();
+        public static int nbCalloutsEnabled = 0;
 
         public static Color calloutWaypointColor = Color.FromArgb(240, 200, 80);
         public static Color alliesColor = Color.FromArgb(93, 182, 229);
@@ -28,7 +29,7 @@ namespace StoryCallouts
             Functions.OnOnDutyStateChanged += OnOnDutyStateChangedHandler;
 
             Game.LogTrivial($"{pluginName} v{pluginVersion} has been initialised.");
-            Settings.LoadSettings();
+            nbCalloutsEnabled = Settings.LoadSettings();
             Game.LogTrivial($"Go on duty to fully load {pluginName}.");
 
             UpdateChecker.CheckForUpdates();
@@ -40,7 +41,7 @@ namespace StoryCallouts
             if (OnDuty)
             {
                 RegisterCallouts();
-                Game.DisplayNotification("mpinventory", "custom_mission", pluginName, $"V {pluginVersion}", l10n.GetString("loaded"));
+                Game.DisplayNotification("mpinventory", "custom_mission", pluginName, $"V {pluginVersion}", l10n.GetString("loaded").Replace(":nbCalloutsEnabled", nbCalloutsEnabled.ToString()));
             }
         }
 
