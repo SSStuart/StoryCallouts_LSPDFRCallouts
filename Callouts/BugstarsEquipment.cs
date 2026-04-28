@@ -126,7 +126,7 @@ namespace StoryCallouts.Callouts
                     };
                     BugstarsEmployeeBlip = new Blip(BugstarsEmployee)
                     {
-                        Color = System.Drawing.Color.LightBlue,
+                        Color = Main.alliesColor,
                         Scale = 0.75f,
                         Name = "Bugstars employee"
                     };
@@ -149,7 +149,7 @@ namespace StoryCallouts.Callouts
                     };
                     BugstarsEmployeeBlip = new Blip(BugstarsEmployee)
                     {
-                        Color = System.Drawing.Color.LightBlue,
+                        Color = Main.alliesColor,
                         Scale = 0.75f,
                         Name = "Bugstars employee"
                     };

@@ -13,7 +13,8 @@ namespace StoryCallouts
         public static string pluginVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public static Localization l10n = new Localization();
 
-        public static Color calloutWaypointColor = Color.Yellow;
+        public static Color calloutWaypointColor = Color.FromArgb(240, 200, 80);
+        public static Color alliesColor = Color.FromArgb(93, 182, 229);
 
         public override void Initialize()
         {

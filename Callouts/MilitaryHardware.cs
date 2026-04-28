@@ -161,7 +161,7 @@ namespace StoryCallouts.Callouts
 
                 MilitaryTruckBlip = new Blip(MilitaryTruck)
                 {
-                    Color = Color.LightBlue,
+                    Color = Main.alliesColor,
                     Name = "Military truck",
                 };
 

@@ -72,7 +72,7 @@ namespace StoryCallouts.Callouts
 
             HumaneVanBlip = new Blip(HumaneVan)
             {
-                Color = Color.LightBlue,
+                Color = Main.alliesColor,
                 Name = "Humane van"
             };
 

@@ -142,12 +142,12 @@ namespace StoryCallouts.Callouts
 
                 VIPVehicleBlip = new Blip(VIPVehicle)
                 {
-                    Color = Color.LightBlue,
+                    Color = Main.alliesColor,
                     Name = "VIP vehicle"
                 };
                 EscortVehicleBlip = new Blip(EscortVehicle)
                 {
-                    Color = Color.LightBlue,
+                    Color = Main.alliesColor,
                     Name = "VIP escort vehicle"
                 };
 
