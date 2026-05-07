@@ -92,8 +92,8 @@ namespace StoryCallouts.Callouts
                 Name = "Humane van under attack"
             };
 
-            ChaseCreated = false;
             NearSpawnMessageSent = false;
+            ChaseCreated = false;
 
             return base.OnCalloutAccepted();
         }
@@ -198,7 +198,7 @@ namespace StoryCallouts.Callouts
             if (HumaneVanBlip.Exists())
                 HumaneVanBlip.Delete();
 
-            Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Opening van door, and tasking Micheal to get gaz");
+            Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Opening van door, and tasking Michael to get gaz");
 
             Gaz.Detach();
             HumaneVan.GetDoors()[2].Open(false);

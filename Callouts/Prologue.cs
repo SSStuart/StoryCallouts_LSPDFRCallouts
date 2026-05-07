@@ -78,8 +78,8 @@ namespace StoryCallouts.Callouts
                 Name = "Bobcat Security Depot under attack"
             };
 
-            ChaseCreated = false;
             NearSpawnMessageSent = false;
+            ChaseCreated = false;
             EnteredVehicle = false;
             RoadblockEscape = false;
 

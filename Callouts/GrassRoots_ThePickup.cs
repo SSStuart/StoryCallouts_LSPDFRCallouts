@@ -67,8 +67,8 @@ namespace StoryCallouts.Callouts
                 Name = "Vehicle under surveillance"
             };
 
-            ChaseCreated = false;
             NearSpawnMessageSent = false;
+            ChaseCreated = false;
 
             return base.OnCalloutAccepted();
         }

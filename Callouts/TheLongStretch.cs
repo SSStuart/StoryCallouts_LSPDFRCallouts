@@ -71,9 +71,9 @@ namespace StoryCallouts.Callouts
                 Name = "Gunfire"
             };
 
-            TaskDrive = false;
-            ChaseCreated = false;
             NearSpawnMessageSent = false;
+            ChaseCreated = false;
+            TaskDrive = false;
 
             return base.OnCalloutAccepted();
         }

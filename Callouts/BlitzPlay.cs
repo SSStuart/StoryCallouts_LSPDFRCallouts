@@ -61,8 +61,8 @@ namespace StoryCallouts.Callouts
                 Name = "Armored transport vehicle attacked"
             };
 
-            ChaseCreated = false;
             NearSpawnMessageSent = false;
+            ChaseCreated = false;
 
             return base.OnCalloutAccepted();
         }

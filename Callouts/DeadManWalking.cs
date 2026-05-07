@@ -42,8 +42,8 @@ namespace StoryCallouts.Callouts
                 Name = "Suspect escaped from the morgue"
             };
 
-            ChaseCreated = false;
             NearSpawnMessageSent = false;
+            ChaseCreated = false;
 
             return base.OnCalloutAccepted();
         }

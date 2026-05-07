@@ -2,8 +2,9 @@
 using Rage;
 using System;
 using System.Drawing;
-using System.Reflection;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace StoryCallouts
 {
@@ -112,5 +113,7 @@ namespace StoryCallouts
             }
             return false;
         }
+
+        public static Ped[] GetNearbyEnnemies(Vector3 position) => World.GetEntities(position, 40, GetEntitiesFlags.ConsiderHumanPeds).OfType<Ped>().Where(ped => ped.IsAlive && (Functions.IsPedACop(ped) || ped.RelationshipGroup == RelationshipGroup.Cop || ped.Model.Name.ToLower() == "s_m_m_security_01" || ped.IsLocalPlayer)).ToArray();
     }
 }

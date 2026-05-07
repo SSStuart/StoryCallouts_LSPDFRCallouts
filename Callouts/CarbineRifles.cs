@@ -100,8 +100,8 @@ namespace StoryCallouts.Callouts
                 Name = "Attacked tactical team truck"
             };
 
-            ChaseCreated = false;
             NearSpawnMessageSent = false;
+            ChaseCreated = false;
 
             return base.OnCalloutAccepted();
         }

@@ -46,8 +46,8 @@ namespace StoryCallouts.Callouts
                 Name = "Stolen Bugstars van"
             };
 
-            ChaseCreated = false;
             NearSpawnMessageSent = false;
+            ChaseCreated = false;
 
             return base.OnCalloutAccepted();
         }

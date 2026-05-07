@@ -73,8 +73,8 @@ namespace StoryCallouts.Callouts
 
             Spikes = new List<Object>();
 
-            ChaseCreated = false;
             NearSpawnMessageSent = false;
+            ChaseCreated = false;
 
             return base.OnCalloutAccepted();
         }

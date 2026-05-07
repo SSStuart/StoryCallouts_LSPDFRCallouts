@@ -142,12 +142,11 @@ namespace StoryCallouts.Callouts
             ChaseCreated = false;
             FranklinDispatched = false;
             FranklinArrivedPickupPoint = false;
+            MichaelInScoop = false;
+            TrevorInScoop = false;
             FranklinEnd = false;
             EscapeThroughFactory = false;
             FightTaskTimeout = 0;
-
-            MichaelInScoop = false;
-            TrevorInScoop = false;
 
             FactoryEscapeTask = new TasksList(Franklin);
             FactoryEscapeTask.AddWalkTask(new Vector3(-69.74802f, 6262.051f, 31.09014f), 2, 1, true);
@@ -231,7 +230,7 @@ namespace StoryCallouts.Callouts
 
             if (FranklinDispatched && Game.GameTime > FightTaskTimeout + 3000)
             {
-                Ped[] nearPeds = World.GetEntities(new Vector3(-176.261f, 6286.955f, 30.96572f), 40, GetEntitiesFlags.ConsiderHumanPeds).OfType<Ped>().Where(ped => Functions.IsPedACop(ped) || ped.IsLocalPlayer).ToArray();
+                Ped[] nearPeds = Main.GetNearbyEnnemies(new Vector3(-176.261f, 6286.955f, 30.96572f));
 
                 FightTaskTimeout = Game.GameTime;
                 if (nearPeds.Length > 0)

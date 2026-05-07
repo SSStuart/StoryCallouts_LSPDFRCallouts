@@ -71,8 +71,8 @@ namespace StoryCallouts.Callouts
                 Name = "Illegal Street Race"
             };
 
-            ChaseCreated = false;
             NearSpawnMessageSent = false;
+            ChaseCreated = false;
 
             return base.OnCalloutAccepted();
         }

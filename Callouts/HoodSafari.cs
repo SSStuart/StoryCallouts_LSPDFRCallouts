@@ -147,8 +147,8 @@ namespace StoryCallouts.Callouts
                 Name = "Gang shootout"
             };
 
-            ChaseCreated = false;
             NearSpawnMessageSent = false;
+            ChaseCreated = false;
             MCClipFleeing = false;
             FranklinTasksEnded = false;
 
