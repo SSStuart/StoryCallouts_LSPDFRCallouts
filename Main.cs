@@ -83,6 +83,10 @@ namespace StoryCallouts
                 Functions.RegisterCallout(typeof(Callouts.ThePaletoScore));
             if (Settings.callout_PackMan)
                 Functions.RegisterCallout(typeof(Callouts.PackMan));
+            if (Settings.callout_LegalTrouble)
+                Functions.RegisterCallout(typeof(Callouts.LegalTrouble));
+            if (Settings.callout_TheBureauRaid)
+                Functions.RegisterCallout(typeof(Callouts.TheBureauRaid));
         }
 
 

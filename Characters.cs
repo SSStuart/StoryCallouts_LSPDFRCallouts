@@ -338,6 +338,82 @@ namespace StoryCallouts
                     character.SetVariation(5, 2, 0);
                     break;
 
+                // THE BUREAU RAID
+                case ("TheBureauRaid", "Michael"):
+                    character.SetVariation(2, 1, 0);
+                    character.SetVariation(3, 4, 0);
+                    character.SetVariation(4, 4, 0);
+                    character.SetVariation(5, 6, 0);
+                    character.SetVariation(6, 4, 0);
+                    character.SetVariation(8, 23, 0);
+                    character.SetVariation(9, 3, 0);
+                    break;
+                case ("TheBureauRaid", "Franklin"):
+                    character.SetVariation(0, 0, 1);
+                    character.SetVariation(2, 5, 0);
+                    character.SetVariation(3, 16, 0);
+                    character.SetVariation(4, 16, 0);
+                    character.SetVariation(5, 4, 0);
+                    character.SetVariation(6, 5, 0);
+                    character.SetVariation(8, 14, 0);
+                    character.SetVariation(9, 2, 0);
+                    break;
+                case ("TheBureauRaid", "Gustavo"):
+                    character.SetVariation(0, 4, 0);
+                    character.SetVariation(3, 8, 0);
+                    character.SetVariation(4, 8, 0);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(8, 7, 0);
+                    character.SetVariation(9, 2, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBureauRaid", "Hugh"):
+                    character.SetVariation(0, 3, 0);
+                    character.SetVariation(3, 8, 0);
+                    character.SetVariation(4, 8, 0);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(8, 7, 0);
+                    character.SetVariation(9, 2, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBureauRaid", "Norm"):
+                    character.SetVariation(3, 8, 0);
+                    character.SetVariation(4, 8, 0);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(8, 7, 0);
+                    character.SetVariation(9, 2, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBureauRaid", "Daryl"):
+                    character.SetVariation(0, 2, 0);
+                    character.SetVariation(3, 8, 0);
+                    character.SetVariation(4, 8, 0);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(8, 7, 0);
+                    character.SetVariation(9, 2, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBureauRaid", "Eddie"):
+                    character.SetVariation(2, 1, 0);
+                    character.SetVariation(3, 2, 0);
+                    character.SetVariation(4, 3, 2);
+                    character.SetVariation(8, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBureauRaid", "Karim"):
+                    character.SetVariation(0, 1, 0);
+                    character.SetVariation(2, 1, 0);
+                    character.SetVariation(3, 2, 0);
+                    character.SetVariation(4, 3, 2);
+                    character.SetVariation(8, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
                 default:
                     Game.DisplayNotification("NO VARIATIONS DEFINED FOR " + Forename);
                     break;
@@ -399,6 +475,9 @@ namespace StoryCallouts
 
         public static readonly CharacterDefinition Chef =
             new CharacterDefinition("hc_gunman", "Chef", "White", Gender.Male, new DateTime(1, 1, 1));
+
+        public static readonly CharacterDefinition Molly =
+            new CharacterDefinition("ig_molly", "Molly", "Schultz", Gender.Female, new DateTime(1, 1, 1));
     }
 
 
