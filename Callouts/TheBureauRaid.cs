@@ -3,7 +3,6 @@ using LSPD_First_Response.Mod.Callouts;
 using Rage;
 using Rage.Native;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
@@ -312,7 +311,6 @@ namespace StoryCallouts.Callouts
                         }
                     }
 
-                    Game.LogTrivial("[=====DEBUG=====] Waiting for suspect to enter vehicles...");
                     do
                     {
                         GameFiber.Sleep(1000);
@@ -324,8 +322,6 @@ namespace StoryCallouts.Callouts
                             break;
 
                     } while (!Michael.IsInVehicle(EscapeVehicle, true) || !Franklin.IsInVehicle(EscapeVehicle, true) || !Gunman.IsInVehicle(EscapeVehicle, true));
-
-                    Game.LogTrivial("[=====DEBUG=====] Driving away");
 
                     if (Driver.IsAlive && Driver.IsInVehicle(EscapeVehicle, false) && !Functions.IsPedArrested(Driver))
                     {
@@ -372,24 +368,24 @@ namespace StoryCallouts.Callouts
             if (EmergencyVeh2.Exists())
                 EmergencyVeh2.Dismiss();
             if (!ParticleHandle.IsZero)
-                NativeFunction.Natives.StopParticleFxLooped(ParticleHandle.Value, false);
+                NativeFunction.Natives.STOP_PARTICLE_FX_LOOPED(ParticleHandle.Value, false);
 
             Game.LogTrivial($"[{Main.pluginName}] 'The Bureau Raid' callout has ended.");
         }
 
         private PoolHandle StartParticle(string dictName, string particleName, Vector3 position)
         {
-            NativeFunction.Natives.RequestNamedPtfxAsset(dictName);
+            NativeFunction.Natives.REQUEST_NAMED_PTFX_ASSET(dictName);
 
             uint timeout = Game.GameTime + 1000;
-            while (!NativeFunction.Natives.HasNamedPtfxAssetLoaded<bool>(dictName) && Game.GameTime < timeout)
+            while (!NativeFunction.Natives.HAS_NAMED_PTFX_ASSET_LOADED<bool>(dictName) && Game.GameTime < timeout)
             {
                 GameFiber.Sleep(10);
             }
 
-            NativeFunction.Natives.x6C38AF3693A69A91(dictName); // _SET_PTFX_ASSET_NEXT_CALL
+            NativeFunction.Natives.USE_PARTICLE_FX_ASSET(dictName);
 
-            return NativeFunction.Natives.StartParticleFxLoopedAtCoord<uint>(
+            return NativeFunction.Natives.START_PARTICLE_FX_LOOPED_AT_COORD<uint>(
                 particleName,
                 position.X, position.Y, position.Z,
                 0f, 0f, 0f,
