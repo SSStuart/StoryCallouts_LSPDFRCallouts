@@ -414,6 +414,12 @@ namespace StoryCallouts
                     character.SetVariation(10, 1, 0);
                     NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
                     break;
+
+                // PAPARAZZO - THE MELTDOWN
+                case ("Paparazzo_TheMeltdown", "Poppy"):
+                    character.SetVariation(4, 0, 0);
+                    break;
+
                 default:
                     Game.DisplayNotification("NO VARIATIONS DEFINED FOR " + Forename);
                     break;
@@ -478,6 +484,9 @@ namespace StoryCallouts
 
         public static readonly CharacterDefinition Molly =
             new CharacterDefinition("ig_molly", "Molly", "Schultz", Gender.Female, new DateTime(1, 1, 1));
+
+        public static readonly CharacterDefinition Poppy =
+            new CharacterDefinition("u_f_y_poppymich", "Poppy", "Mitchell", Gender.Female, new DateTime(1989, 5, 8));
     }
 
 

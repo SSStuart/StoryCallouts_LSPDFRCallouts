@@ -25,6 +25,7 @@ namespace StoryCallouts
         internal static bool callout_PackMan = true;
         internal static bool callout_LegalTrouble = true;
         internal static bool callout_TheBureauRaid = true;
+        internal static bool callout_Paparazzo_TheMeltdown = true;
         
         internal static bool forceInteriorsEnabled = false;
 
@@ -108,6 +109,10 @@ namespace StoryCallouts
             callout_TheBureauRaid = ini.ReadBoolean("Callouts", "TheBureauRaid", true);
             Game.LogTrivial($"- Callout 'TheBureauRaid' {(callout_TheBureauRaid ? "[x] enabled" : "[ ] disabled")}");
             enabledCallouts += callout_TheBureauRaid ? 1 : 0;
+
+            callout_Paparazzo_TheMeltdown = ini.ReadBoolean("Callouts", "Paparazzo_TheMeltdown", true);
+            Game.LogTrivial($"- Callout 'Paparazzo_TheMeltdown' {(callout_Paparazzo_TheMeltdown ? "[x] enabled" : "[ ] disabled")}");
+            enabledCallouts += callout_Paparazzo_TheMeltdown ? 1 : 0;
 
             forceInteriorsEnabled = ini.ReadBoolean("Interiors", "forceEnabled", false);
             Game.LogTrivial($"- Force enable interiors : {(forceInteriorsEnabled ? "Yes" : "No")}");

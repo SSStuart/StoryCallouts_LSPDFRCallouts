@@ -77,6 +77,8 @@
     <Compile Include="Callouts\BugstarsEquipment.cs" />
     <Compile Include="Callouts\BZGasGrenades.cs" />
     <Compile Include="Callouts\BlitzPlay.cs" />
+    <Compile Include="Callouts\Paparazzo_TheMeltdown.cs" />
+    <Compile Include="Callouts\TheBigScore.cs" />
     <Compile Include="Callouts\TheBureauRaid.cs" />
     <Compile Include="Callouts\LegalTrouble.cs" />
     <Compile Include="Callouts\ThePaletoScore.cs" />

@@ -87,6 +87,8 @@ namespace StoryCallouts
                 Functions.RegisterCallout(typeof(Callouts.LegalTrouble));
             if (Settings.callout_TheBureauRaid)
                 Functions.RegisterCallout(typeof(Callouts.TheBureauRaid));
+            if (Settings.callout_Paparazzo_TheMeltdown)
+                Functions.RegisterCallout(typeof(Callouts.Paparazzo_TheMeltdown));
         }
 
 
