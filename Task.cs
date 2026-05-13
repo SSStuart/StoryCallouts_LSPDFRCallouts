@@ -68,19 +68,20 @@ namespace StoryCallouts
     internal class FollowInVehicle : Task
     {
         private readonly Ped _target;
+        private readonly int _distance;
 
-        public FollowInVehicle(Ped ped, Ped target)
+        public FollowInVehicle(Ped ped, Ped target, int distance)
         {
             _ped = ped;
             _target = target;
+            _distance = distance;
         }
 
         public override void Execute()
         {
-            if (_ped.Exists() && _target.Exists())
+            if (_ped.Exists() && _ped.IsInAnyVehicle(false) && _target.Exists())
             {
-                NativeFunction.Natives.TASK_VEHICLE_CHASE(_ped, _target);
-                NativeFunction.Natives.SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG(_ped, 32, true);
+                NativeFunction.Natives.TASK_VEHICLE_FOLLOW(_ped, _ped.CurrentVehicle, _target, 100f, 1074528293, _distance);
                 _ped.KeepTasks = true;
 
                 while (_ped.Exists() && _ped.IsAlive && _target.Exists() && _target.IsInAnyVehicle(false))

@@ -161,8 +161,7 @@ namespace StoryCallouts.Callouts
             } while (JB700.HeightAboveGround > 1);
             Franklin.Tasks.PerformDrivingManeuver(JB700, VehicleManeuver.GoForwardStraight, 1000);
 
-            NativeFunction.Natives.TASK_VEHICLE_CHASE(Franklin, Trevor);
-            NativeFunction.Natives.SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG(Franklin, 32, true);
+            NativeFunction.Natives.TASK_VEHICLE_FOLLOW(Franklin, JB700, Truck, 100f, 1074528293, 40);
 
             GameFiber.Wait(10000);
             Monroe.Detach();

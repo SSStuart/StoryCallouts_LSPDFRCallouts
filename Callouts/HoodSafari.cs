@@ -86,14 +86,14 @@ namespace StoryCallouts.Callouts
                     break;
 
                 case 1:
-                    FranklinTasks.AddFollowInVehicleTask(Trevor);
+                    FranklinTasks.AddFollowInVehicleTask(Trevor, 10);
                     FranklinTasks.AddExitVehicleTask();
                     FranklinTasks.AddWalkTask(new Vector3(767.1197f, -2919.813f, 0.07052082f), 2, 1, false, false, 180);
                     FranklinTasks.AddClimbLadderTask();
                     break;
 
                 case 2:
-                    FranklinTasks.AddFollowInVehicleTask(Lamar);
+                    FranklinTasks.AddFollowInVehicleTask(Lamar, 10);
                     FranklinTasks.AddExitVehicleTask();
                     GameFiber.Wait(3000);
                     GameFiber.Yield();

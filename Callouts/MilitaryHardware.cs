@@ -142,10 +142,8 @@ namespace StoryCallouts.Callouts
                 CalloutInterfaceAPI.Functions.SendMessage(this, "Military convoy heading to Fort Zancudo under attack");
 
                 MilitaryEscortFront.Driver.Tasks.DriveToPosition(new Vector3(-1603.984f, 2817.603f, 17.17263f), 40, VehicleDrivingFlags.Normal, 20);
-                NativeFunction.Natives.TASK_VEHICLE_CHASE(TruckDriver, MilitaryEscortFront.Driver);
-                NativeFunction.Natives.SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG(TruckDriver, 32, true);
-                NativeFunction.Natives.TASK_VEHICLE_CHASE(MilitaryEscortBack.Driver, TruckDriver);
-                NativeFunction.Natives.SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG(MilitaryEscortBack.Driver, 32, true);
+                NativeFunction.Natives.TASK_VEHICLE_FOLLOW(TruckDriver, MilitaryTruck, MilitaryEscortFront, 100f, 1074528293, 20);
+                NativeFunction.Natives.TASK_VEHICLE_FOLLOW(MilitaryEscortBack.Driver, MilitaryEscortBack, TruckDriver, 100f, 1074528293, 20);
 
                 NativeFunction.Natives.TASK_VEHICLE_CHASE(Trevor, MilitaryEscortBack.Driver);
                 NativeFunction.Natives.SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG(Trevor, 32, true);

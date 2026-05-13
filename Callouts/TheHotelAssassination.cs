@@ -119,9 +119,7 @@ namespace StoryCallouts.Callouts
                 }
 
                 DriveAway.StartTasks();
-                NativeFunction.Natives.TASK_VEHICLE_CHASE(BodyguardEscort, VIP);
-                NativeFunction.Natives.SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG(BodyguardEscort, 32, true);
-
+                NativeFunction.Natives.TASK_VEHICLE_FOLLOW(BodyguardEscort, EscortVehicle, BodyguardDriver, 100f, 1074528293, 10);
 
                 if (VIPVehicleBlip.Exists())
                     VIPVehicleBlip.Delete();
@@ -208,8 +206,7 @@ namespace StoryCallouts.Callouts
                 DrivingAwayFiber = GameFiber.StartNew(delegate
                 {
                     DriveAway.StartTasks();
-                    NativeFunction.Natives.TASK_VEHICLE_CHASE(BodyguardEscort, VIP);
-                    NativeFunction.Natives.SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG(BodyguardEscort, 32, true);
+                    NativeFunction.Natives.TASK_VEHICLE_FOLLOW(BodyguardEscort, EscortVehicle, BodyguardDriver, 100f, 1074528293, 10);
 
                     if (WeaponVariation == 0)
                     {

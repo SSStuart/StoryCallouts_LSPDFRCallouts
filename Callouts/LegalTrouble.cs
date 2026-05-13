@@ -135,7 +135,7 @@ namespace StoryCallouts.Callouts
 
                 MollyTasks.StartTasks();
 
-                Michael.Tasks.ChaseWithGroundVehicle(Molly);
+                NativeFunction.Natives.TASK_VEHICLE_FOLLOW(Michael, MichaelCar, Molly, 100f, 4457020, 30);
 
                 MollyBlip = new Blip(Molly)
                 {
