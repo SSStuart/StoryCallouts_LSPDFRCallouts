@@ -2,8 +2,10 @@
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
 using Rage.Native;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Object = Rage.Object;
 
 namespace StoryCallouts.Callouts
 {
@@ -14,12 +16,12 @@ namespace StoryCallouts.Callouts
         private Vector3 SpawnPoint;
         private Blip EventBlip, MollyBlip;
         private LHandle Pursuit;
-        private Ped Michael, Molly, JetPilot, EscapeRouteTarget;
-        private Vehicle MichaelCar, MollyCar, BigJet, EscapeJet;
+        private Ped Michael, Molly, LandingJetPilot, HangarJetPilot, EscapeRouteTarget;
+        private Vehicle MichaelCar, MollyCar, LandingJet, HangarJet, EscapeJet;
         private Object FilmReel;
         private TasksList MollyTasks;
         private GameFiber MichaelChaseFiber;
-        private bool NearSpawnMessageSent, ChaseCreated, MollyNowASuspect, MollyExitedCar, JetEngineOn, MollyKilled;
+        private bool NearSpawnMessageSent, ChaseCreated, StartLandingJet, MollyNowASuspect, MollyExitedCar, JetEngineOn, MollyKilled;
 
         public override bool OnBeforeCalloutDisplayed()
         {
@@ -28,7 +30,7 @@ namespace StoryCallouts.Callouts
             AddMinimumDistanceCheck(200f, SpawnPoint);
             CalloutMessage = "Esorted person driving recklessly at the airport";
             CalloutPosition = SpawnPoint;
-            Functions.PlayScannerAudioUsingPosition("WE_HAVE ... IN_OR_ON_POSITION", SpawnPoint);
+            Functions.PlayScannerAudioUsingPosition("WE_HAVE CRIME_SUSPECT_ON_THE_RUN IN_OR_ON_POSITION", SpawnPoint);
 
             return base.OnBeforeCalloutDisplayed();
         }
@@ -65,8 +67,8 @@ namespace StoryCallouts.Callouts
             MollyTasks.AddDriveTask(new Vector3(-928.552f, -2916.578f, 13.39358f), 80, 10, VehicleDrivingFlags.IgnorePathFinding);
             MollyTasks.AddWalkTask(new Vector3(-937.1634f, -2931.86f, 13.94513f), 3, 1, false);
             MollyTasks.AddWalkTask(new Vector3(-918.7474f, -2942.682f, 13.94507f), 3, 2, true);
-            MollyTasks.AddWalkTask(new Vector3(-933.1793f, -2965.922f, 13.95531f), 3, 3, true, false, 150);
-            MollyTasks.AddWalkTask(new Vector3(-934.0757f, -2978.374f, 13.94508f), 3, 3);
+            MollyTasks.AddWalkTask(new Vector3(-933.1793f, -2965.922f, 13.95531f), 3, 4, true, false, 150);
+            MollyTasks.AddWalkTask(new Vector3(-934.0757f, -2978.374f, 13.94508f), 3, 4);
             MollyTasks.AddWalkTask(new Vector3(-914.1453f, -3030.82f, 13.94555f));
 
             FilmReel = new Object("prop_cs_film_reel_01", Molly.GetOffsetPositionRight(-2));
@@ -75,16 +77,33 @@ namespace StoryCallouts.Callouts
             Michael = Characters.Michael.Create(MollyCar.GetOffsetPositionFront(-25), 100, this.GetType().Name);
             MichaelCar = Vehicles.MichaelCar.Create(MollyCar.GetOffsetPositionFront(-30), 100, Michael);
 
-            // Removing eventual existing vehicle
-            Entity[] planeToRemove = World.GetEntities(new Vector3(-952.13f, -2990.27f, 22.74f), 10, GetEntitiesFlags.ConsiderPlanes);
+            // Removing eventual existing plane
+            Entity[] planeToRemove = World.GetEntities(new Vector3(-1610.484f, -2683.857f, 13.2891f), 30, GetEntitiesFlags.ConsiderPlanes);
             if (planeToRemove.Length > 0)
                 planeToRemove[0].Delete();
-            BigJet = new Vehicle("JET", new Vector3(-952.13f, -2990.27f, 13), 240f);
+            LandingJet = new Vehicle("JET", new Vector3(-927.5688f, -1497.594f, 233.2677f), 150f)
+            {
+                IsEngineOn = true,
+                IsPositionFrozen = true,
+                Opacity = 0,
+            };
+            LandingJetPilot = new Ped("S_M_M_GENTRANSPORT", LandingJet.GetOffsetPositionUp(10), 0f)
+            {
+                KeepTasks = true,
+                BlockPermanentEvents = true,
+            };
+            LandingJetPilot.WarpIntoVehicle(LandingJet, -1);
 
-            JetPilot = new Ped("s_m_m_pilot_01", BigJet.GetOffsetPositionRight(10), 0);
-            JetPilot.WarpIntoVehicle(BigJet, -1);
+            // Removing eventual existing plane
+            planeToRemove = World.GetEntities(new Vector3(-952.13f, -2990.27f, 22.74f), 10, GetEntitiesFlags.ConsiderPlanes);
+            if (planeToRemove.Length > 0)
+                planeToRemove[0].Delete();
+            HangarJet = new Vehicle("JET", new Vector3(-952.13f, -2990.27f, 13), 240f);
 
-            // Removing eventual existing vehicle
+            HangarJetPilot = new Ped("s_m_m_pilot_01", HangarJet.GetOffsetPositionRight(10), 0);
+            HangarJetPilot.WarpIntoVehicle(HangarJet, -1);
+
+            // Removing eventual existing plane
             planeToRemove = World.GetEntities(new Vector3(-968.37f, -2952.32f, 14.57f), 10, GetEntitiesFlags.ConsiderPlanes);
             if (planeToRemove.Length > 0)
                 planeToRemove[0].Delete();
@@ -107,6 +126,7 @@ namespace StoryCallouts.Callouts
 
             NearSpawnMessageSent = false;
             ChaseCreated = false;
+            StartLandingJet = false;
             MollyNowASuspect = false;
             MollyExitedCar = false;
             JetEngineOn = false;
@@ -153,6 +173,25 @@ namespace StoryCallouts.Callouts
                 ChaseCreated = true;
             }
 
+            if (ChaseCreated && !StartLandingJet && Molly.DistanceTo2D(new Vector3(-1227.677f, -2585.197f, 13.62339f)) < 30)
+            {
+                LandingJet.IsPositionFrozen = false;
+                LandingJet.Opacity = 1;
+                LandingJetPilot.Tasks.LandPlane(new Vector3(-1331.008f, -2201.203f, 13.62391f), new Vector3(-1605.616f, -2676.81f, 13.5929f));
+                GameFiber.StartNew(delegate
+                {
+                    while (LandingJet.DistanceTo2D(new Vector3(-1381.439f, -2289.579f, 50f)) > 50)
+                    {
+                        float speedBoost = Math.Max(0, LandingJet.DistanceTo2D(new Vector3(-1381.439f, -2289.579f, 13.60108f))) / 20;
+                        LandingJet.ApplyForce(new Vector3(0f, speedBoost, 0f), new Vector3(), true, false);
+                        LandingJet.SetRotationPitch(Math.Min(-2f, LandingJet.Rotation.Pitch));
+                        GameFiber.Yield();
+                    }
+                });
+
+                StartLandingJet = true;
+            }
+
             if (ChaseCreated && !MollyNowASuspect && Molly.DistanceTo2D(new Vector3(-1296.04f, -2188.958f, 13.51853f)) < 20)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Molly on runway, adding to pursuit");
@@ -178,7 +217,7 @@ namespace StoryCallouts.Callouts
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Turning on engine of big jet");
 
-                BigJet.IsEngineOn = true;
+                HangarJet.IsEngineOn = true;
 
                 JetEngineOn = true;
             }
@@ -197,7 +236,7 @@ namespace StoryCallouts.Callouts
                 GameFiber.StartNew(delegate
                 {
                     GameFiber.Sleep(5000);
-                    BigJet.IsEngineOn = false;
+                    HangarJet.IsEngineOn = false;
                 });
 
                 MollyKilled = true;
@@ -228,12 +267,16 @@ namespace StoryCallouts.Callouts
                 MollyCar.Dismiss();
             if (FilmReel.Exists())
                 FilmReel.Dismiss();
-            if (JetPilot.Exists())
-                JetPilot.Dismiss();
-            if (BigJet.Exists())
-                BigJet.Dismiss();
+            if (HangarJetPilot.Exists())
+                HangarJetPilot.Dismiss();
+            if (HangarJet.Exists())
+                HangarJet.Dismiss();
             if (EscapeJet.Exists())
                 EscapeJet.Dismiss();
+            if (LandingJetPilot.Exists())
+                LandingJetPilot.Dismiss();
+            if (LandingJet.Exists())
+                LandingJet.Dismiss();
 
             Game.LogTrivial($"[{Main.pluginName}] 'Legal Trouble' callout has ended.");
         }
@@ -278,7 +321,7 @@ namespace StoryCallouts.Callouts
                 GameFiber.Yield();
                 GameFiber.Wait(500);
 
-                if (Michael.IsTouching(BigJet))
+                if (Michael.IsTouching(HangarJet))
                 {
                     Game.DisplaySubtitle("Touching Jet");
                     Michael.Position = Michael.GetOffsetPositionRight(0.1f);
