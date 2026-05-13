@@ -203,6 +203,7 @@ namespace StoryCallouts.Callouts
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Tasking Trevor to drive to Paleto");
 
+                MilitaryTruckBlip.Delete();
                 Trevor.Tasks.DriveToPosition(new Vector3(1374.305f, 3586.606f, 34.59678f), 80, VehicleDrivingFlags.Emergency);
 
                 TrevorDriveAway = true;
