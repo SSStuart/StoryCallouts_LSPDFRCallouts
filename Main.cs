@@ -122,6 +122,13 @@ namespace StoryCallouts
             return false;
         }
 
-        public static Ped[] GetNearbyEnnemies(Vector3 position) => World.GetEntities(position, 40, GetEntitiesFlags.ConsiderHumanPeds).OfType<Ped>().Where(ped => ped.IsAlive && (Functions.IsPedACop(ped) || ped.RelationshipGroup == RelationshipGroup.Cop || ped.Model.Name.ToLower() == "s_m_m_security_01" || ped.IsLocalPlayer)).ToArray();
+        public static Ped[] GetNearbyEnnemies(Vector3 position) => 
+            World.GetEntities(position, 40, GetEntitiesFlags.ConsiderHumanPeds)
+            .OfType<Ped>()
+            .Where(ped => ped.IsAlive && (Functions.IsPedACop(ped) || ped.RelationshipGroup == RelationshipGroup.Cop || ped.Model.Name.ToLower() == "s_m_m_security_01" || ped.IsLocalPlayer))
+            .ToArray();
+
+        public static float DistanceSquared2D(Vector3 pos1, Vector3 pos2) =>
+            (pos1.X - pos2.X) * (pos1.X - pos2.X) + (pos1.Y - pos2.Y) * (pos1.Y - pos2.Y);
     }
 }

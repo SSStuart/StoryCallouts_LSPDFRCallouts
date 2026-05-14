@@ -138,6 +138,8 @@ namespace StoryCallouts
                     character.SetVariation(8, 1, 0);
                     character.SetVariation(9, 1, 0);
                     character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 3, 0, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
                     break;
                 case ("CasingTheJewelStore", "Karim"):
                     character.SetVariation(0, 1, 0);
@@ -450,7 +452,7 @@ namespace StoryCallouts
             new CharacterDefinition("ig_stretch", "Harold", "Joseph", Gender.Male, new DateTime(1, 1, 1));
 
         public static readonly CharacterDefinition Eddie =
-            new CharacterDefinition("u_m_m_edtoh", "Eddie", "Toh", Gender.Male, new DateTime(1, 1, 1));
+            new CharacterDefinition("hc_driver", "Eddie", "Toh", Gender.Male, new DateTime(1, 1, 1));
 
         public static readonly CharacterDefinition Karim =
             new CharacterDefinition("hc_driver", "Karim", "Denz", Gender.Male, new DateTime(1, 1, 1));

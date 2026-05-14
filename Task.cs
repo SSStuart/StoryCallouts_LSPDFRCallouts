@@ -40,7 +40,7 @@ namespace StoryCallouts
             do
             {
                 GameFiber.Yield();
-                GameFiber.Wait(50);
+                GameFiber.Wait(100);
                 counterSec++;
             }
             while (counterSec < _timeoutSec * 10 && task != null && _ped.Exists() && _ped.IsAlive && (_ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress || _ped.Tasks.CurrentTaskStatus == TaskStatus.Interrupted) && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));

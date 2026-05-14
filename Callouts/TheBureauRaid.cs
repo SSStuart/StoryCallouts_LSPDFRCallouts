@@ -163,9 +163,9 @@ namespace StoryCallouts.Callouts
                 GameFiber.StartNew(delegate
                 {
                     GameFiber.Wait(1000 * (2 + MathHelper.GetRandomInteger(10)));
-                    World.SpawnExplosion(new Vector3(115f, -764f, 208f), 29, 30, true, false, 0.5f);
+                    World.SpawnExplosion(new Vector3(116f, -768f, 210f), 34, 30, true, false, 0.5f);
                     GameFiber.Wait(1000 * (1 + MathHelper.GetRandomInteger(3)));
-                    World.SpawnExplosion(new Vector3(115f, -764f, 208f), 29, 30, true, false, 0.5f);
+                    World.SpawnExplosion(new Vector3(116f, -768f, 210f), 34, 30, true, false, 0.5f);
 
                     ParticleHandle = StartParticle("core", "ent_amb_smoke_general", new Vector3(115f, -764f, 208f));
                 });
