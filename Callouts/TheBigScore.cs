@@ -9,7 +9,7 @@ using Object = Rage.Object;
 
 namespace StoryCallouts.Callouts
 {
-    [CalloutInterfaceAPI.CalloutInterface("The Big Score", CalloutProbability.Medium, "...", "Code 3")]
+    [CalloutInterfaceAPI.CalloutInterface("The Big Score", CalloutProbability.Medium, "Union Depository robbery", "Code 3")]
 
     internal class TheBigScore : Callout
     {
@@ -33,13 +33,11 @@ namespace StoryCallouts.Callouts
         public override bool OnBeforeCalloutDisplayed()
         {
             ApproachVariant = MathHelper.GetRandomInteger(2);
-            // === DEBUG ===
-            ApproachVariant = 1;
 
             SpawnPoint = ApproachVariant == 0 ? new Vector3(154.9018f, -1290.577f, 28.58763f): new Vector3(-27.46582f, -677.475f, 49.09523f);
             ShowCalloutAreaBlipBeforeAccepting(SpawnPoint, 50f);
             AddMinimumDistanceCheck(200f, SpawnPoint);
-            CalloutMessage = "...";
+            CalloutMessage = ApproachVariant == 0 ? "Shooting behind the Vanilla Unicorn" : "Union Depository robbery";
             CalloutPosition = SpawnPoint;
             Functions.PlayScannerAudioUsingPosition("WE_HAVE CRIME_SUSPECT_ON_THE_RUN IN_OR_ON_POSITION", SpawnPoint);
 
@@ -68,7 +66,7 @@ namespace StoryCallouts.Callouts
             {
                 Color = Main.calloutWaypointColor,
                 IsRouteEnabled = true,
-                Name = "..."
+                Name = ApproachVariant == 0 ? "Shooting behind the Vanilla Unicorn" : "Union Depository robbery"
             };
 
             NearSpawnMessageSent = false;
@@ -273,7 +271,7 @@ namespace StoryCallouts.Callouts
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message");
 
-                CalloutInterfaceAPI.Functions.SendMessage(this, "...");
+                CalloutInterfaceAPI.Functions.SendMessage(this, "A shooting has been reported under the highway behind the Vanilla Unicorn");
                 NearSpawnMessageSent = true;
             }
 
@@ -328,6 +326,8 @@ namespace StoryCallouts.Callouts
                 || Driver.DistanceTo2D(new Vector3(-947, -537, 18)) < 50)
             )
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting trucks");
+
                 Truck2Driver.Tasks.CruiseWithVehicle(5);
                 Truck2Trailer.GetDoors()[0].Open(false);
                 GameFiber.StartNew(delegate
@@ -344,6 +344,8 @@ namespace StoryCallouts.Callouts
 
             if (TrucksInPosition && !TrucksTooFar)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks in position, starting entering trucks logic");
+
                 if (!MichaelEnteringTruck && Michael.Exists() && Michael.IsAlive && !Functions.IsPedArrested(Michael) && Michael.DistanceTo(Truck2Trailer) < 400)
                 {
                     MichaelDriveTask.AbortTasks();
@@ -392,6 +394,8 @@ namespace StoryCallouts.Callouts
 
             if (TrucksInPosition && !TrucksTooFar && Truck1.DistanceTo2D(EndTunnelPos) < 20 || (MichaelEnteredTruck && TrevorEnteredTruck && FranklinEnteredTruck && DriverEnteredTruck))
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks reached end of tunnel");
+
                 foreach (GameFiber fiber in EnterTruckHelperFibers)
                 {
                     if (fiber.IsAlive)
@@ -418,6 +422,8 @@ namespace StoryCallouts.Callouts
 
             if (TrucksStarting && (!Truck1.HasDriver || Truck1.IsDead) && !Truck1VehiclesDetached)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Truck 1 stopped");
+
                 Truck1Trailer.GetDoors()[0].Open(false);
 
                 if (TrevorEnteredTruck)
@@ -430,6 +436,8 @@ namespace StoryCallouts.Callouts
 
             if (TrucksStarting && (!Truck2.HasDriver || Truck2.IsDead) && !Truck2VehiclesDetached)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Truck 2 stopped");
+
                 Truck2Trailer.GetDoors()[0].Open(false);
 
                 if (MichaelEnteredTruck)
@@ -484,6 +492,8 @@ namespace StoryCallouts.Callouts
 
             if (!WaitingForDiversionInVehicle && DiversionEscapeVehicle.HasDriver)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Waiting for all passengers in escape vehicle");
+
                 GameFiber.StartNew(delegate
                 {
                     bool waitingForMichael = Michael.Exists() && Michael.IsAlive && !Functions.IsPedArrested(Michael) && !Functions.IsPedGettingArrested(Michael) && !Michael.IsInVehicle(DiversionEscapeVehicle, true);

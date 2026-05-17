@@ -114,7 +114,7 @@ namespace StoryCallouts.Callouts
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message & Driving task");
 
-                CalloutInterfaceAPI.Functions.SendMessage(this, "Suspect stopped is car in front of the truck");
+                CalloutInterfaceAPI.Functions.SendMessage(this, "Suspect stopped is car in front of the tactical team truck");
 
                 Michael.Tasks.DriveToPosition(SwatTruck.GetOffsetPositionFront(10), 60, VehicleDrivingFlags.Emergency | VehicleDrivingFlags.StopAtDestination);
 

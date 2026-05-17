@@ -201,6 +201,8 @@ namespace StoryCallouts.Callouts
 
             if (ChaseCreated && !MCClipFleeing && Franklin.DistanceTo(MCClip) < 20)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] MCClip fleeing");
+             
                 GameFiber.StartNew(delegate
                 {
                     MCClip.Tasks.ReactAndFlee(Franklin);
@@ -218,6 +220,8 @@ namespace StoryCallouts.Callouts
 
             if (!FranklinTasksEnded && ChaseCreated)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Ending Franklin Tasks at chase end");
+
                 if ((ChaseEndVariation == 1 && Franklin.DistanceTo(new Vector3(757.7037f, -2915.058f, 0.4871701f)) < 30)
                     || (ChaseEndVariation == 2 && Franklin.DistanceTo(new Vector3(1161.633f, -2692.565f, 0.8653155f)) < 30))
                 {

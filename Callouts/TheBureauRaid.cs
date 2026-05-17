@@ -160,6 +160,8 @@ namespace StoryCallouts.Callouts
 
             if (!Exploded && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 500)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Exlposion and particles");
+
                 GameFiber.StartNew(delegate
                 {
                     GameFiber.Wait(1000 * (2 + MathHelper.GetRandomInteger(10)));

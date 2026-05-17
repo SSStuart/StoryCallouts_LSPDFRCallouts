@@ -19,7 +19,7 @@ namespace StoryCallouts.Callouts
         private Blip EventBlip, MilitaryTruckBlip;
         private LHandle Pursuit;
         private Ped Trevor, TruckDriver;
-        private List<Ped> Soldiers = new List<Ped>();
+        private List<Ped> Soldiers;
         private Vehicle TrevorCar, MilitaryTruck, MilitaryEscortFront, MilitaryEscortBack;
         private Object Crate1, Crate2;
         private bool NearSpawnMessageSent, ChaseCreated, TrevorEnterTruck, TrevorDriveAway, TrevorDriveEnd;
@@ -95,6 +95,7 @@ namespace StoryCallouts.Callouts
             {
                 IsEngineOn = true
             };
+            Soldiers = new List<Ped>();
             for (int soldierNb = -1; soldierNb < 2; soldierNb++)
             {
                 Ped soldier = new Ped((MathHelper.GetRandomInteger(2) == 0 ? "S_M_Y_MARINE_03" : "S_M_M_MARINE_01"), MilitaryEscortFront.Position.Around2D(5), 0);

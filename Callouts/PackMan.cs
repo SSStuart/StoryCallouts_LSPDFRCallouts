@@ -87,7 +87,7 @@ namespace StoryCallouts.Callouts
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message & Driving task");
 
-                CalloutInterfaceAPI.Functions.SendMessage(this, "..................");
+                CalloutInterfaceAPI.Functions.SendMessage(this, "A truck carrying stolen vehicles was spotted on the Great Ocean Highway");
                 Trevor.Tasks.CruiseWithVehicle(70, VehicleDrivingFlags.FollowTraffic);
                 NearSpawnMessageSent = true;
             }

@@ -103,11 +103,11 @@ namespace StoryCallouts
                     DEBUG_BLIP.Sprite = _currentTaskIndex > 0 && _currentTaskIndex <= 10 ? (BlipSprite)_currentTaskIndex + 16 : BlipSprite.Darts;
                     DEBUG_BLIP.Name = $"Task #{_currentTaskIndex} {_tasks[_currentTaskIndex].GetType().Name} for {_ped.Model.Name}";
 
-                    Game.LogTrivial($"Executing task #{_currentTaskIndex} {_tasks[_currentTaskIndex].GetType().Name} for {_ped.Model.Name}");
+                    //Game.LogTrivial($"Executing task #{_currentTaskIndex} {_tasks[_currentTaskIndex].GetType().Name} for {_ped.Model.Name}");
                     currentTask.Execute();
                     _currentTaskIndex++;
                 }
-                Game.LogTrivial("Exiting tasks loop");
+                //Game.LogTrivial("Exiting tasks loop");
                 DEBUG_BLIP.Delete();
 
                 if (!_ped.Exists() || !_ped.IsAlive)
@@ -117,7 +117,7 @@ namespace StoryCallouts
                 }
                 if (Functions.IsPedArrested(_ped) || Functions.IsPedGettingArrested(_ped))
                 {
-                    Game.LogTrivial("Reenabling Ped IA and returning");
+                    //Game.LogTrivial("Reenabling Ped IA and returning");
                     Functions.SetPursuitDisableAIForPed(_ped, false);
                     TaskFinished = true;
                     return;
@@ -132,7 +132,7 @@ namespace StoryCallouts
             if (TaskFinished)
                 return;
 
-            Game.LogTrivial("End Behaviour logic...");
+            //Game.LogTrivial("End Behaviour logic...");
             switch (_endBehavior)
             {
                 case EndBehavior.Nothing:
@@ -160,15 +160,15 @@ namespace StoryCallouts
                 case EndBehavior.Fight:
                     if (!_ped.IsInAnyVehicle(false))
                     {
-                        Game.LogTrivial("Reenabling Ped IA");
+                        //Game.LogTrivial("Reenabling Ped IA");
                         _ped.Tasks.Clear();
                         Functions.SetPursuitDisableAIForPed(_ped, false);
                         break;
                     }
-                    Game.LogTrivial("Leaving Vehicle");
+                    //Game.LogTrivial("Leaving Vehicle");
                     _ped.Tasks.Clear();
                     _ped.Tasks.LeaveVehicle(LeaveVehicleFlags.LeaveDoorOpen).WaitForCompletion();
-                    Game.LogTrivial("Reenabling Ped IA");
+                    //Game.LogTrivial("Reenabling Ped IA");
                     Functions.SetPursuitDisableAIForPed(_ped, false);
                     break;
                 default:

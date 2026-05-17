@@ -143,7 +143,7 @@ namespace StoryCallouts.Callouts
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message");
 
-                CalloutInterfaceAPI.Functions.SendMessage(this, "A person being escorted to the airport has started to drive recklessly");
+                CalloutInterfaceAPI.Functions.SendMessage(this, "A person being escorted to the airport has started driving recklessly");
                 NearSpawnMessageSent = true;
             }
 
@@ -175,6 +175,8 @@ namespace StoryCallouts.Callouts
 
             if (ChaseCreated && !StartLandingJet && Molly.DistanceTo2D(new Vector3(-1227.677f, -2585.197f, 13.62339f)) < 30)
             {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting landing jet sequence");
+                
                 LandingJet.IsPositionFrozen = false;
                 LandingJet.Opacity = 1;
                 LandingJetPilot.Tasks.LandPlane(new Vector3(-1331.008f, -2201.203f, 13.62391f), new Vector3(-1605.616f, -2676.81f, 13.5929f));
@@ -302,7 +304,6 @@ namespace StoryCallouts.Callouts
                 GameFiber.Yield();
                 GameFiber.Wait(500);
             } while (Michael.DistanceTo2D(new Vector3(-970.6552f, -2976.935f, 13.94508f)) > 20 || Michael.Speed > 1);
-            Game.LogTrivial("Michael reached destination");
 
             Michael.Tasks.GoStraightToPosition(MichaelCar.GetOffsetPositionRight(-3), 2, 240, 0, 3000).WaitForCompletion(3000);
             Michael.Tasks.FireWeaponAt(Molly, 60000, FiringPattern.BurstFire);
@@ -312,7 +313,6 @@ namespace StoryCallouts.Callouts
                 GameFiber.Yield();
                 GameFiber.Wait(500);
             } while (Molly.Exists() && Molly.IsAlive && !Functions.IsPedGettingArrested(Molly));
-            Game.LogTrivial("Michael chasing molly");
 
             Michael.Tasks.GoStraightToPosition(FilmReel.Position, 3, 240, 2, 60000);
 
@@ -323,11 +323,9 @@ namespace StoryCallouts.Callouts
 
                 if (Michael.IsTouching(HangarJet))
                 {
-                    Game.DisplaySubtitle("Touching Jet");
                     Michael.Position = Michael.GetOffsetPositionRight(0.1f);
                 }
             } while (FilmReel.Exists() && Michael.DistanceTo(FilmReel) > 2);
-            Game.LogTrivial("Michael next to reel");
 
             GameFiber.Wait(1000);
             FilmReel.AttachTo(Michael, Michael.GetBoneIndex(PedBoneId.LeftHand), new Vector3(0.2f, 0, 0.05f), new Rotator(0, 0, 0));
@@ -342,7 +340,6 @@ namespace StoryCallouts.Callouts
                     GameFiber.Yield();
                     GameFiber.Wait(500);
                 } while (EscapeJet.Exists() && Michael.DistanceTo(EscapeJet) > 6);
-                Game.LogTrivial("Michael next to jet");
 
                 GameFiber.Wait(1000);
                 Michael.Tasks.EnterVehicle(EscapeJet, -1, EnterVehicleFlags.WarpTo);
@@ -352,7 +349,6 @@ namespace StoryCallouts.Callouts
                     GameFiber.Yield();
                     GameFiber.Wait(500);
                 } while (!Michael.IsInVehicle(EscapeJet, false));
-                Game.LogTrivial("Michael entered jet");
 
                 Michael.Tasks.DriveToPosition(new Vector3(-1372.915f, -3213.127f, 125.5794f), 200, VehicleDrivingFlags.IgnorePathFinding);
                 GameFiber.Wait(10000);

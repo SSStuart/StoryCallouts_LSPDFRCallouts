@@ -91,7 +91,7 @@ namespace StoryCallouts.Callouts
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message");
 
-                CalloutInterfaceAPI.Functions.SendMessage(this, "...");
+                CalloutInterfaceAPI.Functions.SendMessage(this, "Pursuit in progress of a potentially intoxicated person");
                 NearSpawnMessageSent = true;
             }
 
