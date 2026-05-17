@@ -72,7 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callouts\CasingTheJewelStore.cs" />
+    <Compile Include="Callouts\TheJewelStoreJob.cs" />
     <Compile Include="Callouts\CarbineRifles.cs" />
     <Compile Include="Callouts\BugstarsEquipment.cs" />
     <Compile Include="Callouts\BZGasGrenades.cs" />

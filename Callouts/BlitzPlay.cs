@@ -32,15 +32,15 @@ namespace StoryCallouts.Callouts
         public override bool OnCalloutAccepted()
         {
             Michael = Characters.Michael.Create(new Vector3(881.53f, -2334.04f, 34.91f), 260, this.GetType().Name);
-            Michael.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_COMBATMG"), 300, true);
+            Michael.Inventory.GiveNewWeapon("WEAPON_COMBATMG", 300, true);
             Michael.Accuracy = 20;
 
             Franklin = Characters.Franklin.Create(new Vector3(873.8723f, -2353.05f, 30.3312f), 260, this.GetType().Name);
-            Franklin.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_CARBINERIFLE"), 300, true);
+            Franklin.Inventory.GiveNewWeapon("WEAPON_CARBINERIFLE", 300, true);
             Franklin.Accuracy = 20;
 
             Trevor = Characters.Trevor.Create(new Vector3(804.7164f, -2330.207f, 62.09619f), 260, this.GetType().Name);
-            Trevor.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_RPG"), 50, true);
+            Trevor.Inventory.GiveNewWeapon("WEAPON_RPG", 50, true);
             Trevor.Accuracy = 0;
 
             TrashTruck = new Vehicle("TRASH", new Vector3(908.42f, -2375.82f, 30.21f), 248f);

@@ -42,9 +42,9 @@ namespace StoryCallouts.Callouts
         {
             Franklin = Characters.Franklin.Create(new Vector3(-1259.232f, -243.2478f, 47.0454f), 320, this.GetType().Name);
             if (WeaponVariation == 0)
-               Franklin.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_SNIPERRIFLE"), 10, true);
+               Franklin.Inventory.GiveNewWeapon("WEAPON_SNIPERRIFLE", 10, true);
             else
-                Franklin.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_STICKYBOMB"), 5, true);
+                Franklin.Inventory.GiveNewWeapon("WEAPON_STICKYBOMB", 5, true);
 
             FranklinCar = Vehicles.FranklinCar.Create(new Vector3(-1259.304f, -227.9357f, 46.69148f), 126);
 

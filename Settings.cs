@@ -14,7 +14,7 @@ namespace StoryCallouts
         internal static bool callout_CarbineRifles = true;
         internal static bool callout_BugstarsEquipment = true;
         internal static bool callout_BZGasGrenades = true;
-        internal static bool callout_CasingTheJewelStore = true;
+        internal static bool callout_TheJewelStoreJob = true;
         internal static bool callout_DeadManWalking = true;
         internal static bool callout_HoodSafari = true;
         internal static bool callout_TheHotelAssassination = true;
@@ -67,9 +67,9 @@ namespace StoryCallouts
             Game.LogTrivial($"- Callout 'BZGasGrenades' {(callout_BZGasGrenades ? "[x] enabled" : "[ ] disabled")}");
             enabledCallouts += callout_BZGasGrenades ? 1 : 0;
 
-            callout_CasingTheJewelStore = ini.ReadBoolean("Callouts", "CasingTheJewelStore", true);
-            Game.LogTrivial($"- Callout 'CasingTheJewelStore' {(callout_CasingTheJewelStore ? "[x] enabled" : "[ ] disabled")}");
-            enabledCallouts += callout_CasingTheJewelStore ? 1 : 0;
+            callout_TheJewelStoreJob = ini.ReadBoolean("Callouts", "TheJewelStoreJob", true);
+            Game.LogTrivial($"- Callout 'TheJewelStoreJob' {(callout_TheJewelStoreJob ? "[x] enabled" : "[ ] disabled")}");
+            enabledCallouts += callout_TheJewelStoreJob ? 1 : 0;
 
             callout_DeadManWalking = ini.ReadBoolean("Callouts", "DeadManWalking", true);
             Game.LogTrivial($"- Callout 'DeadManWalking' {(callout_DeadManWalking ? "[x] enabled" : "[ ] disabled")}");

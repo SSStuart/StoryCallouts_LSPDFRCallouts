@@ -119,8 +119,8 @@ namespace StoryCallouts
                     character.SetVariation(6, 1, 0);
                     break;
 
-                // CASING THE JEWEL STORE
-                case ("CasingTheJewelStore", "Franklin"):
+                // THE JEWEL STORE JOB
+                case ("TheJewelStoreJob", "Franklin"):
                     character.SetVariation(0, 0, 5);
                     character.SetVariation(1, 3, 0);
                     character.SetVariation(2, 2, 0);
@@ -132,7 +132,7 @@ namespace StoryCallouts
                     character.SetVariation(9, 6, 0);
                     character.SetVariation(11, 5, 0);
                     break;
-                case ("CasingTheJewelStore", "Eddie"):
+                case ("TheJewelStoreJob", "Eddie"):
                     character.SetVariation(3, 4, 2);
                     character.SetVariation(4, 3, 2);
                     character.SetVariation(8, 1, 0);
@@ -141,7 +141,7 @@ namespace StoryCallouts
                     NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 3, 0, true, 0);
                     NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
                     break;
-                case ("CasingTheJewelStore", "Karim"):
+                case ("TheJewelStoreJob", "Karim"):
                     character.SetVariation(0, 1, 0);
                     character.SetVariation(3, 4, 2);
                     character.SetVariation(4, 3, 2);
@@ -149,7 +149,7 @@ namespace StoryCallouts
                     character.SetVariation(9, 1, 0);
                     character.SetVariation(10, 1, 0);
                     break;
-                case ("CasingTheJewelStore", "Gustavo"):
+                case ("TheJewelStoreJob", "Gustavo"):
                     character.SetVariation(0, 4, 0);
                     character.SetVariation(1, 1, 0);
                     character.SetVariation(2, 1, 0);
@@ -159,7 +159,7 @@ namespace StoryCallouts
                     character.SetVariation(9, 4, 0);
                     character.SetVariation(10, 1, 0);
                     break;
-                case ("CasingTheJewelStore", "Patrick"):
+                case ("TheJewelStoreJob", "Patrick"):
                     character.SetVariation(0, 5, 0);
                     character.SetVariation(1, 1, 0);
                     character.SetVariation(2, 1, 0);
@@ -169,7 +169,7 @@ namespace StoryCallouts
                     character.SetVariation(9, 4, 0);
                     character.SetVariation(10, 1, 0);
                     break;
-                case ("CasingTheJewelStore", "Michael"):
+                case ("TheJewelStoreJob", "Michael"):
                     character.SetVariation(0, 0, 2);
                     character.SetVariation(1, 3, 0);
                     character.SetVariation(2, 3, 0);
@@ -178,7 +178,7 @@ namespace StoryCallouts
                     character.SetVariation(5, 8, 0);
                     character.SetVariation(11, 1, 0);
                     break;
-                case ("CasingTheJewelStore", "Norm"):
+                case ("TheJewelStoreJob", "Norm"):
                     character.SetVariation(1, 1, 0);
                     character.SetVariation(2, 1, 0);
                     character.SetVariation(3, 5, 0);

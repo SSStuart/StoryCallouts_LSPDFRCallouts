@@ -80,7 +80,7 @@ namespace StoryCallouts.Callouts
             Gaz.AttachTo(HumaneVan, 0, new Vector3(0, -2, 0), new Rotator());
 
             Michael = Characters.Michael.Create(HumaneVan.GetOffsetPositionFront(-10), 0, this.GetType().Name);
-            Michael.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_MICROSMG"), 100, true);
+            Michael.Inventory.GiveNewWeapon("WEAPON_MICROSMG", 100, true);
 
             MichaelCar = Vehicles.MichaelCar.Create(HumaneVan.GetOffsetPositionFront(-15), SpawnHeading, Michael);
             MichaelCar.IsEngineOn = true;

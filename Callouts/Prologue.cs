@@ -33,15 +33,15 @@ namespace StoryCallouts.Callouts
         public override bool OnCalloutAccepted()
         {
             Michael = Characters.Michael.Create(new Vector3(5331.559f, -5185.187f, 82.75967f), 260, this.GetType().Name);
-            Michael.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_CARBINERIFLE"), 500, true);
+            Michael.Inventory.GiveNewWeapon("WEAPON_CARBINERIFLE", 500, true);
 
             Trevor = Characters.Trevor.Create(new Vector3(5331.24f, -5191.96f, 82.76762f), 260, this.GetType().Name);
             Trevor.KeepTasks = true;
-            Trevor.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_CARBINERIFLE"), 500, true);
+            Trevor.Inventory.GiveNewWeapon("WEAPON_CARBINERIFLE", 500, true);
 
             Brad = Characters.Brad.Create(new Vector3(5325.857f, -5185.191f, 82.77296f), 260, this.GetType().Name);
             Brad.KeepTasks = true;
-            Brad.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_PUMPSHOTGUN"), 200, true);
+            Brad.Inventory.GiveNewWeapon("WEAPON_PUMPSHOTGUN", 200, true);
 
             LocalYokel = new Ped("u_m_y_proldriver_01", new Vector3(5430.592f, -5116.286f, 78.21192f), 0)
             {

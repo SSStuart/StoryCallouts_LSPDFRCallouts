@@ -1,7 +1,6 @@
 ﻿using LSPD_First_Response.Mod.API;
 using Rage;
 using Rage.Native;
-using System.Linq;
 
 namespace StoryCallouts
 {
@@ -218,7 +217,7 @@ namespace StoryCallouts
         public override void Execute()
         {
             if (_ped.Exists() && _ped.IsAlive && _vehicle.Exists())
-                _ped.Tasks.EnterVehicle(_vehicle, _timeoutSec * 1000, _seatIndex, _speed, _flags).WaitForCompletion(_timeoutSec * 1000);
+                _ped.Tasks.EnterVehicle(_vehicle, _timeoutSec * 1000, (_seatIndex >= -1 ? _seatIndex : _vehicle.GetFreeSeatIndex() ?? -1) , _speed, _flags).WaitForCompletion(_timeoutSec * 1000);
         }
     }
 

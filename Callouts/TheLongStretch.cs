@@ -33,15 +33,15 @@ namespace StoryCallouts.Callouts
         public override bool OnCalloutAccepted()
         {
             Franklin = Characters.Franklin.Create(SpawnPoint, 0, this.GetType().Name);
-            Franklin.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_PUMPSHOTGUN"), 200, true);
+            Franklin.Inventory.GiveNewWeapon("WEAPON_PUMPSHOTGUN", 200, true);
 
             Lamar = Characters.Lamar.Create(SpawnPoint + new Vector3(-1, 0, 0), 0, this.GetType().Name);
             Lamar.KeepTasks = true;
-            Lamar.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_PUMPSHOTGUN"), 200, true);
+            Lamar.Inventory.GiveNewWeapon("WEAPON_PUMPSHOTGUN", 200, true);
 
             Stretch = Characters.Stretch.Create(SpawnPoint + new Vector3(-2, 0, 0), 0, this.GetType().Name);
             Stretch.KeepTasks = true;
-            Stretch.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_PISTOL"), 300, true);
+            Stretch.Inventory.GiveNewWeapon("WEAPON_PISTOL", 300, true);
 
             LamarVehicle = new Vehicle("emperor", new Vector3(-616.1136f, -1604.719f, 26.25291f), 197)
             {

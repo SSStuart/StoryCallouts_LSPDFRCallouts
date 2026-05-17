@@ -5,9 +5,9 @@ using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
 {
-    [CalloutInterfaceAPI.CalloutInterface("Casing the Jewel Store", CalloutProbability.Medium, "Jewel store heist", "Code 3")]
+    [CalloutInterfaceAPI.CalloutInterface("The Jewel Store Job", CalloutProbability.Medium, "Jewel store heist", "Code 3")]
 
-    internal class CasingTheJewelStore : Callout
+    internal class TheJewelStoreJob : Callout
     {
         private Vector3 SpawnPoint;
         private Blip EventBlip;
@@ -52,7 +52,7 @@ namespace StoryCallouts.Callouts
             Driver.KeepTasks = true;
             Driver.CanBeKnockedOffBikes = false;
 
-            DriverBike = new Vehicle((DriverVariant == 0 ? "sanchez" : "bati2"), new Vector3(993.2284f, -153.9241f, 34.32867f), 236)
+            DriverBike = new Vehicle((DriverVariant == 0 ? "sanchez" : "bati2"), new Vector3(1016.887f, -177.229f, 39.95674f), 236)
             {
                 IsPersistent = true,
                 IsEngineOn = true
@@ -67,7 +67,7 @@ namespace StoryCallouts.Callouts
             Gunman.KeepTasks = true;
             Gunman.CanBeKnockedOffBikes = false;
 
-            GunmanBike = new Vehicle((DriverVariant == 0 ? "sanchez" : "bati2"), new Vector3(979.9433f, -139.9055f, 33.69652f), 234)
+            GunmanBike = new Vehicle((DriverVariant == 0 ? "sanchez" : "bati2"), new Vector3(1019.758f, -177.3154f, 40.21076f), 234)
             {
                 IsPersistent = true,
                 IsEngineOn = true
@@ -104,8 +104,8 @@ namespace StoryCallouts.Callouts
             DriverEscape = new TasksList(Driver);
             GunmanEscape = new TasksList(Gunman);
 
-            DriverEscape.AddDriveTask(new Vector3(1019.542f, -177.163f, 40.4483f), 20, 5, beeLineDrivingFlags);
-            GunmanEscape.AddDriveTask(new Vector3(1019.542f, -177.163f, 40.4483f), 20, 5, beeLineDrivingFlags);
+            DriverEscape.AddDriveTask(new Vector3(1022.919f, -225.5466f, 42.67932f), 20, 5, beeLineDrivingFlags);
+            GunmanEscape.AddDriveTask(new Vector3(1022.919f, -225.5466f, 42.67932f), 20, 5, beeLineDrivingFlags);
 
             foreach (TasksList BikeEscape in new[] { FranklinEscape, DriverEscape, GunmanEscape })
             {
@@ -178,8 +178,12 @@ namespace StoryCallouts.Callouts
 
                 EventBlip.Delete();
                 FranklinEscape.StartTasks();
-                DriverEscape.StartTasks();
-                GunmanEscape.StartTasks();
+                GameFiber.StartNew(delegate
+                {
+                    GameFiber.Sleep(2000);
+                    DriverEscape.StartTasks();
+                    GunmanEscape.StartTasks();
+                });
                 Pursuit = Functions.CreatePursuit();
                 Functions.AddPedToPursuit(Pursuit, Franklin);
                 Functions.AddPedToPursuit(Pursuit, Driver);
@@ -282,7 +286,7 @@ namespace StoryCallouts.Callouts
             if (DeleteDoorsFiber.IsAlive)
                 DeleteDoorsFiber.Abort();
 
-            Game.LogTrivial($"[{Main.pluginName}] 'Casing the Jewel Store' callout has ended.");
+            Game.LogTrivial($"[{Main.pluginName}] 'The Jewel Store Job' callout has ended.");
         }
     }
 }

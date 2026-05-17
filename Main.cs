@@ -65,8 +65,8 @@ namespace StoryCallouts
                 Functions.RegisterCallout(typeof(Callouts.BugstarsEquipment));
             if (Settings.callout_BZGasGrenades)
                 Functions.RegisterCallout(typeof(Callouts.BZGasGrenades));
-            if (Settings.callout_CasingTheJewelStore)
-                Functions.RegisterCallout(typeof(Callouts.CasingTheJewelStore));
+            if (Settings.callout_TheJewelStoreJob)
+                Functions.RegisterCallout(typeof(Callouts.TheJewelStoreJob));
             if (Settings.callout_DeadManWalking)
                 Functions.RegisterCallout(typeof(Callouts.DeadManWalking));
             if (Settings.callout_HoodSafari)

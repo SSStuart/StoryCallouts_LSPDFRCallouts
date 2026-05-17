@@ -99,7 +99,7 @@ namespace StoryCallouts.Callouts
             {
                 Ped soldier = new Ped((MathHelper.GetRandomInteger(2) == 0 ? "S_M_Y_MARINE_03" : "S_M_M_MARINE_01"), MilitaryEscortFront.Position.Around2D(5), 0);
                 Soldiers.Add(soldier);
-                soldier.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_CARBINERIFLE"), 200, true);
+                soldier.Inventory.GiveNewWeapon("WEAPON_CARBINERIFLE", 200, true);
                 soldier.WarpIntoVehicle(MilitaryEscortFront, soldierNb);
             }
 
@@ -111,7 +111,7 @@ namespace StoryCallouts.Callouts
             {
                 Ped soldier = new Ped((MathHelper.GetRandomInteger(2) == 0 ? "S_M_Y_MARINE_03" : "S_M_M_MARINE_01"), MilitaryEscortBack.Position.Around2D(5), 0);
                 Soldiers.Add(soldier);
-                soldier.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_CARBINERIFLE"), 200, true);
+                soldier.Inventory.GiveNewWeapon("WEAPON_CARBINERIFLE", 200, true);
                 soldier.WarpIntoVehicle(MilitaryEscortBack, soldierNb);
             }
 
@@ -163,7 +163,7 @@ namespace StoryCallouts.Callouts
                     Name = "Military truck",
                 };
 
-                Trevor.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_MICROSMG"), 100, true);
+                Trevor.Inventory.GiveNewWeapon("WEAPON_MICROSMG", 100, true);
 
                 Pursuit = Functions.CreatePursuit();
                 Functions.AddPedToPursuit(Pursuit, Trevor);

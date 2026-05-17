@@ -62,7 +62,7 @@ namespace StoryCallouts
             WalkToAiming walkAimingRandomEnemyTask = new WalkToAiming(_ped, position, walkingSpeed, acceptedDistance, true, firingPattern, timeoutSec);
             _tasks.Add(walkAimingRandomEnemyTask);
         }
-        public void AddEnterVehicleTask(Vehicle vehicle, int seatIndex = -1, float speed = 1, EnterVehicleFlags flags = EnterVehicleFlags.None, int timeoutSec = 60)
+        public void AddEnterVehicleTask(Vehicle vehicle, int seatIndex = -2, float speed = 1, EnterVehicleFlags flags = EnterVehicleFlags.None, int timeoutSec = 60)
         {
             EnterVehicle enterVehicleTask = new EnterVehicle(_ped, vehicle, seatIndex, speed, flags, timeoutSec);
             _tasks.Add(enterVehicleTask);

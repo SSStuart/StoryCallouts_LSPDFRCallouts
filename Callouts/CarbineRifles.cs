@@ -87,7 +87,7 @@ namespace StoryCallouts.Callouts
             Swat4.WarpIntoVehicle(SwatTruck, 2);
 
             Michael = Characters.Michael.Create(SwatTruck.GetOffsetPositionFront(-10), 0, this.GetType().Name);
-            Michael.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_MICROSMG"), 100, true);
+            Michael.Inventory.GiveNewWeapon("WEAPON_MICROSMG", 100, true);
             Michael.Health = 300;
 
             MichaelCar = Vehicles.MichaelCar.Create(SwatTruck.GetOffsetPositionFront(-15), SpawnHeading, Michael);

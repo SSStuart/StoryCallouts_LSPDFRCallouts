@@ -37,7 +37,7 @@ namespace StoryCallouts.Callouts
         {
             Franklin = Characters.Franklin.Create(SpawnPoint, 70, this.GetType().Name);
             Franklin.IsInvincible = true;
-            Franklin.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_SMG"), 300, true);
+            Franklin.Inventory.GiveNewWeapon("WEAPON_SMG", 300, true);
 
             FranklinJetski = new Vehicle("SEASHARK", new Vector3(-128.59f, -1861.97f, -0.13f), 224);
 
@@ -46,7 +46,7 @@ namespace StoryCallouts.Callouts
 
             Trevor = Characters.Trevor.Create(Franklin.GetOffsetPositionFront(7), 70, this.GetType().Name);
             Trevor.IsInvincible = true;
-            Trevor.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_PUMPSHOTGUN"), 100, true);
+            Trevor.Inventory.GiveNewWeapon("WEAPON_PUMPSHOTGUN", 100, true);
 
             TrevorJetski = new Vehicle("SEASHARK", new Vector3(-123.1158f, -1866.819f, -0.03468414f), 224);
 
@@ -55,7 +55,7 @@ namespace StoryCallouts.Callouts
 
             Lamar = Characters.Lamar.Create(Franklin.GetOffsetPositionFront(8), 125, this.GetType().Name);
             Lamar.IsInvincible = true;
-            Lamar.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_ASSAULTRIFLE"), 300, true);
+            Lamar.Inventory.GiveNewWeapon("WEAPON_ASSAULTRIFLE", 300, true);
 
             LamarJetski = new Vehicle("SEASHARK", new Vector3(-115.3505f, -1872.951f, -0.02148503f), 224);
 
@@ -125,13 +125,13 @@ namespace StoryCallouts.Callouts
             {
                 RelationshipGroup = RelationshipGroup.AmbientGangBallas
             };
-            Ballas1.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_SMG"), 200, true);
+            Ballas1.Inventory.GiveNewWeapon("WEAPON_SMG", 200, true);
 
             Ballas2 = new Ped("G_M_Y_BALLAORIG_01", new Vector3(-14.11972f, -1814.12f, 25.90099f), 135)
             {
                 RelationshipGroup = RelationshipGroup.AmbientGangBallas
             };
-            Ballas2.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_CARBINERIFLE"), 200, true);
+            Ballas2.Inventory.GiveNewWeapon("WEAPON_CARBINERIFLE", 200, true);
 
             MCClip = Characters.MCClip.Create(new Vector3(-122.669f, -1858.916f, 1.45896f), 263, this.GetType().Name);
 

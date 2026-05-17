@@ -39,7 +39,7 @@ namespace StoryCallouts.Callouts
         public override bool OnCalloutAccepted()
         {
             Michael = Characters.Michael.Create(new Vector3(-115.0931f, 6457.916f, 31.46846f), 135, this.GetType().Name);
-            Michael.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_MINIGUN"), 7000, true);
+            Michael.Inventory.GiveNewWeapon("WEAPON_MINIGUN", 7000, true);
             Michael.Armor = 200;
             Michael.CanAttackFriendlies = false;
             Michael.RelationshipGroup = RelationshipGroup.Gang1;
@@ -47,7 +47,7 @@ namespace StoryCallouts.Callouts
             MichaelTask = new TasksList(Michael, EndBehavior.Nothing);
 
             Trevor = Characters.Trevor.Create(new Vector3(-116.2796f, 6459.558f, 31.46846f), 135, this.GetType().Name);
-            Trevor.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_MINIGUN"), 7000, true);
+            Trevor.Inventory.GiveNewWeapon("WEAPON_MINIGUN", 7000, true);
             Trevor.Armor = 200;
             Trevor.CanAttackFriendlies = false;
             Trevor.RelationshipGroup = RelationshipGroup.Gang1;
@@ -70,7 +70,7 @@ namespace StoryCallouts.Callouts
                     Gunman = Characters.Chef.Create(new Vector3(-113.4816f, 6456.168f, 31.46846f), 135, this.GetType().Name);
                     break;
             }
-            Gunman.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_MINIGUN"), 7000, true);
+            Gunman.Inventory.GiveNewWeapon("WEAPON_MINIGUN", 7000, true);
             Gunman.Armor = 200;
             Gunman.CanAttackFriendlies = false;
             Gunman.RelationshipGroup = RelationshipGroup.Gang1;

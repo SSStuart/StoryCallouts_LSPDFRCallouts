@@ -45,13 +45,13 @@ namespace StoryCallouts.Callouts
             Michael = Characters.Michael.Create(new Vector3(155.3556f, -723.0673f, 47.07694f), 70, this.GetType().Name);
             Michael.CanAttackFriendlies = false;
             Michael.RelationshipGroup = RelationshipGroup.Gang1;
-            Michael.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_CARBINERIFLE"), 300, true);
+            Michael.Inventory.GiveNewWeapon("WEAPON_CARBINERIFLE", 300, true);
             MichaelEscape = new TasksList(Michael);
 
             Franklin = Characters.Franklin.Create(Michael.GetOffsetPositionFront(-2), 70, this.GetType().Name);
             Franklin.CanAttackFriendlies = false;
             Franklin.RelationshipGroup = RelationshipGroup.Gang1;
-            Franklin.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_CARBINERIFLE"), 300, true);
+            Franklin.Inventory.GiveNewWeapon("WEAPON_CARBINERIFLE", 300, true);
             FranklinEscape = new TasksList(Franklin);
 
             switch (GunmanVariant)
@@ -72,7 +72,7 @@ namespace StoryCallouts.Callouts
             }
             Gunman.CanAttackFriendlies = false;
             Gunman.RelationshipGroup = RelationshipGroup.Gang1;
-            Gunman.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_CARBINERIFLE"), 300, true);
+            Gunman.Inventory.GiveNewWeapon("WEAPON_CARBINERIFLE", 300, true);
             GunmanEscape = new TasksList(Gunman);
 
             switch (DriverVariant)

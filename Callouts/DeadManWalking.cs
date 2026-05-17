@@ -31,7 +31,7 @@ namespace StoryCallouts.Callouts
         public override bool OnCalloutAccepted()
         {
             Michael = Characters.Michael.Create(SpawnPoint, 0, this.GetType().Name);
-            Michael.Inventory.GiveNewWeapon(new WeaponAsset("WEAPON_PISTOL"), 100, true);
+            Michael.Inventory.GiveNewWeapon("WEAPON_PISTOL", 100, true);
 
             EscapeVehicle = new Vehicle("felon", new Vector3(223.1245f, -1352.664f, 30.27094f), 234);
 
