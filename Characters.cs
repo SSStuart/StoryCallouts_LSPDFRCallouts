@@ -417,6 +417,142 @@ namespace StoryCallouts
                     NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
                     break;
 
+                // THE BIG SCORE
+                case ("TheBigScoreSubtle", "Michael"):
+                    character.SetVariation(3, 11, 0);
+                    character.SetVariation(4, 10, 0);
+                    character.SetVariation(6, 17, 0);
+                    character.SetVariation(8, 8, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 5, 0, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBigScoreSubtle", "Trevor"):
+                    character.SetVariation(3, 8, 0);
+                    character.SetVariation(4, 8, 0);
+                    character.SetVariation(6, 15, 0);
+                    character.SetVariation(8, 7, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 6, 0, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBigScoreSubtle", "Franklin"):
+                    character.SetVariation(3, 16, 0);
+                    character.SetVariation(4, 16, 0);
+                    character.SetVariation(5, 4, 0);
+                    character.SetVariation(6, 5, 0);
+                    character.SetVariation(8, 14, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBigScoreSubtle", "Eddie"):
+                    character.SetVariation(3, 1, 0);
+                    character.SetVariation(4, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 0, 0, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBigScoreSubtle", "Karim"):
+                    character.SetVariation(0, 1, 0);
+                    character.SetVariation(3, 1, 0);
+                    character.SetVariation(4, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 0, 0, 0, true, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+
+                case ("TheBigScoreLoud", "Michael"):
+                    character.SetVariation(2, 1, 0);
+                    character.SetVariation(3, 0, 2);
+                    character.SetVariation(4, 0, 2);
+                    character.SetVariation(5, 7, 0);
+                    character.SetVariation(10, 11, 3);
+                    character.SetVariation(11, 1, 0);
+                    break;
+                case ("TheBigScoreLoud", "Franklin"):
+                    character.SetVariation(2, 4, 0);
+                    character.SetVariation(3, 18, 4);
+                    character.SetVariation(4, 15, 4);
+                    character.SetVariation(5, 4, 0);
+                    character.SetVariation(6, 10, 0);
+                    character.SetVariation(8, 14, 0);
+                    character.SetVariation(10, 8, 3);
+                    character.SetVariation(11, 5, 0);
+                    break;
+                case ("TheBigScoreLoud", "Gustavo"):
+                    character.SetVariation(0, 4, 0);
+                    character.SetVariation(1, 1, 0);
+                    character.SetVariation(3, 5, 2);
+                    character.SetVariation(4, 5, 2);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBigScoreLoud", "Karl"):
+                    character.SetVariation(0, 1, 0);
+                    character.SetVariation(1, 1, 0);
+                    character.SetVariation(3, 5, 2);
+                    character.SetVariation(4, 5, 2);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBigScoreLoud", "Hugh"):
+                    character.SetVariation(0, 3, 0);
+                    character.SetVariation(1, 1, 0);
+                    character.SetVariation(3, 5, 2);
+                    character.SetVariation(4, 5, 2);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBigScoreLoud", "Norm"):
+                    character.SetVariation(1, 1, 0);
+                    character.SetVariation(3, 5, 2);
+                    character.SetVariation(4, 5, 2);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBigScoreLoud", "Daryl"):
+                    character.SetVariation(0, 2, 0);
+                    character.SetVariation(1, 1, 0);
+                    character.SetVariation(3, 5, 2);
+                    character.SetVariation(4, 5, 2);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheBigScoreLoud", "Chef"):
+                    character.SetVariation(0, 6, 0);
+                    character.SetVariation(1, 1, 0);
+                    character.SetVariation(3, 5, 2);
+                    character.SetVariation(4, 5, 2);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+
+                // THE THIRD WAY
+                case ("TheThirdWay", "Michael"):
+                    character.SetVariation(3, 22, 0);
+                    character.SetVariation(4, 20, 0);
+                    character.SetVariation(6, 1, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheThirdWay", "Franklin"):
+                    character.SetVariation(3, 18, 4);
+                    character.SetVariation(4, 15, 4);
+                    character.SetVariation(6, 10, 0);
+                    character.SetVariation(8, 14, 0);
+                    character.SetVariation(11, 5, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheThirdWay", "Trevor"):
+                    character.SetVariation(6, 10, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(character, 2, 0, 0, true, 0);
+                    break;
+                case ("TheThirdWay", "Lamar"):
+                    character.SetVariation(5, 2, 0);
+                    break;
+
                 // PAPARAZZO - THE MELTDOWN
                 case ("Paparazzo_TheMeltdown", "Poppy"):
                     character.SetVariation(4, 0, 0);
@@ -486,6 +622,12 @@ namespace StoryCallouts
 
         public static readonly CharacterDefinition Molly =
             new CharacterDefinition("ig_molly", "Molly", "Schultz", Gender.Female, new DateTime(1, 1, 1));
+
+        public static readonly CharacterDefinition Hugh =
+            new CharacterDefinition("hc_gunman", "Hugh", "Welsh", Gender.Male, new DateTime(1, 1, 1));
+
+        public static readonly CharacterDefinition Karl =
+            new CharacterDefinition("hc_gunman", "Karl", "Abolaji", Gender.Male, new DateTime(1, 1, 1));
 
         public static readonly CharacterDefinition Poppy =
             new CharacterDefinition("u_f_y_poppymich", "Poppy", "Mitchell", Gender.Female, new DateTime(1989, 5, 8));

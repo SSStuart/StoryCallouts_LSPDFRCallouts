@@ -1,6 +1,4 @@
 ﻿using Rage;
-using StoryCallouts.Callouts;
-using System.Text.RegularExpressions;
 
 namespace StoryCallouts
 {
@@ -26,8 +24,10 @@ namespace StoryCallouts
         internal static bool callout_LegalTrouble = true;
         internal static bool callout_TheBureauRaid = true;
         internal static bool callout_Driller = true;
+        internal static bool callout_TheBigScore = true;
+        internal static bool callout_TheThirdWay = true;
         internal static bool callout_Paparazzo_TheMeltdown = true;
-        
+
         internal static bool forceInteriorsEnabled = false;
 
         internal static string path = "Plugins/LSPDFR/StoryCallouts.ini";
@@ -114,6 +114,14 @@ namespace StoryCallouts
             callout_Driller = ini.ReadBoolean("Callouts", "Driller", true);
             Game.LogTrivial($"- Callout 'Driller' {(callout_Driller ? "[x] enabled" : "[ ] disabled")}");
             enabledCallouts += callout_Driller ? 1 : 0;
+
+            callout_TheBigScore = ini.ReadBoolean("Callouts", "TheBigScore", true);
+            Game.LogTrivial($"- Callout 'TheBigScore' {(callout_TheBigScore ? "[x] enabled" : "[ ] disabled")}");
+            enabledCallouts += callout_TheBigScore ? 1 : 0;
+
+            callout_TheThirdWay = ini.ReadBoolean("Callouts", "TheThirdWay", true);
+            Game.LogTrivial($"- Callout 'TheThirdWay' {(callout_TheThirdWay ? "[x] enabled" : "[ ] disabled")}");
+            enabledCallouts += callout_TheThirdWay ? 1 : 0;
 
             callout_Paparazzo_TheMeltdown = ini.ReadBoolean("Callouts", "Paparazzo_TheMeltdown", true);
             Game.LogTrivial($"- Callout 'Paparazzo_TheMeltdown' {(callout_Paparazzo_TheMeltdown ? "[x] enabled" : "[ ] disabled")}");

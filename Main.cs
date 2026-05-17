@@ -89,6 +89,10 @@ namespace StoryCallouts
                 Functions.RegisterCallout(typeof(Callouts.TheBureauRaid));
             if (Settings.callout_Driller)
                 Functions.RegisterCallout(typeof(Callouts.Driller));
+            if (Settings.callout_TheBigScore)
+                Functions.RegisterCallout(typeof(Callouts.TheBigScore));
+            if (Settings.callout_TheThirdWay)
+                Functions.RegisterCallout(typeof(Callouts.TheThirdWay));
             if (Settings.callout_Paparazzo_TheMeltdown)
                 Functions.RegisterCallout(typeof(Callouts.Paparazzo_TheMeltdown));
         }
