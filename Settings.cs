@@ -127,7 +127,7 @@ namespace StoryCallouts
             Game.LogTrivial($"- Callout 'Paparazzo_TheMeltdown' {(callout_Paparazzo_TheMeltdown ? "[x] enabled" : "[ ] disabled")}");
             enabledCallouts += callout_Paparazzo_TheMeltdown ? 1 : 0;
 
-            forceInteriorsEnabled = ini.ReadBoolean("Interiors", "forceEnabled", false);
+            forceInteriorsEnabled = ini.ReadBoolean("Interiors", "forceInteriorsEnabled", false);
             Game.LogTrivial($"- Force enable interiors : {(forceInteriorsEnabled ? "Yes" : "No")}");
 
             Game.LogTrivial($"[{Main.pluginName}] Plugin settings loaded.");

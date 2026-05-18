@@ -21,7 +21,7 @@ namespace StoryCallouts
         private readonly Ped _ped;
         private readonly EndBehavior _endBehavior;
         private GameFiber _taskFiber;
-        private Blip DEBUG_BLIP;
+        //private Blip DEBUG_BLIP;
 
         public TasksList(Ped ped, EndBehavior endBehavior = EndBehavior.Auto)
         {
@@ -87,7 +87,7 @@ namespace StoryCallouts
         {
             _taskFiber = GameFiber.StartNew(delegate
             {
-                DEBUG_BLIP = new Blip(_tasks[0].Position);
+                //DEBUG_BLIP = new Blip(_tasks[0].Position);
                 while (_currentTaskIndex < _tasks.Count)
                 {
                     GameFiber.Yield();
@@ -96,19 +96,19 @@ namespace StoryCallouts
                         break;
 
                     Task currentTask = _tasks[_currentTaskIndex];
-                    if (currentTask.Position != Vector3.Zero)
-                        DEBUG_BLIP.Position = currentTask.Position;
-                    else
-                        DEBUG_BLIP.Position = _ped.Position;
-                    DEBUG_BLIP.Sprite = _currentTaskIndex > 0 && _currentTaskIndex <= 10 ? (BlipSprite)_currentTaskIndex + 16 : BlipSprite.Darts;
-                    DEBUG_BLIP.Name = $"Task #{_currentTaskIndex} {_tasks[_currentTaskIndex].GetType().Name} for {_ped.Model.Name}";
+                    //if (currentTask.Position != Vector3.Zero)
+                    //    DEBUG_BLIP.Position = currentTask.Position;
+                    //else
+                    //    DEBUG_BLIP.Position = _ped.Position;
+                    //DEBUG_BLIP.Sprite = _currentTaskIndex > 0 && _currentTaskIndex <= 10 ? (BlipSprite)_currentTaskIndex + 16 : BlipSprite.Darts;
+                    //DEBUG_BLIP.Name = $"Task #{_currentTaskIndex} {_tasks[_currentTaskIndex].GetType().Name} for {_ped.Model.Name}";
 
                     //Game.LogTrivial($"Executing task #{_currentTaskIndex} {_tasks[_currentTaskIndex].GetType().Name} for {_ped.Model.Name}");
                     currentTask.Execute();
                     _currentTaskIndex++;
                 }
                 //Game.LogTrivial("Exiting tasks loop");
-                DEBUG_BLIP.Delete();
+                //DEBUG_BLIP.Delete();
 
                 if (!_ped.Exists() || !_ped.IsAlive)
                 {
@@ -175,8 +175,8 @@ namespace StoryCallouts
                     break;
             }
 
-            if (DEBUG_BLIP.Exists())
-                DEBUG_BLIP.Delete();
+            //if (DEBUG_BLIP.Exists())
+            //    DEBUG_BLIP.Delete();
 
             TaskFinished = true;
         }
@@ -187,8 +187,8 @@ namespace StoryCallouts
             if (_ped.Exists())
                 _ped.Tasks.Clear();
 
-            if (DEBUG_BLIP.Exists())
-                DEBUG_BLIP.Delete();
+            //if (DEBUG_BLIP.Exists())
+            //    DEBUG_BLIP.Delete();
 
             TaskFinished = true;
         }

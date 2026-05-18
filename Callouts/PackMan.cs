@@ -121,6 +121,9 @@ namespace StoryCallouts.Callouts
 
             base.End();
 
+            if (SpikesFiber != null && SpikesFiber.IsAlive)
+                SpikesFiber.Abort();
+
             if (EventBlip.Exists())
                 EventBlip.Delete();
             if (Franklin.Exists())
@@ -137,8 +140,7 @@ namespace StoryCallouts.Callouts
                 Monroe.Dismiss();
             if (JB700.Exists())
                 JB700.Dismiss();
-            if (SpikesFiber.IsAlive)
-                SpikesFiber.Abort();
+            
             foreach (Object spike in Spikes)
                 if (spike.Exists())
                     spike.Delete();
@@ -229,6 +231,8 @@ namespace StoryCallouts.Callouts
 
                 foreach (Object spike in Spikes)
                 {
+                    if (!spike.Exists())
+                        continue;
                     float distanceWheelLF_X = spike.Position.X - wheelLF_Position.X;
                     float distanceWheelLF_Y = spike.Position.Y - wheelLF_Position.Y;
                     float distanceWheelLF = distanceWheelLF_X * distanceWheelLF_X + distanceWheelLF_Y * distanceWheelLF_Y;
