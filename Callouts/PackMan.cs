@@ -181,7 +181,7 @@ namespace StoryCallouts.Callouts
                 List<Object> cleanedSpikes = new List<Object>();
                 foreach (Object spike in Spikes)
                 {
-                    if (spike.DistanceTo2D(Game.LocalPlayer.Character) > 100 && JB700.Exists() && spike.DistanceTo2D(JB700) > 100)
+                    if (spike.Exists() && spike.DistanceTo2D(Game.LocalPlayer.Character) > 100 && JB700.Exists() && spike.DistanceTo2D(JB700) > 100)
                         spike.Delete();
                     else
                         cleanedSpikes.Add(spike);
@@ -265,7 +265,7 @@ namespace StoryCallouts.Callouts
             uint firingStart = 0;
             List<Entity> copVehiclesInFront = new List<Entity>();
 
-            while (Franklin.IsInVehicle(JB700, false) && Franklin.IsAlive)
+            while (Franklin.Exists() && JB700.Exists() && Franklin.IsInVehicle(JB700, false) && Franklin.IsAlive)
             {
                 GameFiber.Yield();
 

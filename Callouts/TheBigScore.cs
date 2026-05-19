@@ -344,10 +344,9 @@ namespace StoryCallouts.Callouts
 
             if (TrucksInPosition && !TrucksTooFar)
             {
-                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks in position, starting entering trucks logic");
-
                 if (!MichaelEnteringTruck && Michael.Exists() && Michael.IsAlive && !Functions.IsPedArrested(Michael) && Michael.DistanceTo(Truck2Trailer) < 400)
                 {
+                    Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks in position, starting Michael enter trucks logic");
                     MichaelDriveTask.AbortTasks();
 
                     GameFiber michaelEnterTruckFiber = GameFiber.StartNew(delegate {
@@ -359,6 +358,7 @@ namespace StoryCallouts.Callouts
                 }
                 if (!TrevorEnteringTruck && Trevor.Exists() && Trevor.IsAlive && !Functions.IsPedArrested(Trevor) && Trevor.DistanceTo(Truck2Trailer) < 400)
                 {
+                    Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks in position, starting Trevor enter trucks logic");
                     TrevorDriveTask.AbortTasks();
 
                     GameFiber TrevorEnterTruckFiber = GameFiber.StartNew(delegate {
@@ -370,6 +370,7 @@ namespace StoryCallouts.Callouts
                 }
                 if (!FranklinEnteringTruck && Franklin.Exists() && Franklin.IsAlive && !Functions.IsPedArrested(Franklin) && Franklin.DistanceTo(Truck2Trailer) < 400)
                 {
+                    Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks in position, starting Franklin enter trucks logic");
                     FranklinDriveTask.AbortTasks();
 
                     GameFiber FranklinEnterTruckFiber = GameFiber.StartNew(delegate {
@@ -381,6 +382,7 @@ namespace StoryCallouts.Callouts
                 }
                 if (!DriverEnteringTruck && Driver.Exists() && Driver.IsAlive && !Functions.IsPedArrested(Driver) && Driver.DistanceTo(Truck2Trailer) < 400)
                 {
+                    Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks in position, starting Driver enter trucks logic");
                     DriverDriveTask.AbortTasks();
 
                     GameFiber DriverEnterTruckFiber = GameFiber.StartNew(delegate {

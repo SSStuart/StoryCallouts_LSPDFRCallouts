@@ -46,3 +46,6 @@ You can adjust some values in the `.ini` file :
 - [RAGE Plugin Hook](https://ragepluginhook.net/Downloads.aspx)
 - [LSPDFR](https://www.lcpdfr.com/downloads/gta5mods/g17media/7792-lspd-first-response/)
 - [CalloutInterfaceAPI](https://github.com/Immersive-Plugins-Team/CalloutInterfaceAPI) (included)
+
+## Credits
+[alexguirre's LoopedParticle code](https://gist.github.com/alexguirre/c4634a3c38903fb7a57200f8e268f047)
