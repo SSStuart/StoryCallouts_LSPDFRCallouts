@@ -2,7 +2,7 @@
 
 Callout pack based on story mode missions.
 
-Available *soon* on lcpdfr.com.
+Available on [lcpdfr.com](https://www.lcpdfr.com/downloads/gta5mods/scripts/54210-story-callouts/).
 
 ## Callouts list
 1. Prologue
