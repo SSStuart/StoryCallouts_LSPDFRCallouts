@@ -176,8 +176,6 @@ namespace StoryCallouts.Callouts
 
             while (Functions.IsPursuitStillRunning(Pursuit) && JB700.Exists() && Franklin.IsInVehicle(JB700, false))
             {
-                GameFiber.Sleep(5000);
-
                 List<Object> cleanedSpikes = new List<Object>();
                 foreach (Object spike in Spikes)
                 {
@@ -206,6 +204,8 @@ namespace StoryCallouts.Callouts
                     Name = "Spikes"
                 };
                 Spikes.Add(newSpike);
+
+                GameFiber.Sleep(5000);
             }
         }
 
