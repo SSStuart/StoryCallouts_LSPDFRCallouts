@@ -122,11 +122,9 @@ namespace StoryCallouts.Callouts
                     if (Franklin.DistanceTo2D(Poppy) > 40)
                         Franklin.Tasks.DriveToPosition(Poppy.Position, 30, VehicleDrivingFlags.AllowMedianCrossing | VehicleDrivingFlags.AllowWrongWay, 40).WaitForCompletion(60000);
 
-                    GameFiber.Yield();
                     GameFiber.Wait(5000);
                     Franklin.Tasks.LeaveVehicle(LeaveVehicleFlags.LeaveDoorOpen).WaitForCompletion(10000);
                     Franklin.Face(Poppy);
-                    GameFiber.Yield();
                     GameFiber.Wait(2000);
                     FranklinPhone = new Object("prop_phone_ing_03", Franklin.GetOffsetPositionUp(-3));
                     FranklinPhone.AttachTo(Franklin, Franklin.GetBoneIndex(PedBoneId.LeftHand), new Vector3(0.15f, 0.05f, -0.02f), new Rotator(200, 30, 30));
@@ -143,10 +141,10 @@ namespace StoryCallouts.Callouts
             if (ChaseEnded && !PoppyAIEnabled && !Poppy.IsInVehicle(PoppyCar, true))
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Enabling Poppy AI");
-                
+
                 Functions.SetPedResistanceChance(Poppy, 0f);
                 Functions.SetPursuitDisableAIForPed(Poppy, false);
-                
+
                 PoppyAIEnabled = true;
             }
 

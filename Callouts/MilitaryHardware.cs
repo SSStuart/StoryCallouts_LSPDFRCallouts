@@ -4,7 +4,6 @@ using Rage;
 using Rage.Native;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using Object = Rage.Object;
 

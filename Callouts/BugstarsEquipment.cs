@@ -2,7 +2,6 @@
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
 using System.Windows.Forms;
-using static System.Windows.Forms.AxHost;
 
 namespace StoryCallouts.Callouts
 {
@@ -155,7 +154,6 @@ namespace StoryCallouts.Callouts
                     };
                     BugstarsEmployee.WarpIntoVehicle(Taxi, 1);
                     TaxiDriver.Tasks.DriveToPosition(BugstarsVan.Position, 50, VehicleDrivingFlags.AllowMedianCrossing | VehicleDrivingFlags.AllowWrongWay, 40).WaitForCompletion(240000);
-                    GameFiber.Yield();
                     GameFiber.Wait(3000);
                     if (BugstarsEmployee.Exists() && Taxi.Exists() && BugstarsVan.Exists() && BugstarsEmployee.DistanceTo(BugstarsVan) < 100)
                     {

@@ -1,7 +1,6 @@
 ﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
@@ -185,7 +184,6 @@ namespace StoryCallouts.Callouts
 
             do
             {
-                GameFiber.Yield();
                 GameFiber.Wait(1000);
 
                 if (!HumaneVan.Exists() || !HumaneVan.HasDriver)
@@ -204,7 +202,6 @@ namespace StoryCallouts.Callouts
             HumaneVan.GetDoors()[2].Open(false);
             HumaneVan.GetDoors()[3].Open(false);
             Michael.Tasks.DriveToPosition(HumaneVan.GetOffsetPositionFront(-3), 40, VehicleDrivingFlags.AllowWrongWay | VehicleDrivingFlags.AllowMedianCrossing).WaitForCompletion();
-            GameFiber.Yield();
             GameFiber.Wait(2000);
             Michael.Tasks.LeaveVehicle(LeaveVehicleFlags.LeaveDoorOpen).WaitForCompletion(4000);
             if (!Gaz.Exists())

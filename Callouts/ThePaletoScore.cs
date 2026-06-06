@@ -2,7 +2,6 @@
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
 using System;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
@@ -102,7 +101,8 @@ namespace StoryCallouts.Callouts
                 IsPositionFrozen = true,
             };
 
-            foreach (TasksList EscapeTask in new[] { MichaelTask, TrevorTask, GunmanTask }) {
+            foreach (TasksList EscapeTask in new[] { MichaelTask, TrevorTask, GunmanTask })
+            {
                 EscapeTask.AddWalkAimingRandomEnemyTask(new Vector3(-140.9637f, 6442.315f, 31.35501f).Around2D(2), 1, 1, FiringPattern.BurstFireMG, 180);
                 EscapeTask.AddWalkAimingRandomEnemyTask(new Vector3(-146.308f, 6436.221f, 31.4569f), 0.5f, 1, FiringPattern.BurstFireMG, 180);
                 EscapeTask.AddWalkTask(new Vector3(-156.9891f, 6426.387f, 31.9159f).Around2D(1), 2, 2, false, true, 130, 60 * 4);
@@ -248,9 +248,9 @@ namespace StoryCallouts.Callouts
             if (FranklinDispatched && !FranklinArrivedPickupPoint && Franklin.DistanceTo2D(new Vector3(-182.7301f, 6287.158f, 31.11247f)) < 5)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Making Michael and Trevor enter the bulldoze scoop");
-             
+
                 FranklinArrivedPickupPoint = true;
-                
+
                 Functions.AddPedToPursuit(Pursuit, Franklin);
                 Functions.SetPursuitDisableAIForPed(Franklin, true);
 
@@ -271,7 +271,6 @@ namespace StoryCallouts.Callouts
                 do
                 {
                     GameFiber.Wait(500);
-                    GameFiber.Yield();
                 } while (taskFiber.IsAlive);
 
                 if (MichaelInScoop)
@@ -404,7 +403,7 @@ namespace StoryCallouts.Callouts
             Functions.SetPursuitDisableAIForPed(ped, disabledIA);
 
             if (ped == Michael)
-                    MichaelInScoop = false;
+                MichaelInScoop = false;
             if (ped == Trevor)
                 TrevorInScoop = false;
         }

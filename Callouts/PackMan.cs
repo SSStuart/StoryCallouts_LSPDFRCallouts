@@ -140,7 +140,7 @@ namespace StoryCallouts.Callouts
                 Monroe.Dismiss();
             if (JB700.Exists())
                 JB700.Dismiss();
-            
+
             foreach (Object spike in Spikes)
                 if (spike.Exists())
                     spike.Delete();
@@ -274,7 +274,8 @@ namespace StoryCallouts.Callouts
                     GameFiber.Wait(MathHelper.GetRandomInteger(10) * 1000);
                     firingStart = Game.GameTime;
                     copVehiclesInFront = World.GetEntities(JB700.GetOffsetPositionFront(40), 30, GetEntitiesFlags.ConsiderGroundVehicles).Where(veh => veh.Model.IsLawEnforcementVehicle).ToList();
-                } else if (copVehiclesInFront.Count > 0)
+                }
+                else if (copVehiclesInFront.Count > 0)
                     NativeFunction.Natives.SET_VEHICLE_SHOOT_AT_TARGET(Franklin, Game.LocalPlayer.Character, Game.LocalPlayer.Character.Position.X, Game.LocalPlayer.Character.Position.Y, Game.LocalPlayer.Character.Position.Z);
             }
         }

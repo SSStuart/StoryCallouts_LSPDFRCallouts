@@ -1,7 +1,6 @@
 ﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
-using System.Security.Policy;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
@@ -104,7 +103,8 @@ namespace StoryCallouts.Callouts
                     Franklin.Heading = 56f;
                     Trevor.Position = new Vector3(1080.78f, -1980.85f, 34.63f);
                     Trevor.Heading = 234f;
-                } else
+                }
+                else
                 {
                     Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting shootout outside");
 
@@ -212,7 +212,8 @@ namespace StoryCallouts.Callouts
                     if (Lamar.DistanceTo2D(new Vector3(1086.092f, -1968.122f, 31.01467f)) > 5)
                     {
                         Lamar.Tasks.FollowNavigationMeshToPosition(new Vector3(1086.092f, -1968.122f, 31.01467f), 120f, 2).WaitForCompletion(10000);
-                    } else
+                    }
+                    else
                     {
                         Ped[] LamarEnnemies = Main.GetNearbyEnnemies(Lamar.Position);
                         Ped LamarEnnemy = LamarEnnemies.Length > 0 ? LamarEnnemies[MathHelper.GetRandomInteger(LamarEnnemies.Length)] : Game.LocalPlayer.Character;
@@ -220,7 +221,6 @@ namespace StoryCallouts.Callouts
                     }
                 }
 
-                GameFiber.Yield();
                 GameFiber.Wait(5000);
             }
         }

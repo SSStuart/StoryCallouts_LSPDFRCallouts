@@ -65,7 +65,7 @@ namespace StoryCallouts
             switch (callout, Forename)
             {
                 // PROLOGUE
-                case ("Prologue", "Michael") :
+                case ("Prologue", "Michael"):
                     character.SetVariation(0, 0, 3);
                     character.SetVariation(2, 5, 0);
                     character.SetVariation(3, 31, 0);
@@ -74,7 +74,7 @@ namespace StoryCallouts
                     character.SetVariation(6, 14, 0);
                     character.SetVariation(9, 12, 0);
                     break;
-                case ("Prologue", "Trevor") :
+                case ("Prologue", "Trevor"):
                     character.SetVariation(0, 0, 5);
                     character.SetVariation(2, 1, 0);
                     character.SetVariation(3, 9, 0);
@@ -91,7 +91,7 @@ namespace StoryCallouts
                     break;
 
                 // FRANKLIN AND LAMAR
-                case ("FranklinAndLamar", "Franklin") :
+                case ("FranklinAndLamar", "Franklin"):
                     character.SetVariation(0, 0, 5);
                     character.SetVariation(1, 3, 0);
                     character.SetVariation(2, 2, 0);

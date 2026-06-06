@@ -16,7 +16,7 @@ namespace StoryCallouts.Callouts
         private Vehicle LamarVehicle, EscapeVehicle;
         private Ped Franklin, Lamar, Stretch;
         private TasksList EscapeTasks;
-        private bool NearSpawnMessageSent, TaskDrive ,ChaseCreated;
+        private bool NearSpawnMessageSent, TaskDrive, ChaseCreated;
 
         public override bool OnBeforeCalloutDisplayed()
         {
@@ -119,7 +119,6 @@ namespace StoryCallouts.Callouts
 
                 do
                 {
-                    GameFiber.Yield();
                     GameFiber.Sleep(1000);
 
                     if (EscapeVehicle.HasDriver && !EscapeVehicle.IsEngineStarting && !EscapeVehicle.IsEngineOn)

@@ -152,7 +152,8 @@ namespace StoryCallouts.Callouts
             TruckChaseCreated = false;
             ScriptedChaseEnd = false;
 
-            GameFiber.StartNew(delegate {
+            GameFiber.StartNew(delegate
+            {
                 GameFiber.Wait(5000);
                 CalloutInterfaceAPI.Functions.SendMessage(this, "Suspects escaped through tunnels. They are expected to exit the sewers into the LS River, where a suspicious truck was spotted");
             });
@@ -200,7 +201,7 @@ namespace StoryCallouts.Callouts
             if (!TruckChaseCreated && ChaseCreated && Franklin.DistanceTo(new Vector3(1031.18f, -265.59f, 50.37f)) < 10)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting truck chase");
-                
+
                 TruckEscape.StartTasks();
                 Functions.AddPedToPursuit(Pursuit, Michael);
                 Functions.AddPedToPursuit(Pursuit, Hacker);
@@ -210,7 +211,8 @@ namespace StoryCallouts.Callouts
                 TruckChaseCreated = true;
             }
 
-            if (!ScriptedChaseEnd && Franklin.DistanceTo(new Vector3(637.4592f, -1843.054f, 9.25897f)) < 20) {
+            if (!ScriptedChaseEnd && Franklin.DistanceTo(new Vector3(637.4592f, -1843.054f, 9.25897f)) < 20)
+            {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Ending scripted chase, restoring ped AI");
 
                 TruckEscape.AbortTasks();
@@ -228,7 +230,6 @@ namespace StoryCallouts.Callouts
                 {
                     while (Game.LocalPlayer.Character.DistanceTo2D(new Vector3(456.0397f, -1999.073f, 23.21957f)) < 500)
                     {
-                        GameFiber.Yield();
                         GameFiber.Wait(100);
 
                         foreach (Entity entity in World.GetEntities(new Vector3(456.0397f, -1999.073f, 23.21957f), 10, GetEntitiesFlags.ConsiderAllObjects))

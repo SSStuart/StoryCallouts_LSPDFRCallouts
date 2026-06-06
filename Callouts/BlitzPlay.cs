@@ -1,7 +1,6 @@
 ﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
-using Rage.Native;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
@@ -96,7 +95,7 @@ namespace StoryCallouts.Callouts
                 Michael.Tasks.FireWeaponAt(Game.LocalPlayer.Character, 1000 * 60 * 10, FiringPattern.BurstFireInCover);
                 Franklin.Tasks.FireWeaponAt(Game.LocalPlayer.Character, 1000 * 60 * 10, FiringPattern.BurstFireInCover);
                 Trevor.Tasks.FireWeaponAt(Game.LocalPlayer.Character, 1000 * 60 * 10, FiringPattern.BurstFireSlowFireTank);
-                
+
                 GameFiber.StartNew(delegate
                 {
                     GameFiber.Wait(10000);
@@ -126,7 +125,6 @@ namespace StoryCallouts.Callouts
                             Trevor.Tasks.FireWeaponAt(new Vector3(890.9384f, -2349.93f, 30.35868f), 1000 * 60 * 10, FiringPattern.BurstFireSlowFireTank);
                         }
 
-                        GameFiber.Yield();
                         GameFiber.Wait(10000);
                     }
                 });

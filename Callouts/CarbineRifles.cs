@@ -1,7 +1,6 @@
 ﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
@@ -173,7 +172,7 @@ namespace StoryCallouts.Callouts
         private void PostEndLogic()
         {
             Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Executing post-end logic...");
-         
+
             if (!SwatTruck.Exists() || SwatTruck.IsUpsideDown || SwatTruck.EngineHealth <= 300)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Truck not driveable, ending");
@@ -188,12 +187,12 @@ namespace StoryCallouts.Callouts
                     Swat3.Dismiss();
                 if (Swat4.Exists())
                     Swat4.Dismiss();
-            } else
+            }
+            else
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Waiting for a driver in the truck...");
                 do
                 {
-                    GameFiber.Yield();
                     GameFiber.Wait(1000);
                 } while (SwatTruck.Exists() && !SwatTruck.HasDriver && Game.LocalPlayer.Character.DistanceTo(SwatTruck) < 300);
 

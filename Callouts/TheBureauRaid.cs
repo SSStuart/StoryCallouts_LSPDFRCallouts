@@ -225,7 +225,8 @@ namespace StoryCallouts.Callouts
                 AddedDriverToPursuit = true;
             }
 
-            if (!AddedDriverToPursuit && DriverVariant == 1 && Driver.DistanceTo(new Vector3(60.17799f, -736.3732f, 44.10456f)) < 30) {
+            if (!AddedDriverToPursuit && DriverVariant == 1 && Driver.DistanceTo(new Vector3(60.17799f, -736.3732f, 44.10456f)) < 30)
+            {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Adding Driver to pursuit (far)");
 
                 Functions.AddPedToPursuit(Pursuit, Driver);
@@ -237,7 +238,7 @@ namespace StoryCallouts.Callouts
             if (!EnteringVehicle && MichaelEscape.TaskFinished && FranklinEscape.TaskFinished && GunmanEscape.TaskFinished)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Making suspect enter vehicle");
-                
+
                 EnterVehicleFiber = GameFiber.StartNew(delegate
                 {
                     if (DriverVariant == 1)

@@ -60,7 +60,7 @@ namespace StoryCallouts.Callouts
             TrevorEscape = new TasksList(Trevor);
             BradEscape = new TasksList(Brad);
             int seatIndex = 0;
-            foreach (TasksList EscapeToCar in new[] { MichaelEscape, TrevorEscape, BradEscape})
+            foreach (TasksList EscapeToCar in new[] { MichaelEscape, TrevorEscape, BradEscape })
             {
                 EscapeToCar.AddWalkTask(new Vector3(5375.041f, -5187.116f, 82.05238f).Around2D(0, 2), 4, 4);
                 EscapeToCar.AddWalkTask(new Vector3(5404.926f, -5179.46f, 80.05573f).Around2D(0, 2), 4, 4);
@@ -139,7 +139,6 @@ namespace StoryCallouts.Callouts
 
                     do
                     {
-                        GameFiber.Yield();
                         GameFiber.Wait(500);
 
                         if (Functions.IsPedArrested(LocalYokel) || Functions.IsPedArrested(Michael) || Functions.IsPedArrested(Trevor) || Functions.IsPedArrested(Brad) || Game.LocalPlayer.Character.DistanceTo(EscapeVehicle) < 10)
@@ -151,7 +150,6 @@ namespace StoryCallouts.Callouts
                     if (EscapeVehicle.HasDriver)
                         EscapeVehicle.Driver.Tasks.CruiseWithVehicle(80, VehicleDrivingFlags.Emergency);
 
-                    GameFiber.Yield();
                     GameFiber.Wait(1000);
                     Functions.SetPursuitDisableAIForPed(Michael, false);
                     Functions.SetPursuitDisableAIForPed(Trevor, false);

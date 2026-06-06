@@ -96,7 +96,6 @@ namespace StoryCallouts.Callouts
                     FranklinTasks.AddFollowInVehicleTask(Lamar, 10);
                     FranklinTasks.AddExitVehicleTask();
                     GameFiber.Wait(3000);
-                    GameFiber.Yield();
                     FranklinTasks.AddWalkTask(new Vector3(1195.02f, -2640.952f, 9.139727f));
                     FranklinTasks.AddWalkTask(new Vector3(1173.089f, -2621.521f, 22.8566f));
                     FranklinTasks.AddWalkTask(new Vector3(1177.548f, -2583.267f, 36.14999f));
@@ -202,7 +201,7 @@ namespace StoryCallouts.Callouts
             if (ChaseCreated && !MCClipFleeing && Franklin.DistanceTo(MCClip) < 20)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] MCClip fleeing");
-             
+
                 GameFiber.StartNew(delegate
                 {
                     MCClip.Tasks.ReactAndFlee(Franklin);

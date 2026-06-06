@@ -3,7 +3,6 @@ using LSPD_First_Response.Mod.Callouts;
 using Rage;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Forms;
 using Object = Rage.Object;
 
@@ -34,7 +33,7 @@ namespace StoryCallouts.Callouts
         {
             ApproachVariant = MathHelper.GetRandomInteger(2);
 
-            SpawnPoint = ApproachVariant == 0 ? new Vector3(154.9018f, -1290.577f, 28.58763f): new Vector3(-27.46582f, -677.475f, 49.09523f);
+            SpawnPoint = ApproachVariant == 0 ? new Vector3(154.9018f, -1290.577f, 28.58763f) : new Vector3(-27.46582f, -677.475f, 49.09523f);
             ShowCalloutAreaBlipBeforeAccepting(SpawnPoint, 50f);
             AddMinimumDistanceCheck(200f, SpawnPoint);
             CalloutMessage = ApproachVariant == 0 ? "Shooting behind the Vanilla Unicorn" : "Union Depository robbery";
@@ -319,7 +318,7 @@ namespace StoryCallouts.Callouts
                 ChaseCreated = true;
             }
 
-            if (ChaseCreated && !TrucksStarting && 
+            if (ChaseCreated && !TrucksStarting &&
                 (Michael.DistanceTo2D(new Vector3(-947, -537, 18)) < 50
                 || Trevor.DistanceTo2D(new Vector3(-947, -537, 18)) < 50
                 || Franklin.DistanceTo2D(new Vector3(-947, -537, 18)) < 50
@@ -349,7 +348,8 @@ namespace StoryCallouts.Callouts
                     Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks in position, starting Michael enter trucks logic");
                     MichaelDriveTask.AbortTasks();
 
-                    GameFiber michaelEnterTruckFiber = GameFiber.StartNew(delegate {
+                    GameFiber michaelEnterTruckFiber = GameFiber.StartNew(delegate
+                    {
                         EnterTruckHelperLogic(Michael, Truck2Trailer, Truck2Driver, ref FranklinEnteredTruck);
                         MichaelEnteredTruck = true;
                     });
@@ -361,7 +361,8 @@ namespace StoryCallouts.Callouts
                     Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks in position, starting Trevor enter trucks logic");
                     TrevorDriveTask.AbortTasks();
 
-                    GameFiber TrevorEnterTruckFiber = GameFiber.StartNew(delegate {
+                    GameFiber TrevorEnterTruckFiber = GameFiber.StartNew(delegate
+                    {
                         EnterTruckHelperLogic(Trevor, Truck1Trailer, Truck1Driver, ref DriverEnteredTruck);
                         TrevorEnteredTruck = true;
                     });
@@ -373,7 +374,8 @@ namespace StoryCallouts.Callouts
                     Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks in position, starting Franklin enter trucks logic");
                     FranklinDriveTask.AbortTasks();
 
-                    GameFiber FranklinEnterTruckFiber = GameFiber.StartNew(delegate {
+                    GameFiber FranklinEnterTruckFiber = GameFiber.StartNew(delegate
+                    {
                         EnterTruckHelperLogic(Franklin, Truck2Trailer, Truck2Driver, ref MichaelEnteredTruck);
                         FranklinEnteredTruck = true;
                     });
@@ -385,7 +387,8 @@ namespace StoryCallouts.Callouts
                     Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks in position, starting Driver enter trucks logic");
                     DriverDriveTask.AbortTasks();
 
-                    GameFiber DriverEnterTruckFiber = GameFiber.StartNew(delegate {
+                    GameFiber DriverEnterTruckFiber = GameFiber.StartNew(delegate
+                    {
                         EnterTruckHelperLogic(Driver, Truck1Trailer, Truck1Driver, ref TrevorEnteredTruck);
                         DriverEnteredTruck = true;
                     });
@@ -504,7 +507,6 @@ namespace StoryCallouts.Callouts
                     do
                     {
                         GameFiber.Wait(500);
-                        GameFiber.Yield();
 
                         waitingForMichael = Michael.Exists() && Michael.IsAlive && !Functions.IsPedArrested(Michael) && !Functions.IsPedGettingArrested(Michael) && !Michael.IsInVehicle(DiversionEscapeVehicle, true);
                         waitingForGunman = GunmanDiversion.Exists() && GunmanDiversion.IsAlive && !Functions.IsPedArrested(GunmanDiversion) && !Functions.IsPedGettingArrested(GunmanDiversion) && !GunmanDiversion.IsInVehicle(DiversionEscapeVehicle, true);
@@ -610,7 +612,6 @@ namespace StoryCallouts.Callouts
 
             do
             {
-                GameFiber.Yield();
                 GameFiber.Wait(2000);
 
                 distancePoint1 = Main.DistanceSquared2D(Game.LocalPlayer.Character.Position, new Vector3(146.7486f, -803.7667f, 30.56549f));
@@ -638,7 +639,8 @@ namespace StoryCallouts.Callouts
                     Backup2.Position = new Vector3(166.8861f, -404.2699f, 40.62871f);
                     Backup2.Heading = 85f;
                     Backup2.IsSirenOn = true;
-                } else if (distancePoint4 < distancePoint3 && Main.DistanceSquared2D(Backup1.Position, new Vector3(-129.3019f, -214.7852f, 44.07787f)) > 10)
+                }
+                else if (distancePoint4 < distancePoint3 && Main.DistanceSquared2D(Backup1.Position, new Vector3(-129.3019f, -214.7852f, 44.07787f)) > 10)
                 {
                     Backup1.Position = new Vector3(-129.3019f, -214.7852f, 44.07787f);
                     Backup1.Heading = 150f;
@@ -657,7 +659,6 @@ namespace StoryCallouts.Callouts
             {
                 ped.Tasks.DriveToPosition(trailer.GetOffsetPositionFront(-20), trailer.Speed + 20, VehicleDrivingFlags.Emergency);
                 GameFiber.Wait(500);
-                GameFiber.Yield();
             } while (!TrucksInPosition);
 
 
@@ -665,7 +666,6 @@ namespace StoryCallouts.Callouts
             do
             {
                 GameFiber.Wait(500);
-                GameFiber.Yield();
             } while (ped.DistanceTo2D(trailer.GetOffsetPositionFront(-20)) > 30 && !TrucksTooFar);
 
             Vector3 targetPos;
@@ -675,7 +675,6 @@ namespace StoryCallouts.Callouts
                     return;
                 ped.Tasks.DriveToPosition(trailer.GetOffsetPositionFront(-5), trailer.Speed + 5, VehicleDrivingFlags.IgnorePathFinding);
                 GameFiber.Wait(500);
-                GameFiber.Yield();
                 targetPos = trailer.GetOffsetPosition(new Vector3(0, -15, -2));
             } while (ped.IsInAnyVehicle(false) && ped.CurrentVehicle.DistanceTo(targetPos) > 5);
 
@@ -685,7 +684,6 @@ namespace StoryCallouts.Callouts
                     return;
                 ped.Tasks.DriveToPosition(trailer.GetOffsetPositionFront(firstPlaceOccupied ? 7 : 15), trailer.Speed + 5, VehicleDrivingFlags.IgnorePathFinding);
                 GameFiber.Wait(100);
-                GameFiber.Yield();
                 if (!ped.IsInAnyVehicle(false))
                     return;
 

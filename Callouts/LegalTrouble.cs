@@ -176,7 +176,7 @@ namespace StoryCallouts.Callouts
             if (ChaseCreated && !StartLandingJet && Molly.DistanceTo2D(new Vector3(-1227.677f, -2585.197f, 13.62339f)) < 30)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting landing jet sequence");
-                
+
                 LandingJet.IsPositionFrozen = false;
                 LandingJet.Opacity = 1;
                 LandingJetPilot.Tasks.LandPlane(new Vector3(-1331.008f, -2201.203f, 13.62391f), new Vector3(-1605.616f, -2676.81f, 13.5929f));
@@ -227,7 +227,7 @@ namespace StoryCallouts.Callouts
             if (ChaseCreated && !MollyKilled && Molly.DistanceTo2D(new Vector3(-931.4089f, -2989.927f, 13.94507f)) < 3)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Throwing Molly into jet reactor");
-                
+
                 Molly.IsRagdoll = true;
                 FilmReel.Detach();
                 GameFiber.Sleep(100);
@@ -301,7 +301,6 @@ namespace StoryCallouts.Callouts
 
             do
             {
-                GameFiber.Yield();
                 GameFiber.Wait(500);
             } while (Michael.DistanceTo2D(new Vector3(-970.6552f, -2976.935f, 13.94508f)) > 20 || Michael.Speed > 1);
 
@@ -310,7 +309,6 @@ namespace StoryCallouts.Callouts
 
             do
             {
-                GameFiber.Yield();
                 GameFiber.Wait(500);
             } while (Molly.Exists() && Molly.IsAlive && !Functions.IsPedGettingArrested(Molly));
 
@@ -318,7 +316,6 @@ namespace StoryCallouts.Callouts
 
             do
             {
-                GameFiber.Yield();
                 GameFiber.Wait(500);
 
                 if (Michael.IsTouching(HangarJet))
@@ -337,7 +334,6 @@ namespace StoryCallouts.Callouts
 
                 do
                 {
-                    GameFiber.Yield();
                     GameFiber.Wait(500);
                 } while (EscapeJet.Exists() && Michael.DistanceTo(EscapeJet) > 6);
 
@@ -346,7 +342,6 @@ namespace StoryCallouts.Callouts
 
                 do
                 {
-                    GameFiber.Yield();
                     GameFiber.Wait(500);
                 } while (!Michael.IsInVehicle(EscapeJet, false));
 
@@ -355,7 +350,8 @@ namespace StoryCallouts.Callouts
                 Michael.Tasks.ChaseWithPlane(EscapeRouteTarget, new Vector3(0, 0, 30));
                 GameFiber.Wait(2000);
                 NativeFunction.Natives.CONTROL_LANDING_GEAR(EscapeJet, 1);
-            } else
+            }
+            else
             {
                 Functions.SetPursuitDisableAIForPed(Michael, false);
             }

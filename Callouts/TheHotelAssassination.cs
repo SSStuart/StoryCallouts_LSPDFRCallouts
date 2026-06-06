@@ -3,7 +3,6 @@ using LSPD_First_Response.Mod.Callouts;
 using Rage;
 using Rage.Native;
 using System.Drawing;
-using System.Security.Policy;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
@@ -25,7 +24,7 @@ namespace StoryCallouts.Callouts
         public override bool OnBeforeCalloutDisplayed()
         {
             WeaponVariation = MathHelper.GetRandomInteger(2);
-            Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Varriant: "+WeaponVariation);
+            Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Varriant: " + WeaponVariation);
 
             SpawnPoint = new Vector3(-1251.225f, -216.2316f, 40.61005f);
             ShowCalloutAreaBlipBeforeAccepting(SpawnPoint, 20f);
@@ -42,7 +41,7 @@ namespace StoryCallouts.Callouts
         {
             Franklin = Characters.Franklin.Create(new Vector3(-1259.232f, -243.2478f, 47.0454f), 320, this.GetType().Name);
             if (WeaponVariation == 0)
-               Franklin.Inventory.GiveNewWeapon("WEAPON_SNIPERRIFLE", 10, true);
+                Franklin.Inventory.GiveNewWeapon("WEAPON_SNIPERRIFLE", 10, true);
             else
                 Franklin.Inventory.GiveNewWeapon("WEAPON_STICKYBOMB", 5, true);
 
@@ -155,17 +154,14 @@ namespace StoryCallouts.Callouts
                 EnteringVehicleFiber = GameFiber.StartNew(delegate
                 {
                     GameFiber.Wait(2000);
-                    GameFiber.Yield();
                     BodyguardEscort.Tasks.EnterVehicle(EscortVehicle, -1);
 
                     Franklin.Tasks.GoStraightToPosition(new Vector3(-1255.98f, -235.4348f, 47.04544f), 2, 316, 1, 5000).WaitForCompletion(5000);
                     NativeFunction.Natives.TASK_THROW_PROJECTILE(Franklin, StickyBombPos.X, StickyBombPos.Y, StickyBombPos.Z, 0, false);
-                    GameFiber.Yield();
                     GameFiber.Wait(2000);
 
                     do
                     {
-                        GameFiber.Yield();
                         GameFiber.Wait(1000);
                     } while (!VIP.IsInVehicle(VIPVehicle, false) && VIP.IsAlive);
                     EnteredVehicles = true;
@@ -226,7 +222,6 @@ namespace StoryCallouts.Callouts
                         uint stickyTimeout = Game.GameTime + 10000;
                         do
                         {
-                            GameFiber.Yield();
                             GameFiber.Wait(100);
                         } while (VIPVehicle.DistanceTo(StickyBombPos) > 3 && Game.GameTime < stickyTimeout);
                         Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Exploding bomb & starting pursuit");
@@ -251,7 +246,7 @@ namespace StoryCallouts.Callouts
                         VIPVehicleBlip.Delete();
                     if (EscortVehicleBlip.Exists())
                         EscortVehicleBlip.Delete();
-                
+
                     ChaseCreated = true;
                 });
 

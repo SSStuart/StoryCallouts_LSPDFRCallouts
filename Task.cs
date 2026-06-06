@@ -38,7 +38,6 @@ namespace StoryCallouts
 
             do
             {
-                GameFiber.Yield();
                 GameFiber.Wait(100);
                 counterSec++;
             }
@@ -85,7 +84,6 @@ namespace StoryCallouts
 
                 while (_ped.Exists() && _ped.IsAlive && _target.Exists() && _target.IsInAnyVehicle(false))
                 {
-                    GameFiber.Yield();
                     GameFiber.Wait(500);
                 }
             }
@@ -125,7 +123,6 @@ namespace StoryCallouts
 
                 do
                 {
-                    GameFiber.Yield();
                     GameFiber.Wait(100);
                     counterSec++;
                 }
@@ -148,7 +145,7 @@ namespace StoryCallouts
         private readonly bool _fireWeapon;
         private readonly FiringPattern _firingPattern;
 
-        public WalkToAiming(Ped ped, Vector3 position, Entity targetEntity, float speed, float acceptedDistance,  bool fireWeapon, FiringPattern firingPattern, int timeoutSec)
+        public WalkToAiming(Ped ped, Vector3 position, Entity targetEntity, float speed, float acceptedDistance, bool fireWeapon, FiringPattern firingPattern, int timeoutSec)
         {
             _ped = ped;
             Position = position;
@@ -187,7 +184,6 @@ namespace StoryCallouts
 
                 do
                 {
-                    GameFiber.Yield();
                     GameFiber.Wait(100);
                     counterSec++;
                 }
@@ -217,7 +213,7 @@ namespace StoryCallouts
         public override void Execute()
         {
             if (_ped.Exists() && _ped.IsAlive && _vehicle.Exists())
-                _ped.Tasks.EnterVehicle(_vehicle, _timeoutSec * 1000, (_seatIndex >= -1 ? _seatIndex : _vehicle.GetFreeSeatIndex() ?? -1) , _speed, _flags).WaitForCompletion(_timeoutSec * 1000);
+                _ped.Tasks.EnterVehicle(_vehicle, _timeoutSec * 1000, (_seatIndex >= -1 ? _seatIndex : _vehicle.GetFreeSeatIndex() ?? -1), _speed, _flags).WaitForCompletion(_timeoutSec * 1000);
         }
     }
 
