@@ -38,6 +38,8 @@ namespace StoryCallouts
 
         internal static int LoadSettings()
         {
+            InitializeSettings();
+
             int enabledCallouts = 0;
 
             Game.LogTrivial($"[{Main.pluginName}] Loading config file:");
@@ -148,6 +150,64 @@ namespace StoryCallouts
             Game.LogTrivial($"[{Main.pluginName}] Plugin settings loaded.");
 
             return enabledCallouts;
+        }
+
+        internal static void InitializeSettings()
+        {
+            if (!ini.DoesKeyExist("General", "useStoryModeCharacters"))
+                ini.Write("General", "useStoryModeCharacters", true);
+
+            if (!ini.DoesKeyExist("Callouts", "Prologue"))
+                ini.Write("Callouts", "Prologue", false);
+            if (!ini.DoesKeyExist("Callouts", "FranklinAndLamar"))
+                ini.Write("Callouts", "FranklinAndLamar", true);
+            if (!ini.DoesKeyExist("Callouts", "TheLongStretch"))
+                ini.Write("Callouts", "TheLongStretch", true);
+            if (!ini.DoesKeyExist("Callouts", "CarbineRifles"))
+                ini.Write("Callouts", "CarbineRifles", true);
+            if (!ini.DoesKeyExist("Callouts", "BugstarsEquipment"))
+                ini.Write("Callouts", "BugstarsEquipment", true);
+            if (!ini.DoesKeyExist("Callouts", "BZGasGrenades"))
+                ini.Write("Callouts", "BZGasGrenades", true);
+            if (!ini.DoesKeyExist("Callouts", "TheJewelStoreJob"))
+                ini.Write("Callouts", "TheJewelStoreJob", true);
+            if (!ini.DoesKeyExist("Callouts", "DeadManWalking"))
+                ini.Write("Callouts", "DeadManWalking", true);
+            if (!ini.DoesKeyExist("Callouts", "HoodSafari"))
+                ini.Write("Callouts", "HoodSafari", true);
+            if (!ini.DoesKeyExist("Callouts", "TheHotelAssassination"))
+                ini.Write("Callouts", "TheHotelAssassination", true);
+            if (!ini.DoesKeyExist("Callouts", "GrassRoots_ThePickup"))
+                ini.Write("Callouts", "GrassRoots_ThePickup", true);
+            if (!ini.DoesKeyExist("Callouts", "BlitzPlay"))
+                ini.Write("Callouts", "BlitzPlay", true);
+            if (!ini.DoesKeyExist("Callouts", "MilitaryHardware"))
+                ini.Write("Callouts", "MilitaryHardware", true);
+            if (!ini.DoesKeyExist("Callouts", "ThePaletoScore"))
+                ini.Write("Callouts", "ThePaletoScore", true);
+            if (!ini.DoesKeyExist("Callouts", "PackMan"))
+                ini.Write("Callouts", "PackMan", true);
+            if (!ini.DoesKeyExist("Callouts", "LegalTrouble"))
+                ini.Write("Callouts", "LegalTrouble", true);
+            if (!ini.DoesKeyExist("Callouts", "TheBureauRaid"))
+                ini.Write("Callouts", "TheBureauRaid", true);
+            if (!ini.DoesKeyExist("Callouts", "Driller"))
+                ini.Write("Callouts", "Driller", true);
+            if (!ini.DoesKeyExist("Callouts", "TheBigScore"))
+                ini.Write("Callouts", "TheBigScore", true);
+            if (!ini.DoesKeyExist("Callouts", "TheThirdWay"))
+                ini.Write("Callouts", "TheThirdWay", true);
+            if (!ini.DoesKeyExist("Callouts", "Paparazzo_TheMeltdown"))
+                ini.Write("Callouts", "Paparazzo_TheMeltdown", true);
+            if (!ini.DoesKeyExist("Callouts", "RandomEvent_GetawayDriver"))
+                ini.Write("Callouts", "RandomEvent_GetawayDriver", true);
+            if (!ini.DoesKeyExist("Callouts", "RandomEvent_CountrysideRobbery"))
+                ini.Write("Callouts", "RandomEvent_CountrysideRobbery", true);
+            if (!ini.DoesKeyExist("Callouts", "RandomEvent_CountrysideGangFight"))
+                ini.Write("Callouts", "RandomEvent_CountrysideGangFight", true);
+
+            if (!ini.DoesKeyExist("Interiors", "forceInteriorsEnabled"))
+                ini.Write("Interiors", "forceInteriorsEnabled", true);
         }
     }
 }
