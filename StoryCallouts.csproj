@@ -72,6 +72,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Callouts\RE_CountrysideGangFight.cs" />
+    <Compile Include="Callouts\RE_CountrysideRobbery.cs" />
+    <Compile Include="Callouts\RE_GetawayDriver.cs" />
     <Compile Include="Callouts\TheJewelStoreJob.cs" />
     <Compile Include="Callouts\CarbineRifles.cs" />
     <Compile Include="Callouts\BugstarsEquipment.cs" />

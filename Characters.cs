@@ -558,6 +558,17 @@ namespace StoryCallouts
                     character.SetVariation(4, 0, 0);
                     break;
 
+                // RANDOM EVENT - GETAWAY DRIVER
+                case ("RE_GetawayDriver", "Patrick"):
+                    character.SetVariation(0, 5, 0);
+                    character.SetVariation(1, 1, 0);
+                    character.SetVariation(2, 1, 0);
+                    character.SetVariation(3, 6, 0);
+                    character.SetVariation(4, 6, 2);
+                    character.SetVariation(6, 1, 0);
+                    character.SetVariation(10, 1, 0);
+                    break;
+
                 default:
                     //Game.DisplayNotification("NO VARIATIONS DEFINED FOR " + Forename);
                     break;
@@ -574,7 +585,7 @@ namespace StoryCallouts
 
         public static readonly CharacterDefinition Franklin =
             new CharacterDefinition("player_one", "Franklin", "Clinton", Gender.Male, new DateTime(1988, 7, 28));
-        
+
         public static readonly CharacterDefinition Trevor =
             new CharacterDefinition("player_two", "Trevor", "Philips", Gender.Male, new DateTime(1, 1, 1));
 
@@ -583,7 +594,7 @@ namespace StoryCallouts
 
         public static readonly CharacterDefinition Lamar =
             new CharacterDefinition("ig_lamardavis", "Lamar", "Davis", Gender.Male, new DateTime(1, 1, 1));
-        
+
         public static readonly CharacterDefinition Stretch =
             new CharacterDefinition("ig_stretch", "Harold", "Joseph", Gender.Male, new DateTime(1, 1, 1));
 

@@ -27,6 +27,9 @@ namespace StoryCallouts
         internal static bool callout_TheBigScore = true;
         internal static bool callout_TheThirdWay = true;
         internal static bool callout_Paparazzo_TheMeltdown = true;
+        internal static bool callout_RE_GetawayDriver = true;
+        internal static bool callout_RE_CountrysideRobbery = true;
+        internal static bool callout_RE_CountrysideGangFight = true;
 
         internal static bool forceInteriorsEnabled = false;
 
@@ -126,6 +129,18 @@ namespace StoryCallouts
             callout_Paparazzo_TheMeltdown = ini.ReadBoolean("Callouts", "Paparazzo_TheMeltdown", true);
             Game.LogTrivial($"- Callout 'Paparazzo_TheMeltdown' {(callout_Paparazzo_TheMeltdown ? "[x] enabled" : "[ ] disabled")}");
             enabledCallouts += callout_Paparazzo_TheMeltdown ? 1 : 0;
+
+            callout_RE_GetawayDriver = ini.ReadBoolean("Callouts", "RandomEvent_GetawayDriver", true);
+            Game.LogTrivial($"- Callout 'RandomEvent_GetawayDriver' {(callout_RE_GetawayDriver ? "[x] enabled" : "[ ] disabled")}");
+            enabledCallouts += callout_RE_GetawayDriver ? 1 : 0;
+
+            callout_RE_CountrysideRobbery = ini.ReadBoolean("Callouts", "RandomEvent_CountrysideRobbery", true);
+            Game.LogTrivial($"- Callout 'RandomEvent_CountrysideRobbery' {(callout_RE_CountrysideRobbery ? "[x] enabled" : "[ ] disabled")}");
+            enabledCallouts += callout_RE_CountrysideRobbery ? 1 : 0;
+
+            callout_RE_CountrysideGangFight = ini.ReadBoolean("Callouts", "RandomEvent_CountrysideGangFight", true);
+            Game.LogTrivial($"- Callout 'RandomEvent_CountrysideGangFight' {(callout_RE_CountrysideGangFight ? "[x] enabled" : "[ ] disabled")}");
+            enabledCallouts += callout_RE_CountrysideGangFight ? 1 : 0;
 
             forceInteriorsEnabled = ini.ReadBoolean("Interiors", "forceInteriorsEnabled", false);
             Game.LogTrivial($"- Force enable interiors : {(forceInteriorsEnabled ? "Yes" : "No")}");

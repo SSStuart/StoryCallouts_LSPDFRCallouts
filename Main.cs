@@ -95,6 +95,12 @@ namespace StoryCallouts
                 Functions.RegisterCallout(typeof(Callouts.TheThirdWay));
             if (Settings.callout_Paparazzo_TheMeltdown)
                 Functions.RegisterCallout(typeof(Callouts.Paparazzo_TheMeltdown));
+            if (Settings.callout_RE_GetawayDriver)
+                Functions.RegisterCallout(typeof(Callouts.RE_GetawayDriver));
+            if (Settings.callout_RE_CountrysideRobbery)
+                Functions.RegisterCallout(typeof(Callouts.RE_CountrysideRobbery));
+            if (Settings.callout_RE_CountrysideGangFight)
+                Functions.RegisterCallout(typeof(Callouts.RE_CountrysideGangFight));
         }
 
 
@@ -126,7 +132,7 @@ namespace StoryCallouts
             return false;
         }
 
-        public static Ped[] GetNearbyEnnemies(Vector3 position) => 
+        public static Ped[] GetNearbyEnnemies(Vector3 position) =>
             World.GetEntities(position, 40, GetEntitiesFlags.ConsiderHumanPeds)
             .OfType<Ped>()
             .Where(ped => ped.IsAlive && (Functions.IsPedACop(ped) || ped.RelationshipGroup == RelationshipGroup.Cop || ped.Model.Name.ToLower() == "s_m_m_security_01" || ped.IsLocalPlayer))
