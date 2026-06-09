@@ -34,7 +34,7 @@ namespace StoryCallouts.Callouts
                 276,
             };
 
-            int spawnVariation = MathHelper.GetRandomInteger(13);
+            int spawnVariation = MathHelper.GetRandomInteger(4);
 
             SpawnPoint = spawnpoints[spawnVariation];
             SpawnHeading = spawnHeadings[spawnVariation];
