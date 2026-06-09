@@ -33,11 +33,12 @@ namespace StoryCallouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            EscapeDriver = EscapePedVariant == 0 ?
-                Characters.Franklin.Create(new Vector3(61.83673f, -1564.017f, 29.46009f), 0, this.GetType().Name) :
-                (EscapePedVariant == 1 ?
-                Characters.Michael.Create(new Vector3(61.83673f, -1564.017f, 29.46009f), 0, this.GetType().Name) :
-                Characters.Trevor.Create(new Vector3(61.83673f, -1564.017f, 29.46009f), 0, this.GetType().Name));
+            EscapeDriver = EscapePedVariant switch
+            {
+                0 => Characters.Franklin.Create(new Vector3(61.83673f, -1564.017f, 29.46009f), 0, this.GetType().Name),
+                1 => Characters.Michael.Create(new Vector3(61.83673f, -1564.017f, 29.46009f), 0, this.GetType().Name),
+                _ => Characters.Trevor.Create(new Vector3(61.83673f, -1564.017f, 29.46009f), 0, this.GetType().Name),
+            };
 
             EscapeVehicle = EscapePedVariant == 0 ?
                 Vehicles.FranklinCar.Create(new Vector3(55.26971f, -1565.4f, 29.24365f), 165, EscapeDriver) :

@@ -55,11 +55,12 @@ namespace StoryCallouts.Callouts
             Briefcase1 = new Object("prop_security_case_01", new Vector3(328.51f, 2624.372f, 43.6f), MathHelper.GetRandomSingle(-180, 180));
             Briefcase2 = new Object("prop_security_case_01", new Vector3(328.5627f, 2627.276f, 43.6f), MathHelper.GetRandomSingle(-180, 180));
 
-            StoryCharacter = StoryCharacterVariant == 0 ?
-                Characters.Franklin.Create(new Vector3(317.0602f, 2613.423f, 44.47596f), 297, this.GetType().Name) :
-                (StoryCharacterVariant == 1 ?
-                Characters.Michael.Create(new Vector3(317.0602f, 2613.423f, 44.47596f), 297, this.GetType().Name) :
-                Characters.Trevor.Create(new Vector3(317.0602f, 2613.423f, 44.47596f), 297, this.GetType().Name));
+            StoryCharacter = StoryCharacterVariant switch
+            {
+                0 => Characters.Franklin.Create(new Vector3(317.0602f, 2613.423f, 44.47596f), 297, this.GetType().Name),
+                1 => Characters.Michael.Create(new Vector3(317.0602f, 2613.423f, 44.47596f), 297, this.GetType().Name),
+                _ => Characters.Trevor.Create(new Vector3(317.0602f, 2613.423f, 44.47596f), 297, this.GetType().Name),
+            };
 
             CopCar = new Vehicle("sheriff", new Vector3(325.7083f, 2640.782f, 44.19189f), 157f)
             {
