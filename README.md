@@ -14,20 +14,25 @@ Available on [lcpdfr.com](https://www.lcpdfr.com/downloads/gta5mods/scripts/5421
 7. The Jewel Store Job
 8. Dead Man Walking
 9. Hood Safari
-10. Blitz Play
-11. Military Hardware
-12. The Paleto Score
-13. Pack Man
-14. Legal Trouble
-15. The Bureau Raid
-16. Driller
-17. The Big Score
+10. Trash Truck
+11. Tow Truck
+12. Blitz Play
+13. Military Hardware
+14. The Paleto Score
+15. Pack Man
+16. Legal Trouble
+17. The Bureau Raid
+18. Driller
+19. The Big Score
     - Sublte
     - Obvious
-18. The Third Way
-19. Paparazzo - The Meltdown
-20. The Hotel Assassination
-21. Grass Roots - The Pickup
+20. The Third Way
+21. Paparazzo - The Meltdown
+22. The Hotel Assassination
+23. Grass Roots - The Pickup
+24. Getaway Driver *(Random event)*
+25. Countryside Robbery *(Random event)*
+26. Countryside Gang Fight *(Random event)*
 
 ## Configuration
 You can adjust some values in the `.ini` file :
