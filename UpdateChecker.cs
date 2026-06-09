@@ -7,7 +7,7 @@ namespace StoryCallouts
 {
     internal class UpdateChecker
     {
-        private static readonly string url = "https://ssstuart.net/api/GTAModVersion/StoryCallouts";
+        private static readonly string url = "https://ssstuart.net/api/GTAModVersion/Story%20Callouts";
         private static readonly HttpClient httpClient = new HttpClient();
         private static Version lastVersion = null;
         private static readonly Version currentVersion = new Version(Main.pluginVersion);
