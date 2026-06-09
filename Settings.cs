@@ -17,6 +17,8 @@ namespace StoryCallouts
         internal static bool callout_HoodSafari = true;
         internal static bool callout_TheHotelAssassination = true;
         internal static bool callout_GrassRoots_ThePickup = true;
+        internal static bool callout_TrashTruck = true;
+        internal static bool callout_TowTruck = true;
         internal static bool callout_BlitzPlay = true;
         internal static bool callout_MilitaryHardware = true;
         internal static bool callout_ThePaletoScore = true;
@@ -91,6 +93,14 @@ namespace StoryCallouts
             callout_GrassRoots_ThePickup = ini.ReadBoolean("Callouts", "GrassRoots_ThePickup", true);
             Game.LogTrivial($"- Callout 'GrassRoots_ThePickup' {(callout_GrassRoots_ThePickup ? "[x] enabled" : "[ ] disabled")}");
             enabledCallouts += callout_GrassRoots_ThePickup ? 1 : 0;
+
+            callout_TrashTruck = ini.ReadBoolean("Callouts", "TrashTruck", true);
+            Game.LogTrivial($"- Callout 'TrashTruck' {(callout_TrashTruck ? "[x] enabled" : "[ ] disabled")}");
+            enabledCallouts += callout_TrashTruck ? 1 : 0;
+
+            callout_TowTruck = ini.ReadBoolean("Callouts", "TowTruck", true);
+            Game.LogTrivial($"- Callout 'TowTruck' {(callout_TowTruck ? "[x] enabled" : "[ ] disabled")}");
+            enabledCallouts += callout_TowTruck ? 1 : 0;
 
             callout_BlitzPlay = ini.ReadBoolean("Callouts", "BlitzPlay", true);
             Game.LogTrivial($"- Callout 'BlitzPlay' {(callout_BlitzPlay ? "[x] enabled" : "[ ] disabled")}");
@@ -179,6 +189,10 @@ namespace StoryCallouts
                 ini.Write("Callouts", "TheHotelAssassination", true);
             if (!ini.DoesKeyExist("Callouts", "GrassRoots_ThePickup"))
                 ini.Write("Callouts", "GrassRoots_ThePickup", true);
+            if (!ini.DoesKeyExist("Callouts", "TrashTruck"))
+                ini.Write("Callouts", "TrashTruck", true);
+            if (!ini.DoesKeyExist("Callouts", "TowTruck"))
+                ini.Write("Callouts", "TowTruck", true);
             if (!ini.DoesKeyExist("Callouts", "BlitzPlay"))
                 ini.Write("Callouts", "BlitzPlay", true);
             if (!ini.DoesKeyExist("Callouts", "MilitaryHardware"))

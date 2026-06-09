@@ -72,6 +72,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Callouts\TowTruck.cs" />
+    <Compile Include="Callouts\TrashTruck.cs" />
     <Compile Include="Callouts\RE_CountrysideGangFight.cs" />
     <Compile Include="Callouts\RE_CountrysideRobbery.cs" />
     <Compile Include="Callouts\RE_GetawayDriver.cs" />

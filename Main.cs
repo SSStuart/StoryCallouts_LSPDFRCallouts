@@ -75,6 +75,10 @@ namespace StoryCallouts
                 Functions.RegisterCallout(typeof(Callouts.TheHotelAssassination));
             if (Settings.callout_GrassRoots_ThePickup)
                 Functions.RegisterCallout(typeof(Callouts.GrassRoots_ThePickup));
+            if (Settings.callout_TrashTruck)
+                Functions.RegisterCallout(typeof(Callouts.TrashTruck));
+            if (Settings.callout_TowTruck)
+                Functions.RegisterCallout(typeof(Callouts.TowTruck));
             if (Settings.callout_BlitzPlay)
                 Functions.RegisterCallout(typeof(Callouts.BlitzPlay));
             if (Settings.callout_MilitaryHardware)
