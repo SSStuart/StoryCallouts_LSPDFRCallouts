@@ -124,6 +124,9 @@ namespace StoryCallouts.Callouts
             if (SpikesFiber != null && SpikesFiber.IsAlive)
                 SpikesFiber.Abort();
 
+            if (Pursuit != null && Functions.IsPursuitStillRunning(Pursuit))
+                Functions.ForceEndPursuit(Pursuit);
+
             if (EventBlip.Exists())
                 EventBlip.Delete();
             if (Franklin.Exists())

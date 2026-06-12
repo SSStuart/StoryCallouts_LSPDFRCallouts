@@ -36,7 +36,7 @@ namespace StoryCallouts.Callouts
 
             FranklinEscape = new TasksList(Franklin);
             FranklinEscape.AddDriveTask(new Vector3(1206.921f, -1285.642f, 34.90635f), 30, 5, VehicleDrivingFlags.DriveAroundObjects);
-            FranklinEscape.AddDriveTask(new Vector3(1228.407f, -1291.004f, 34.80341f));
+            FranklinEscape.AddDriveTask(new Vector3(1228.407f, -1291.004f, 34.80341f), 20, 8, VehicleDrivingFlags.IgnorePathFinding | VehicleDrivingFlags.DriveAroundObjects);
 
             Truck = new Vehicle("DLOADER", new Vector3(1199.80f, -1259.22f, 34.94f), 174f);
             Franklin.WarpIntoVehicle(Truck, -1);
@@ -114,6 +114,9 @@ namespace StoryCallouts.Callouts
             Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Ending callout");
 
             base.End();
+
+            if (Pursuit != null && Functions.IsPursuitStillRunning(Pursuit))
+                Functions.ForceEndPursuit(Pursuit);
 
             if (EventBlip.Exists())
                 EventBlip.Delete();

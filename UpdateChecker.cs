@@ -63,7 +63,7 @@ namespace StoryCallouts
 
             bool shouldCheckForUpdate = updateSettings.ReadBoolean("IndividualPlugins", pluginKey);
             int checkFrequency = updateSettings.ReadInt16("General", "UpdateChecksFrequency");
-            
+
             // Check if updates are disabled (globally or for this plugin)
             if (!shouldCheckForUpdate || checkFrequency == 0)
             {

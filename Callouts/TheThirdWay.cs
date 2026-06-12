@@ -167,6 +167,9 @@ namespace StoryCallouts.Callouts
             if (ShootoutFiber != null && ShootoutFiber.IsAlive)
                 ShootoutFiber.Abort();
 
+            if (Pursuit != null && Functions.IsPursuitStillRunning(Pursuit))
+                Functions.ForceEndPursuit(Pursuit);
+
             if (EventBlip.Exists())
                 EventBlip.Delete();
             if (Michael.Exists())

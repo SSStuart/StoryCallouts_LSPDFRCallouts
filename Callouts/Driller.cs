@@ -105,6 +105,9 @@ namespace StoryCallouts.Callouts
 
             base.End();
 
+            if (Pursuit != null && Functions.IsPursuitStillRunning(Pursuit))
+                Functions.ForceEndPursuit(Pursuit);
+
             if (EventBlip.Exists())
                 EventBlip.Delete();
             if (Michael.Exists())

@@ -161,7 +161,7 @@ namespace StoryCallouts
 
             debug = ini.ReadBoolean("DEBUG", "debug", false);
             if (debug)
-               Game.LogTrivial($"- DEBUG FEATURES ENABLED");
+                Game.LogTrivial($"- DEBUG FEATURES ENABLED");
 
             Game.LogTrivial($"[{Main.pluginName}] Plugin settings loaded.");
 

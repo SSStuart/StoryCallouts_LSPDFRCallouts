@@ -269,6 +269,9 @@ namespace StoryCallouts.Callouts
             if (DrivingAwayFiber != null && DrivingAwayFiber.IsAlive)
                 DrivingAwayFiber.Abort();
 
+            if (Pursuit != null && Functions.IsPursuitStillRunning(Pursuit))
+                Functions.ForceEndPursuit(Pursuit);
+
             if (EventBlip.Exists())
                 EventBlip.Delete();
             if (Franklin.Exists())

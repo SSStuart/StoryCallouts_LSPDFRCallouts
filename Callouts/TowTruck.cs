@@ -171,6 +171,9 @@ namespace StoryCallouts.Callouts
             if (GPSAreaFiber != null && GPSAreaFiber.IsAlive)
                 GPSAreaFiber.Abort();
 
+            if (Pursuit != null && Functions.IsPursuitStillRunning(Pursuit))
+                Functions.ForceEndPursuit(Pursuit);
+
             if (EventBlip.Exists())
                 EventBlip.Delete();
             if (Mechanic.Exists())

@@ -121,13 +121,13 @@ namespace StoryCallouts
                                     markerWidth = currentDriveTask._acceptedDistance;
                                 }
                                 NativeFunction.Natives.DRAW_MARKER(
-                                    _currentTaskIndex < _tasks.Count-1 ? 1 : 4,
+                                    _currentTaskIndex < _tasks.Count - 1 ? 1 : 4,
                                     currentTask.Position.X, currentTask.Position.Y, currentTask.Position.Z + (_currentTaskIndex == _tasks.Count - 1 ? 5 : -2),
                                     0f, 0f, 0f,
                                     0f, 0f, 0f,
                                     markerWidth, markerWidth, 10f,
                                     133, 85, 255, 175,
-                                    false, _currentTaskIndex == _tasks.Count -1, 2, false, 0, 0, false);
+                                    false, _currentTaskIndex == _tasks.Count - 1, 2, false, 0, 0, false);
                             }
                         });
                     }

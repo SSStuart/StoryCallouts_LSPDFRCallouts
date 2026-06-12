@@ -350,7 +350,7 @@ namespace StoryCallouts.Callouts
 
                     GameFiber michaelEnterTruckFiber = GameFiber.StartNew(delegate
                     {
-                        EnterTruckHelperLogic(Michael, Truck2Trailer, Truck2Driver, ref FranklinEnteredTruck);
+                        EnterTruckHelperLogic(Michael, Truck2Trailer, ref FranklinEnteredTruck);
                         MichaelEnteredTruck = true;
                     });
                     EnterTruckHelperFibers.Add(michaelEnterTruckFiber);
@@ -363,7 +363,7 @@ namespace StoryCallouts.Callouts
 
                     GameFiber TrevorEnterTruckFiber = GameFiber.StartNew(delegate
                     {
-                        EnterTruckHelperLogic(Trevor, Truck1Trailer, Truck1Driver, ref DriverEnteredTruck);
+                        EnterTruckHelperLogic(Trevor, Truck1Trailer, ref DriverEnteredTruck);
                         TrevorEnteredTruck = true;
                     });
                     EnterTruckHelperFibers.Add(TrevorEnterTruckFiber);
@@ -376,7 +376,7 @@ namespace StoryCallouts.Callouts
 
                     GameFiber FranklinEnterTruckFiber = GameFiber.StartNew(delegate
                     {
-                        EnterTruckHelperLogic(Franklin, Truck2Trailer, Truck2Driver, ref MichaelEnteredTruck);
+                        EnterTruckHelperLogic(Franklin, Truck2Trailer, ref MichaelEnteredTruck);
                         FranklinEnteredTruck = true;
                     });
                     EnterTruckHelperFibers.Add(FranklinEnterTruckFiber);
@@ -389,7 +389,7 @@ namespace StoryCallouts.Callouts
 
                     GameFiber DriverEnterTruckFiber = GameFiber.StartNew(delegate
                     {
-                        EnterTruckHelperLogic(Driver, Truck1Trailer, Truck1Driver, ref TrevorEnteredTruck);
+                        EnterTruckHelperLogic(Driver, Truck1Trailer, ref TrevorEnteredTruck);
                         DriverEnteredTruck = true;
                     });
                     EnterTruckHelperFibers.Add(DriverEnterTruckFiber);
@@ -547,6 +547,9 @@ namespace StoryCallouts.Callouts
             if (BackupsPlacementFiber != null && BackupsPlacementFiber.IsAlive)
                 BackupsPlacementFiber.Abort();
 
+            if (Pursuit != null && Functions.IsPursuitStillRunning(Pursuit))
+                Functions.ForceEndPursuit(Pursuit);
+
             if (EventBlip.Exists())
                 EventBlip.Delete();
             if (Michael.Exists())
@@ -649,12 +652,8 @@ namespace StoryCallouts.Callouts
             } while (!TrucksTooFar);
         }
 
-        private void EnterTruckHelperLogic(Ped ped, Vehicle trailer, Ped truckDriver, ref bool firstPlaceOccupied)
+        private void EnterTruckHelperLogic(Ped ped, Vehicle trailer, ref bool firstPlaceOccupied)
         {
-            //NativeFunction.Natives.TASK_VEHICLE_CHASE(ped, truckDriver);
-            //NativeFunction.Natives.SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG(ped, 32, true);
-            //NativeFunction.Natives.TASK_VEHICLE_FOLLOW(ped, ped.CurrentVehicle, trailer, 50f, 4, 20);
-
             do
             {
                 ped.Tasks.DriveToPosition(trailer.GetOffsetPositionFront(-20), trailer.Speed + 20, VehicleDrivingFlags.Emergency);

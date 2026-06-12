@@ -142,6 +142,9 @@ namespace StoryCallouts.Callouts
             if (GrenadeLogicFiber.IsAlive)
                 GrenadeLogicFiber.Abort();
 
+            if (Pursuit != null && Functions.IsPursuitStillRunning(Pursuit))
+                Functions.ForceEndPursuit(Pursuit);
+
             if (EventBlip.Exists())
                 EventBlip.Delete();
             if (Michael.Exists())
