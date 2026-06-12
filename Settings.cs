@@ -35,6 +35,8 @@ namespace StoryCallouts
 
         internal static bool forceInteriorsEnabled = false;
 
+        internal static bool debug = false;
+
         internal static string path = "Plugins/LSPDFR/StoryCallouts.ini";
         internal static InitializationFile ini = new InitializationFile(path);
 
@@ -156,6 +158,10 @@ namespace StoryCallouts
 
             forceInteriorsEnabled = ini.ReadBoolean("Interiors", "forceInteriorsEnabled", false);
             Game.LogTrivial($"- Force enable interiors : {(forceInteriorsEnabled ? "Yes" : "No")}");
+
+            debug = ini.ReadBoolean("DEBUG", "debug", false);
+            if (debug)
+               Game.LogTrivial($"- DEBUG FEATURES ENABLED");
 
             Game.LogTrivial($"[{Main.pluginName}] Plugin settings loaded.");
 

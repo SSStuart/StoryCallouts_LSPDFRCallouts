@@ -1,5 +1,6 @@
 ﻿using LSPD_First_Response.Mod.API;
 using Rage;
+using Rage.Native;
 using System.Collections.Generic;
 
 namespace StoryCallouts
@@ -21,7 +22,8 @@ namespace StoryCallouts
         private readonly Ped _ped;
         private readonly EndBehavior _endBehavior;
         private GameFiber _taskFiber;
-        //private Blip DEBUG_BLIP;
+        private Blip DEBUG_BLIP;
+        private GameFiber DEBUG_CHECKPOINT_FIBER;
 
         public TasksList(Ped ped, EndBehavior endBehavior = EndBehavior.Auto)
         {
@@ -87,7 +89,8 @@ namespace StoryCallouts
         {
             _taskFiber = GameFiber.StartNew(delegate
             {
-                //DEBUG_BLIP = new Blip(_tasks[0].Position);
+                if (Settings.debug)
+                    DEBUG_BLIP = new Blip(_tasks[0].Position);
                 while (_currentTaskIndex < _tasks.Count)
                 {
                     GameFiber.Yield();
@@ -96,19 +99,45 @@ namespace StoryCallouts
                         break;
 
                     Task currentTask = _tasks[_currentTaskIndex];
-                    //if (currentTask.Position != Vector3.Zero)
-                    //    DEBUG_BLIP.Position = currentTask.Position;
-                    //else
-                    //    DEBUG_BLIP.Position = _ped.Position;
-                    //DEBUG_BLIP.Sprite = _currentTaskIndex > 0 && _currentTaskIndex <= 10 ? (BlipSprite)_currentTaskIndex + 16 : BlipSprite.Darts;
-                    //DEBUG_BLIP.Name = $"Task #{_currentTaskIndex} {_tasks[_currentTaskIndex].GetType().Name} for {_ped.Model.Name}";
+                    if (Settings.debug)
+                    {
+                        if (currentTask.Position != Vector3.Zero)
+                            DEBUG_BLIP.Position = currentTask.Position;
+                        else
+                            DEBUG_BLIP.Position = _ped.Position;
+                        DEBUG_BLIP.Sprite = _currentTaskIndex > 0 && _currentTaskIndex <= 10 ? (BlipSprite)_currentTaskIndex + 16 : BlipSprite.Darts;
+                        DEBUG_BLIP.Name = $"Task #{_currentTaskIndex} {currentTask.GetType().Name} for {_ped.Model.Name}";
 
-                    //Game.LogTrivial($"Executing task #{_currentTaskIndex} {_tasks[_currentTaskIndex].GetType().Name} for {_ped.Model.Name}");
+                        //Game.LogTrivial($"Executing task #{_currentTaskIndex} {currentTask.GetType().Name} for {_ped.Model.Name}");
+                        DEBUG_CHECKPOINT_FIBER = GameFiber.StartNew(delegate
+                        {
+                            while (true)
+                            {
+                                GameFiber.Yield();
+                                float markerWidth = 3f;
+                                if (currentTask.GetType().Name == "DriveTo")
+                                {
+                                    DriveTo currentDriveTask = (DriveTo)currentTask;
+                                    markerWidth = currentDriveTask._acceptedDistance;
+                                }
+                                NativeFunction.Natives.DRAW_MARKER(
+                                    _currentTaskIndex < _tasks.Count-1 ? 1 : 4,
+                                    currentTask.Position.X, currentTask.Position.Y, currentTask.Position.Z + (_currentTaskIndex == _tasks.Count - 1 ? 5 : -2),
+                                    0f, 0f, 0f,
+                                    0f, 0f, 0f,
+                                    markerWidth, markerWidth, 10f,
+                                    133, 85, 255, 175,
+                                    false, _currentTaskIndex == _tasks.Count -1, 2, false, 0, 0, false);
+                            }
+                        });
+                    }
                     currentTask.Execute();
+                    if (Settings.debug && DEBUG_CHECKPOINT_FIBER != null && DEBUG_CHECKPOINT_FIBER.IsAlive)
+                        DEBUG_CHECKPOINT_FIBER.Abort();
                     _currentTaskIndex++;
                 }
-                //Game.LogTrivial("Exiting tasks loop");
-                //DEBUG_BLIP.Delete();
+                if (Settings.debug)
+                    DEBUG_BLIP.Delete();
 
                 if (!_ped.Exists() || !_ped.IsAlive)
                 {
@@ -117,7 +146,6 @@ namespace StoryCallouts
                 }
                 if (Functions.IsPedArrested(_ped) || Functions.IsPedGettingArrested(_ped))
                 {
-                    //Game.LogTrivial("Reenabling Ped IA and returning");
                     Functions.SetPursuitDisableAIForPed(_ped, false);
                     TaskFinished = true;
                     return;
@@ -175,8 +203,8 @@ namespace StoryCallouts
                     break;
             }
 
-            //if (DEBUG_BLIP.Exists())
-            //    DEBUG_BLIP.Delete();
+            if (DEBUG_BLIP.Exists())
+                DEBUG_BLIP.Delete();
 
             TaskFinished = true;
         }
@@ -187,8 +215,8 @@ namespace StoryCallouts
             if (_ped.Exists())
                 _ped.Tasks.Clear();
 
-            //if (DEBUG_BLIP.Exists())
-            //    DEBUG_BLIP.Delete();
+            if (DEBUG_BLIP.Exists())
+                DEBUG_BLIP.Delete();
 
             TaskFinished = true;
         }

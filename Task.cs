@@ -17,7 +17,7 @@ namespace StoryCallouts
     {
         private readonly int _speed;
         private readonly VehicleDrivingFlags _flags;
-        private readonly int _acceptedDistance;
+        public readonly int _acceptedDistance;
 
         public DriveTo(Ped ped, Vector3 position, int drivingSpeed, VehicleDrivingFlags drivingFlags, int acceptedDistance, int timeoutSec)
         {
@@ -93,7 +93,7 @@ namespace StoryCallouts
     internal class WalkTo : Task
     {
         private readonly int _speed;
-        private readonly float _acceptedDistance;
+        public readonly float _acceptedDistance;
         private readonly bool _followNavMesh;
         private readonly bool _force;
         private readonly int _heading;
@@ -141,7 +141,7 @@ namespace StoryCallouts
     {
         private Entity _targetEntity;
         private readonly float _speed;
-        private readonly float _acceptedDistance;
+        public readonly float _acceptedDistance;
         private readonly bool _fireWeapon;
         private readonly FiringPattern _firingPattern;
 
