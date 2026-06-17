@@ -198,7 +198,7 @@ namespace StoryCallouts.Callouts
                 ChaseCreated = true;
             }
 
-            if (ChaseCreated && !MCClipFleeing && Franklin.DistanceTo(MCClip) < 20)
+            if (ChaseCreated && !MCClipFleeing && Franklin.Exists() && MCClip.Exists() && Franklin.DistanceTo(MCClip) < 20)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] MCClip fleeing");
 
@@ -217,7 +217,7 @@ namespace StoryCallouts.Callouts
                 MCClipFleeing = true;
             }
 
-            if (!FranklinTasksEnded && ChaseCreated)
+            if (!FranklinTasksEnded && ChaseCreated && Franklin.Exists())
             {
 
                 if ((ChaseEndVariation == 1 && Franklin.DistanceTo(new Vector3(757.7037f, -2915.058f, 0.4871701f)) < 30)

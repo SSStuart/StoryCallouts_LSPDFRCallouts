@@ -130,7 +130,10 @@ namespace StoryCallouts
                 if (_ped.Exists())
                 {
                     if (_force)
+                    {
                         _ped.Position = Position;
+                        _ped.Heading = _heading;
+                    }
                     _ped.Tasks.Clear();
                 }
             }
