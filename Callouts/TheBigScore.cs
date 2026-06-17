@@ -1,6 +1,7 @@
 ﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
+using Rage.Native;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -19,6 +20,7 @@ namespace StoryCallouts.Callouts
         private Ped GunmanDiversion;
         private Vehicle MichaelGauntlet, TrevorGauntlet, FranklinGauntlet, DriverGauntlet, Truck1, Truck1Trailer, Truck2, Truck2Trailer, Backup1, Backup2;
         private Vehicle DiversionEscapeVehicle;
+        private Object Truck1DoorCloser, Truck2DoorCloser, EggGoldCrate, EggGoldIngot;
         private Object FenceLarge, FenceSmall, Barrier;
         private TasksList MichaelDriveTask, TrevorDriveTask, FranklinDriveTask, DriverDriveTask;
         private TasksList MichaelDiversionEscapeTask, GunmanDiversionEscapeTask, FranklinDiversionEscapeTask;
@@ -26,7 +28,7 @@ namespace StoryCallouts.Callouts
         private Vector3 EndTunnelPos;
         private GameFiber BackupsPlacementFiber;
         private int ApproachVariant, DriverVariant, GoldGunmanVariant, DiversionGunmanVariant;
-        private bool NearSpawnMessageSent, ChaseCreated, TrucksStarting, TrucksInPosition, MichaelEnteringTruck, TrevorEnteringTruck, FranklinEnteringTruck, DriverEnteringTruck, MichaelEnteredTruck, TrevorEnteredTruck, FranklinEnteredTruck, DriverEnteredTruck, TrucksTooFar, Truck1VehiclesDetached, Truck2VehiclesDetached;
+        private bool NearSpawnMessageSent, ChaseCreated, TrucksStarting, TrucksInPosition, MichaelEnteringTruck, TrevorEnteringTruck, FranklinEnteringTruck, DriverEnteringTruck, MichaelEnteredTruck, TrevorEnteredTruck, FranklinEnteredTruck, DriverEnteredTruck, TrucksTooFar, Truck1VehiclesDetached, Truck2VehiclesDetached, EggDroppingGold;
         private bool FranklinDiversionTaskStarted, WaitingForDiversionInVehicle;
 
         public override bool OnBeforeCalloutDisplayed()
@@ -83,6 +85,7 @@ namespace StoryCallouts.Callouts
             TrucksTooFar = false;
             Truck1VehiclesDetached = false;
             Truck2VehiclesDetached = false;
+            EggDroppingGold = false;
 
             FranklinDiversionTaskStarted = false;
             WaitingForDiversionInVehicle = false;
@@ -102,6 +105,9 @@ namespace StoryCallouts.Callouts
             ModGauntlet(MichaelGauntlet);
             Michael.WarpIntoVehicle(MichaelGauntlet, -1);
             MichaelDriveTask = new TasksList(Michael);
+
+            EggGoldCrate = new Object("prop_ld_gold_chest", MichaelGauntlet.GetOffsetPositionUp(-3));
+            EggGoldCrate.AttachTo(MichaelGauntlet, 0, new Vector3(0, -2, 0.1f), new Rotator());
 
             Trevor = Characters.Trevor.Create(new Vector3(130.2066f, -1180.806f, 29.08948f), 0, this.GetType().Name + "Subtle");
 
@@ -318,6 +324,34 @@ namespace StoryCallouts.Callouts
                 ChaseCreated = true;
             }
 
+            if (ChaseCreated && !EggDroppingGold && MichaelGauntlet.Health < 1000)
+            {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting dropping gold");
+
+                MichaelGauntlet.GetDoors()[3].Open(false);
+
+                GameFiber.StartNew(delegate
+                {
+                    GameFiber.Wait(10000);
+                    uint lastGoldDrop = Game.GameTime;
+                    while (MichaelGauntlet.Exists() && MichaelGauntlet.Speed > 5 && !MichaelEnteringTruck)
+                    {
+                        GameFiber.Wait(100);
+                        if (Game.GameTime > lastGoldDrop + 5000)
+                        {
+                            if (EggGoldIngot.Exists())
+                                EggGoldIngot.Delete();
+                            EggGoldIngot = new Object("hei_prop_heist_gold_bar", MichaelGauntlet.GetOffsetPosition(new Vector3(0, -2.5f, 0.3f)));
+                            EggGoldIngot.ApplyForce(new Vector3((float)MathHelper.GetRandomDouble(-100, 100), (float)MathHelper.GetRandomDouble(-100, 100), (float)MathHelper.GetRandomDouble(-20, 20)), new Vector3(), true, false);
+
+                            lastGoldDrop = Game.GameTime;
+                        }
+                    }
+                });
+
+                EggDroppingGold = true;
+            }
+
             if (ChaseCreated && !TrucksStarting &&
                 (Michael.DistanceTo2D(new Vector3(-947, -537, 18)) < 50
                 || Trevor.DistanceTo2D(new Vector3(-947, -537, 18)) < 50
@@ -329,11 +363,53 @@ namespace StoryCallouts.Callouts
 
                 Truck2Driver.Tasks.CruiseWithVehicle(5);
                 Truck2Trailer.GetDoors()[0].Open(false);
+                Truck2DoorCloser = new Object("prop_carcreeper", Truck2Trailer.GetOffsetPositionUp(-10f))
+                {
+                    IsPersistent = true,
+                    IsVisible = false,
+                };
+
+                // Attach the object to the trailer with collision between the trailer (door) and the object
+                NativeFunction.Natives.ATTACH_ENTITY_TO_ENTITY_PHYSICALLY(
+                    Truck2DoorCloser,
+                    Truck2Trailer,
+                    0, 0,
+                    -0.8f, -6.8f, -2.6f,
+                    0f, 0f, 0f,
+                    0f, 0f, 90f,
+                    10000f,
+                    true,
+                    true,
+                    true,
+                    false,
+                    2
+                );
+
                 GameFiber.StartNew(delegate
                 {
                     Truck1Driver.Tasks.DriveToPosition(new Vector3(-1295.658f, -725.2289f, 11.11278f), 40, VehicleDrivingFlags.IgnorePathFinding, 5).WaitForCompletion(20000);
                     Truck1Driver.Tasks.CruiseWithVehicle(5);
                     Truck1Trailer.GetDoors()[0].Open(false);
+                    Truck1DoorCloser = new Object("prop_carcreeper", Truck1Trailer.GetOffsetPositionUp(-10f))
+                    {
+                        IsPersistent = true,
+                        IsVisible = false,
+                    };
+                    // Attach the object to the trailer with collision between the trailer (door) and the object
+                    NativeFunction.Natives.ATTACH_ENTITY_TO_ENTITY_PHYSICALLY(
+                        Truck1DoorCloser,
+                        Truck1Trailer,
+                        0, 0,
+                        -0.8f, -6.8f, -2.6f,
+                        0f, 0f, 0f,
+                        0f, 0f, 90f,
+                        10000f,
+                        true,
+                        true,
+                        true,
+                        false,
+                        2
+                    );
 
                     TrucksInPosition = true;
                 });
@@ -356,7 +432,7 @@ namespace StoryCallouts.Callouts
                     EnterTruckHelperFibers.Add(michaelEnterTruckFiber);
                     MichaelEnteringTruck = true;
                 }
-                if (!TrevorEnteringTruck && Trevor.Exists() && Trevor.IsAlive && !Functions.IsPedArrested(Trevor) && Trevor.DistanceTo(Truck2Trailer) < 400)
+                if (!TrevorEnteringTruck && Trevor.Exists() && Trevor.IsAlive && !Functions.IsPedArrested(Trevor) && Trevor.DistanceTo(Truck1Trailer) < 400)
                 {
                     Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks in position, starting Trevor enter trucks logic");
                     TrevorDriveTask.AbortTasks();
@@ -382,7 +458,7 @@ namespace StoryCallouts.Callouts
                     EnterTruckHelperFibers.Add(FranklinEnterTruckFiber);
                     FranklinEnteringTruck = true;
                 }
-                if (!DriverEnteringTruck && Driver.Exists() && Driver.IsAlive && !Functions.IsPedArrested(Driver) && Driver.DistanceTo(Truck2Trailer) < 400)
+                if (!DriverEnteringTruck && Driver.Exists() && Driver.IsAlive && !Functions.IsPedArrested(Driver) && Driver.DistanceTo(Truck1Trailer) < 400)
                 {
                     Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks in position, starting Driver enter trucks logic");
                     DriverDriveTask.AbortTasks();
@@ -397,7 +473,7 @@ namespace StoryCallouts.Callouts
                 }
             }
 
-            if (TrucksInPosition && !TrucksTooFar && Truck1.DistanceTo2D(EndTunnelPos) < 20 || (MichaelEnteredTruck && TrevorEnteredTruck && FranklinEnteredTruck && DriverEnteredTruck))
+            if (TrucksInPosition && !TrucksTooFar && (Truck1.DistanceTo2D(EndTunnelPos) < 20 || (MichaelEnteredTruck && TrevorEnteredTruck && FranklinEnteredTruck && DriverEnteredTruck)))
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Trucks reached end of tunnel");
 
@@ -414,11 +490,13 @@ namespace StoryCallouts.Callouts
                 if (Truck1Driver.IsInVehicle(Truck1, false))
                 {
                     Truck1Trailer.GetDoors()[0].Close(false);
+                    GameFiber.StartNew(() => { DoorClosingHelper(Truck1Trailer, Truck1DoorCloser); });
                     Truck1Driver.Tasks.CruiseWithVehicle(70);
                 }
                 if (Truck2Driver.IsInVehicle(Truck2, false))
                 {
                     Truck2Trailer.GetDoors()[0].Close(false);
+                    GameFiber.StartNew(() => { DoorClosingHelper(Truck2Trailer, Truck2DoorCloser); });
                     Truck2Driver.Tasks.CruiseWithVehicle(70);
                 }
 
@@ -574,16 +652,24 @@ namespace StoryCallouts.Callouts
                 Truck1.Dismiss();
             if (Truck1Trailer.Exists())
                 Truck1Trailer.Dismiss();
+            if (Truck1DoorCloser.Exists())
+                Truck1DoorCloser.Dismiss();
             if (Truck2Driver.Exists())
                 Truck2Driver.Dismiss();
             if (Truck2.Exists())
                 Truck2.Dismiss();
             if (Truck2Trailer.Exists())
                 Truck2Trailer.Dismiss();
+            if (Truck2DoorCloser.Exists())
+                Truck2DoorCloser.Dismiss();
             if (Backup1.Exists())
                 Backup1.Dismiss();
             if (Backup2.Exists())
                 Backup2.Dismiss();
+            if (EggGoldCrate.Exists())
+                EggGoldCrate.Dismiss();
+            if (EggGoldIngot.Exists())
+                EggGoldIngot.Dismiss();
 
             if (GunmanDiversion.Exists())
                 GunmanDiversion.Dismiss();
@@ -654,18 +740,12 @@ namespace StoryCallouts.Callouts
 
         private void EnterTruckHelperLogic(Ped ped, Vehicle trailer, ref bool firstPlaceOccupied)
         {
-            do
-            {
-                ped.Tasks.DriveToPosition(trailer.GetOffsetPositionFront(-20), trailer.Speed + 20, VehicleDrivingFlags.Emergency);
-                GameFiber.Wait(500);
-            } while (!TrucksInPosition);
-
-
             // Trailer Approach
             do
             {
-                GameFiber.Wait(500);
-            } while (ped.DistanceTo2D(trailer.GetOffsetPositionFront(-20)) > 30 && !TrucksTooFar);
+                ped.Tasks.DriveToPosition(trailer.GetOffsetPositionFront(-20), trailer.Speed + 20, VehicleDrivingFlags.Emergency);
+                GameFiber.Wait(TrucksInPosition ? 300 : 1000);
+            } while (!TrucksInPosition || (ped.DistanceTo2D(trailer.GetOffsetPositionFront(-20)) > 30 && !TrucksTooFar));
 
             Vector3 targetPos;
             do
@@ -706,6 +786,32 @@ namespace StoryCallouts.Callouts
 
             if (Game.LocalPlayer.Character.DistanceTo2D(ped) > 100)
                 Functions.RemovePedFromPursuit(ped);
+        }
+
+        private void DoorClosingHelper(Vehicle Trailer, Object DoorCloser)
+        {
+            float doorCloserZOffset = -3f;
+            for (int step = 0; step < 300; step++)
+            {
+                doorCloserZOffset += step < 50 ? 0.02f : 0.01f;
+                NativeFunction.Natives.ATTACH_ENTITY_TO_ENTITY_PHYSICALLY(
+                    DoorCloser,
+                    Trailer,
+                    0, 0,
+                    -0.8f, -6.8f, doorCloserZOffset,
+                    0f, 0f, 0f,
+                    0f, 0f, 90f,
+                    10000f,
+                    true,
+                    false,
+                    true,
+                    false,
+                    2
+                );
+                GameFiber.Wait(10);
+            }
+
+            DoorCloser.Delete();
         }
 
         private void DetachGauntlet(Ped ped, Vehicle vehicle)
