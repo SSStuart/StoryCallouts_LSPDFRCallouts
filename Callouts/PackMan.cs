@@ -19,7 +19,7 @@ namespace StoryCallouts.Callouts
         private Ped Trevor, Lamar, Franklin;
         private Vehicle Truck, Trailer, JB700, Monroe;
         private List<Object> Spikes;
-        private GameFiber SpikesFiber;
+        private GameFiber JB700Fiber, SpikesFiber;
         private bool NearSpawnMessageSent, ChaseCreated;
 
         public override bool OnBeforeCalloutDisplayed()
@@ -64,7 +64,13 @@ namespace StoryCallouts.Callouts
             {
                 PrimaryColor = Color.FromArgb(217, 166, 0),
             };
-            Monroe.AttachTo(Trailer, 0, new Vector3(0, -4.8f, 1f), new Rotator(5, 0, 0));
+            NativeFunction.Natives.ATTACH_VEHICLE_ON_TO_TRAILER(
+                Monroe, Trailer,
+                0f, 0f, 0f,
+                0f, -4.8f, 0.9f,
+                5f, 0f, 0f,
+                0f
+            );
 
             EventBlip = Truck.AttachBlip();
             EventBlip.Color = Main.calloutWaypointColor;
@@ -98,7 +104,7 @@ namespace StoryCallouts.Callouts
 
                 EventBlip.Delete();
 
-                GameFiber.StartNew(JB700Logic);
+                JB700Fiber = GameFiber.StartNew(JB700Logic);
 
                 Trevor.Tasks.Clear();
                 Pursuit = Functions.CreatePursuit();
@@ -123,6 +129,9 @@ namespace StoryCallouts.Callouts
 
             if (SpikesFiber != null && SpikesFiber.IsAlive)
                 SpikesFiber.Abort();
+
+            if (JB700Fiber != null && JB700Fiber.IsAlive)
+                JB700Fiber.Abort();
 
             if (Pursuit != null && Functions.IsPursuitStillRunning(Pursuit))
                 Functions.ForceEndPursuit(Pursuit);
@@ -179,6 +188,8 @@ namespace StoryCallouts.Callouts
 
             while (Functions.IsPursuitStillRunning(Pursuit) && JB700.Exists() && Franklin.IsInVehicle(JB700, false))
             {
+                GameFiber.Sleep(5000);
+
                 List<Object> cleanedSpikes = new List<Object>();
                 foreach (Object spike in Spikes)
                 {
@@ -189,7 +200,7 @@ namespace StoryCallouts.Callouts
                 }
                 Spikes = cleanedSpikes;
 
-                if (JB700.Speed < 20 || Spikes.Count > 10)
+                if (JB700.Speed < 10 || Spikes.Count > 10)
                     continue;
 
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Spawning spike");
@@ -207,8 +218,6 @@ namespace StoryCallouts.Callouts
                     Name = "Spikes"
                 };
                 Spikes.Add(newSpike);
-
-                GameFiber.Sleep(5000);
             }
         }
 
@@ -257,9 +266,9 @@ namespace StoryCallouts.Callouts
                         wheelLR.BurstTire();
                     if (distanceWheelRR < 0.5 && wheelRR.TireHealth == 1000)
                         wheelRR.BurstTire();
+                    }
                 }
             }
-        }
 
         private void MountedGunFiring()
         {
@@ -280,7 +289,7 @@ namespace StoryCallouts.Callouts
                 }
                 else if (copVehiclesInFront.Count > 0)
                     NativeFunction.Natives.SET_VEHICLE_SHOOT_AT_TARGET(Franklin, Game.LocalPlayer.Character, Game.LocalPlayer.Character.Position.X, Game.LocalPlayer.Character.Position.Y, Game.LocalPlayer.Character.Position.Z);
+                }
             }
         }
     }
-}
