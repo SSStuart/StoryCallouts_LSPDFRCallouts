@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
 {
-    [CalloutInterfaceAPI.CalloutInterface("Prologue", CalloutProbability.Medium, "Bobcat Security Depot under attack", "Code 3")]
+    [CalloutInterfaceAPI.CalloutInterface("Prologue", CalloutProbability.Low, "Bobcat Security Depot under attack", "Code 3")]
 
     internal class Prologue : Callout
     {

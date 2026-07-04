@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
 {
-    [CalloutInterfaceAPI.CalloutInterface("Hood Safari", CalloutProbability.Medium, "Gang shootout", "Code 3")]
+    [CalloutInterfaceAPI.CalloutInterface("Hood Safari", CalloutProbability.Low, "Gang shootout", "Code 3")]
 
     internal class HoodSafari : Callout
     {

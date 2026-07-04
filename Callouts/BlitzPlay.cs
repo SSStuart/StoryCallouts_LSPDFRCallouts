@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
 {
-    [CalloutInterfaceAPI.CalloutInterface("Blitz Play", CalloutProbability.Medium, "Armored transport vehicle attacked", "Code 3")]
+    [CalloutInterfaceAPI.CalloutInterface("Blitz Play", CalloutProbability.Low, "Armored transport vehicle attacked", "Code 3")]
 
     internal class BlitzPlay : Callout
     {

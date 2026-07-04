@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
 {
-    [CalloutInterfaceAPI.CalloutInterface("The Bureau Raid", CalloutProbability.Medium, "FIB building attacked", "Code 3")]
+    [CalloutInterfaceAPI.CalloutInterface("The Bureau Raid", CalloutProbability.Low, "FIB building attacked", "Code 3")]
 
     internal class TheBureauRaid : Callout
     {

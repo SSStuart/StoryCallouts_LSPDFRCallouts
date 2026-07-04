@@ -1,21 +1,22 @@
 ﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
+using Rage.Native;
 using System;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
 {
-    [CalloutInterfaceAPI.CalloutInterface("The Paleto Score", CalloutProbability.Medium, "Paleto Bay Blaine County bank robbery", "Code 3")]
+    [CalloutInterfaceAPI.CalloutInterface("The Paleto Score", CalloutProbability.Low, "Paleto Bay Blaine County bank robbery", "Code 3")]
 
     internal class ThePaletoScore : Callout
     {
         private Vector3 SpawnPoint;
         private Blip EventBlip;
         private LHandle Pursuit;
-        private Ped Franklin, Michael, Trevor, Gunman, Fence1Target, Fence2Target, Fence3Target;
+        private Ped Franklin, Michael, Trevor, Gunman, Fence1Target, Fence2Target, Fence3Target, BackupCop1, BackupCop2, BackupCop3;
         private TasksList MichaelTask, TrevorTask, GunmanTask, FranklinDriveTask, FactoryEscapeTask;
-        private Vehicle Bulldozer;
+        private Vehicle Bulldozer, BackupCar1, BackupCar2;
         private bool NearSpawnMessageSent, ChaseCreated, FranklinDispatched, FranklinArrivedPickupPoint, FranklinEnd, EscapeThroughFactory;
         private bool MichaelInScoop, TrevorInScoop;
         private int GunmanVariant;
@@ -76,6 +77,33 @@ namespace StoryCallouts.Callouts
             Gunman.CanRagdoll = false;
             GunmanTask = new TasksList(Gunman, EndBehavior.Nothing);
 
+            BackupCar1 = new Vehicle("SHERIFF", new Vector3(-124.57f, 6441.20f, 31.11f), 25f)
+            {
+                IsSirenOn = true,
+                IsSirenSilent = true,
+            };
+            BackupCop1 = new Ped("S_M_Y_SHERIFF_01", BackupCar1.GetOffsetPositionRight(-2f), 25f);
+            BackupCop1.Inventory.GiveNewWeapon("WEAPON_PISTOL", 200, true);
+            BackupCop1.SetVariation(0, 1, 0);
+            BackupCop1.SetVariation(3, 1, 0);
+            BackupCop1.SetVariation(5, 1, 0);
+            NativeFunction.Natives.SET_PED_PROP_INDEX(BackupCop1, 0, 1, 0, true, 0);
+            NativeFunction.Natives.SET_PED_PROP_INDEX(BackupCop1, 1, 0, 0, true, 0);
+            BackupCop1.WarpIntoVehicle(BackupCar1, -1);
+
+            BackupCop2 = new Ped("S_M_Y_SHERIFF_01", BackupCar1.GetOffsetPositionRight(2f), 25f);
+            BackupCop2.Inventory.GiveNewWeapon("WEAPON_PISTOL", 200, true);
+            NativeFunction.Natives.SET_PED_PROP_INDEX(BackupCop2, 1, 1, 0, true, 0);
+            BackupCop1.WarpIntoVehicle(BackupCar1, 0);
+
+            BackupCar2 = new Vehicle("SHERIFF", new Vector3(-132.16f, 6447.40f, 31.09f), 281f)
+            {
+                IsSirenOn = true,
+                IsSirenSilent = true,
+            };
+            BackupCop3 = new Ped("S_M_Y_SHERIFF_01", BackupCar2.GetOffsetPositionRight(-2f), 280f);
+            BackupCop3.Inventory.GiveNewWeapon("WEAPON_PISTOL", 200, true);
+
             Fence1Target = new Ped(new Vector3(-177.8922f, 6407.372f, 30.5f))
             {
                 IsInvincible = true,
@@ -103,7 +131,7 @@ namespace StoryCallouts.Callouts
 
             foreach (TasksList EscapeTask in new[] { MichaelTask, TrevorTask, GunmanTask })
             {
-                EscapeTask.AddWalkAimingRandomEnemyTask(new Vector3(-140.9637f, 6442.315f, 31.35501f).Around2D(2), 1, 1, FiringPattern.BurstFireMG, 180);
+                EscapeTask.AddWalkAimingRandomEnemyTask(new Vector3(-130.3354f, 6443.665f, 30.79562f).Around2D(2), 1, 1, FiringPattern.BurstFireMG, 180);
                 EscapeTask.AddWalkAimingRandomEnemyTask(new Vector3(-146.308f, 6436.221f, 31.4569f), 0.5f, 1, FiringPattern.BurstFireMG, 180);
                 EscapeTask.AddWalkTask(new Vector3(-156.9891f, 6426.387f, 31.9159f).Around2D(1), 2, 2, false, true, 130, 60 * 4);
                 EscapeTask.AddWalkAimingTask(new Vector3(-171.529f, 6414.329f, 31.93072f), Fence1Target, 4, 2, FiringPattern.BurstFireMG, 60 * 4);
@@ -185,7 +213,7 @@ namespace StoryCallouts.Callouts
 
                 foreach (Entity entity in closeEntities)
                 {
-                    if (entity != Michael && entity != Trevor && entity != Gunman)
+                    if (entity != Michael && entity != Trevor && entity != Gunman && entity != BackupCar1 && entity != BackupCar2 && entity != BackupCop1 && entity != BackupCop2 && entity != BackupCop3)
                         entity.Delete();
                 }
 
@@ -194,6 +222,9 @@ namespace StoryCallouts.Callouts
                 Functions.AddPedToPursuit(Pursuit, Michael);
                 Functions.AddPedToPursuit(Pursuit, Trevor);
                 Functions.AddPedToPursuit(Pursuit, Gunman);
+                Functions.AddCopToPursuit(Pursuit, BackupCop1);
+                Functions.AddCopToPursuit(Pursuit, BackupCop2);
+                Functions.AddCopToPursuit(Pursuit, BackupCop3);
                 Functions.SetPursuitDisableAIForPed(Michael, true);
                 Functions.SetPursuitDisableAIForPed(Trevor, true);
                 Functions.SetPursuitDisableAIForPed(Gunman, true);
@@ -388,12 +419,22 @@ namespace StoryCallouts.Callouts
             }
             if (Bulldozer.Exists())
                 Bulldozer.Dismiss();
+            if (BackupCop1.Exists())
+                BackupCop1.Dismiss();
+            if (BackupCop2.Exists())
+                BackupCop2.Dismiss();
+            if (BackupCop3.Exists())
+                BackupCop3.Dismiss();
+            if (BackupCar1.Exists())
+                BackupCar1.Dismiss();
+            if (BackupCar2.Exists())
+                BackupCar2.Dismiss();
             if (Fence1Target.Exists())
-                Fence1Target.Dismiss();
+                Fence1Target.Delete();
             if (Fence2Target.Exists())
-                Fence2Target.Dismiss();
+                Fence2Target.Delete();
             if (Fence3Target.Exists())
-                Fence3Target.Dismiss();
+                Fence3Target.Delete();
 
             Game.LogTrivial($"[{Main.pluginName}] 'The Paleto Score' callout has ended.");
         }

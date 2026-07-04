@@ -19,9 +19,9 @@ namespace StoryCallouts.Callouts
         private Ped Michael, Molly, LandingJetPilot, HangarJetPilot, EscapeRouteTarget;
         private Vehicle MichaelCar, MollyCar, LandingJet, HangarJet, EscapeJet;
         private Object FilmReel;
-        private TasksList MollyTasks;
+        private TasksList MollyTasks, MichaelTasks;
         private GameFiber MichaelChaseFiber;
-        private bool NearSpawnMessageSent, ChaseCreated, StartLandingJet, MollyNowASuspect, MollyExitedCar, JetEngineOn, MollyKilled;
+        private bool NearSpawnMessageSent, ChaseCreated, ReelDetached, StartLandingJet, MollyNowASuspect, MollyExitedCar, JetEngineOn, MollyKilled;
 
         public override bool OnBeforeCalloutDisplayed()
         {
@@ -50,7 +50,7 @@ namespace StoryCallouts.Callouts
             MollyTasks = new TasksList(Molly);
             MollyTasks.AddDriveTask(new Vector3(-1248.411f, -2844.598f, 13.49896f), 80, 30, VehicleDrivingFlags.IgnorePathFinding);
             MollyTasks.AddDriveTask(new Vector3(-1318.653f, -2776.937f, 13.24451f), 80, 20, VehicleDrivingFlags.IgnorePathFinding);
-            MollyTasks.AddDriveTask(new Vector3(-1290.709f, -2653.937f, 13.3685f), 80, 20, VehicleDrivingFlags.IgnorePathFinding);
+            MollyTasks.AddDriveTask(new Vector3(-1290.709f, -2653.937f, 13.3685f), 80, 10, VehicleDrivingFlags.IgnorePathFinding);
             MollyTasks.AddDriveTask(new Vector3(-1169.623f, -2512.278f, 13.26293f), 80, 10, VehicleDrivingFlags.IgnorePathFinding);
             MollyTasks.AddDriveTask(new Vector3(-1125.168f, -2432.806f, 13.49878f), 80, 30, VehicleDrivingFlags.IgnorePathFinding);
             MollyTasks.AddDriveTask(new Vector3(-1106.153f, -2319.22f, 13.49903f), 80, 40, VehicleDrivingFlags.IgnorePathFinding);
@@ -76,6 +76,14 @@ namespace StoryCallouts.Callouts
 
             Michael = Characters.Michael.Create(MollyCar.GetOffsetPositionFront(-25), 100, this.GetType().Name);
             MichaelCar = Vehicles.MichaelCar.Create(MollyCar.GetOffsetPositionFront(-30), 100, Michael);
+
+            MichaelTasks = new TasksList(Michael);
+            MichaelTasks.AddDriveTask(new Vector3(-1248.411f, -2844.598f, 13.49896f).Around2D(10), 80, 30, VehicleDrivingFlags.IgnorePathFinding);
+            MichaelTasks.AddDriveTask(new Vector3(-1318.653f, -2776.937f, 13.24451f).Around2D(10), 80, 20, VehicleDrivingFlags.IgnorePathFinding);
+            MichaelTasks.AddDriveTask(new Vector3(-1290.709f, -2653.937f, 13.3685f), 80, 10, VehicleDrivingFlags.IgnorePathFinding);
+            MichaelTasks.AddDriveTask(new Vector3(-1169.623f, -2512.278f, 13.26293f), 80, 10, VehicleDrivingFlags.IgnorePathFinding);
+            MichaelTasks.AddDriveTask(new Vector3(-1125.168f, -2432.806f, 13.49878f), 80, 30, VehicleDrivingFlags.IgnorePathFinding);
+            MichaelTasks.AddFollowInVehicleTask(Molly, 10, 4457020);
 
             // Removing eventual existing plane
             Entity[] planeToRemove = World.GetEntities(new Vector3(-1610.484f, -2683.857f, 13.2891f), 30, GetEntitiesFlags.ConsiderPlanes);
@@ -126,6 +134,7 @@ namespace StoryCallouts.Callouts
 
             NearSpawnMessageSent = false;
             ChaseCreated = false;
+            ReelDetached = false;
             StartLandingJet = false;
             MollyNowASuspect = false;
             MollyExitedCar = false;
@@ -139,7 +148,7 @@ namespace StoryCallouts.Callouts
         {
             base.Process();
 
-            if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 300)
+            if (!NearSpawnMessageSent && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 400)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Sending CI message");
 
@@ -147,15 +156,14 @@ namespace StoryCallouts.Callouts
                 NearSpawnMessageSent = true;
             }
 
-            if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(SpawnPoint) < 200)
+            if (!ChaseCreated && Game.LocalPlayer.Character.DistanceTo2D(new Vector3(-1165.399f, -2969.084f, 13.28978f)) < 250)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting chase");
 
                 CalloutInterfaceAPI.Functions.SendMessage(this, "Another unauthorized individual appears to be following the escort");
 
                 MollyTasks.StartTasks();
-
-                NativeFunction.Natives.TASK_VEHICLE_FOLLOW(Michael, MichaelCar, Molly, 100f, 4457020, 30);
+                MichaelTasks.StartTasks();
 
                 MollyBlip = new Blip(Molly)
                 {
@@ -173,6 +181,17 @@ namespace StoryCallouts.Callouts
                 ChaseCreated = true;
             }
 
+            if (!ReelDetached && Molly.Exists() && (Molly.IsDead || Functions.IsPedGettingArrested(Molly) || Molly.IsRagdoll))
+            {
+                Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Molly arrested/dead/ragdoll, detaching reel & enabling Michael AI");
+
+                FilmReel.Detach();
+
+                MichaelChaseFiber = GameFiber.StartNew(MichaelChaseLogic);
+
+                ReelDetached = true;
+            }
+
             if (ChaseCreated && !StartLandingJet && Molly.DistanceTo2D(new Vector3(-1227.677f, -2585.197f, 13.62339f)) < 30)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting landing jet sequence");
@@ -182,7 +201,7 @@ namespace StoryCallouts.Callouts
                 LandingJetPilot.Tasks.LandPlane(new Vector3(-1331.008f, -2201.203f, 13.62391f), new Vector3(-1605.616f, -2676.81f, 13.5929f));
                 GameFiber.StartNew(delegate
                 {
-                    while (LandingJet.DistanceTo2D(new Vector3(-1381.439f, -2289.579f, 50f)) > 50)
+                    while (LandingJet.Exists() && LandingJet.DistanceTo2D(new Vector3(-1381.439f, -2289.579f, 50f)) > 50)
                     {
                         float speedBoost = Math.Max(0, LandingJet.DistanceTo2D(new Vector3(-1381.439f, -2289.579f, 13.60108f))) / 20;
                         LandingJet.ApplyForce(new Vector3(0f, speedBoost, 0f), new Vector3(), true, false);
@@ -255,6 +274,9 @@ namespace StoryCallouts.Callouts
 
             base.End();
 
+            if (MichaelChaseFiber != null && MichaelChaseFiber.IsAlive)
+                MichaelChaseFiber.Abort();
+
             if (Pursuit != null && Functions.IsPursuitStillRunning(Pursuit))
                 Functions.ForceEndPursuit(Pursuit);
 
@@ -288,6 +310,8 @@ namespace StoryCallouts.Callouts
 
         private void MichaelChaseLogic()
         {
+            MichaelTasks.AbortTasks();
+
             if (!Michael.Exists() || Functions.IsPedArrested(Michael) || !MichaelCar.Exists() || !Molly.Exists() || !FilmReel.Exists()) return;
 
             GameFiber.StartNew(delegate

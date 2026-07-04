@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
 {
-    [CalloutInterfaceAPI.CalloutInterface("The Jewel Store Job", CalloutProbability.Medium, "Jewel store heist", "Code 3")]
+    [CalloutInterfaceAPI.CalloutInterface("The Jewel Store Job", CalloutProbability.Low, "Jewel store heist", "Code 3")]
 
     internal class TheJewelStoreJob : Callout
     {

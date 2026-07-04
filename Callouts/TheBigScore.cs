@@ -9,7 +9,7 @@ using Object = Rage.Object;
 
 namespace StoryCallouts.Callouts
 {
-    [CalloutInterfaceAPI.CalloutInterface("The Big Score", CalloutProbability.Medium, "Union Depository robbery", "Code 3")]
+    [CalloutInterfaceAPI.CalloutInterface("The Big Score", CalloutProbability.Low, "Union Depository robbery", "Code 3")]
 
     internal class TheBigScore : Callout
     {
@@ -185,6 +185,7 @@ namespace StoryCallouts.Callouts
         private void OnCalloutAccepted_Loud()
         {
             Michael = Characters.Michael.Create(new Vector3(-1.173188f, -664.074f, 49.47756f), 0, this.GetType().Name + "Loud");
+            Michael.Armor = 200;
             Michael.Inventory.GiveNewWeapon("WEAPON_ADVANCEDRIFLE", 300, true);
             Michael.CanAttackFriendlies = false;
             Michael.RelationshipGroup = RelationshipGroup.Gang1;
@@ -212,12 +213,14 @@ namespace StoryCallouts.Callouts
                     GunmanDiversion = Characters.Chef.Create(new Vector3(-2.495926f, -670.0272f, 49.47768f), 0, this.GetType().Name + "Loud");
                     break;
             }
+            GunmanDiversion.Armor = 200;
             GunmanDiversion.Inventory.GiveNewWeapon("WEAPON_CARBINERIFLE", 300, true);
             GunmanDiversion.CanAttackFriendlies = false;
             GunmanDiversion.RelationshipGroup = RelationshipGroup.Gang1;
             GunmanDiversionEscapeTask = new TasksList(GunmanDiversion, EndBehavior.Nothing);
 
             Franklin = Characters.Franklin.Create(new Vector3(-40.89185f, -674.7073f, 40.72684f), 0, this.GetType().Name + "Loud");
+            Franklin.Armor = 200;
             Franklin.Inventory.GiveNewWeapon("WEAPON_ADVANCEDRIFLE", 300, true);
             Franklin.CanAttackFriendlies = false;
             Franklin.RelationshipGroup = RelationshipGroup.Gang1;
@@ -236,10 +239,10 @@ namespace StoryCallouts.Callouts
             int seatIndex = -1;
             foreach (TasksList DiversionEscape in new[] { MichaelDiversionEscapeTask, GunmanDiversionEscapeTask, FranklinDiversionEscapeTask })
             {
-                DiversionEscape.AddWalkAimingRandomEnemyTask(new Vector3(-86.83004f, -689.665f, 42.48434f), 2, 2, FiringPattern.BurstFire, 60 * 3); /* Before footbridge */
-                DiversionEscape.AddWalkAimingRandomEnemyTask(new Vector3(-120.9642f, -677.1685f, 40.51041f), 2, 2, FiringPattern.BurstFire, 60 * 3); /* Footbridge end */
-                DiversionEscape.AddWalkAimingRandomEnemyTask(new Vector3(-161.3253f, -667.6812f, 40.46915f), 2, 2, FiringPattern.BurstFire, 60 * 3); /* Middle before stairs */
-                DiversionEscape.AddWalkAimingRandomEnemyTask(new Vector3(-204.2099f, -655.1133f, 40.4893f), 2, 2, FiringPattern.BurstFire, 60 * 3); /* Bottom stairs before going up */
+                DiversionEscape.AddWalkAimingRandomEnemyTask(new Vector3(-86.83004f, -689.665f, 42.48434f), 2, 2, FiringPattern.FullAutomatic, 60 * 3); /* Before footbridge */
+                DiversionEscape.AddWalkAimingRandomEnemyTask(new Vector3(-120.9642f, -677.1685f, 40.51041f), 2, 2, FiringPattern.FullAutomatic, 60 * 3); /* Footbridge end */
+                DiversionEscape.AddWalkAimingRandomEnemyTask(new Vector3(-161.3253f, -667.6812f, 40.46915f), 2, 2, FiringPattern.FullAutomatic, 60 * 3); /* Middle before stairs */
+                DiversionEscape.AddWalkAimingRandomEnemyTask(new Vector3(-204.2099f, -655.1133f, 40.4893f), 2, 2, FiringPattern.FullAutomatic, 60 * 3); /* Bottom stairs before going up */
                 DiversionEscape.AddWalkAimingRandomEnemyTask(new Vector3(-185.1989f, -637.7662f, 48.67397f), 2, 2, FiringPattern.BurstFire, 60 * 3); /* Middle of plaza */
                 DiversionEscape.AddWalkAimingRandomEnemyTask(new Vector3(-171.0332f, -603.8388f, 48.22417f), 2, 2, FiringPattern.BurstFire, 60 * 3); /* End of plaza */
                 DiversionEscape.AddWalkAimingRandomEnemyTask(new Vector3(-164.5792f, -559.0748f, 48.23022f), 2, 2, FiringPattern.BurstFire, 60 * 3); /* Top of the stairs */
