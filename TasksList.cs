@@ -44,9 +44,9 @@ namespace StoryCallouts
             Chase chaseTask = new Chase(_ped, target);
             _tasks.Add(chaseTask);
         }
-        public void AddFollowInVehicleTask(Ped target, int distance = 20)
+        public void AddFollowInVehicleTask(Ped target, int distance = 20, int flags = 1074528293)
         {
-            FollowInVehicle followInVehicleTask = new FollowInVehicle(_ped, target, distance);
+            FollowInVehicle followInVehicleTask = new FollowInVehicle(_ped, target, distance, flags);
             _tasks.Add(followInVehicleTask);
         }
         public void AddWalkTask(Vector3 position, int walkingSpeed = 3, float acceptedDistance = 1, bool followNavMesh = false, bool force = false, int heading = 0, int timeoutSec = 60)

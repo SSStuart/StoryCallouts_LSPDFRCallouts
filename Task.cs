@@ -67,19 +67,21 @@ namespace StoryCallouts
     {
         private readonly Ped _target;
         private readonly int _distance;
+        private readonly int _flags;
 
-        public FollowInVehicle(Ped ped, Ped target, int distance)
+        public FollowInVehicle(Ped ped, Ped target, int distance, int flags)
         {
             _ped = ped;
             _target = target;
             _distance = distance;
+            _flags = flags;
         }
 
         public override void Execute()
         {
             if (_ped.Exists() && _ped.IsInAnyVehicle(false) && _target.Exists())
             {
-                NativeFunction.Natives.TASK_VEHICLE_FOLLOW(_ped, _ped.CurrentVehicle, _target, 100f, 1074528293, _distance);
+                NativeFunction.Natives.TASK_VEHICLE_FOLLOW(_ped, _ped.CurrentVehicle, _target, 100f, _flags, _distance);
                 _ped.KeepTasks = true;
 
                 while (_ped.Exists() && _ped.IsAlive && _target.Exists() && _target.IsInAnyVehicle(false))
@@ -176,14 +178,22 @@ namespace StoryCallouts
         {
             if (_ped.Exists())
             {
+                bool foundEnnemy = true;
                 int counterSec = 0;
-                if (_targetEntity == null)
+                if (_targetEntity == null || !_targetEntity.Exists())
                 {
                     Ped[] enemies = Main.GetNearbyEnnemies(_ped.Position);
+                    if (enemies.Length > 0 || (Game.LocalPlayer.Character.Exists() && Game.LocalPlayer.Character.IsAlive))
                     _targetEntity = enemies.Length > 0 ? enemies[MathHelper.GetRandomInteger(enemies.Length)] : Game.LocalPlayer.Character;
+                    else
+                        foundEnnemy = false;
                 }
 
-                Rage.Task task = _ped.Tasks.GoToWhileAiming(Position, _targetEntity, _acceptedDistance, _speed, _fireWeapon, _firingPattern);
+                Rage.Task task;
+                if (foundEnnemy)
+                    task = _ped.Tasks.GoToWhileAiming(Position, _targetEntity, _acceptedDistance, _speed, _fireWeapon, _firingPattern);
+                else
+                    task = _ped.Tasks.FollowNavigationMeshToPosition(Position, _ped.Heading, _speed, _acceptedDistance, _timeoutSec * 1000);
 
                 do
                 {
