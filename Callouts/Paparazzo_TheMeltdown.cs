@@ -16,7 +16,7 @@ namespace StoryCallouts.Callouts
         private Ped Poppy, Franklin;
         private Vehicle PoppyCar, FranklinCar;
         private Object FranklinPhone;
-        private TasksList PoppyTasks;
+        private TasksList PoppyTasks, FranklinTasks;
         private bool NearSpawnMessageSent, ChaseCreated, ChaseEnded, PoppyAIEnabled;
 
         public override bool OnBeforeCalloutDisplayed()
@@ -67,6 +67,10 @@ namespace StoryCallouts.Callouts
             Franklin.KeepTasks = true;
             Franklin.WarpIntoVehicle(FranklinCar, -1);
 
+            FranklinTasks = new TasksList(Franklin, EndBehavior.Nothing);
+            FranklinTasks.AddDriveTask(new Vector3(471.0115f, 275.8743f, 102.7398f), 30, 5);
+            FranklinTasks.AddFollowInVehicleTask(Poppy, 50, 524861);
+
             EventBlip = new Blip(SpawnPoint)
             {
                 Color = Main.calloutWaypointColor,
@@ -106,8 +110,7 @@ namespace StoryCallouts.Callouts
                 Functions.SetPursuitIsActiveForPlayer(Pursuit, true);
 
                 PoppyTasks.StartTasks();
-
-                NativeFunction.Natives.TASK_VEHICLE_FOLLOW(Franklin, FranklinCar, Poppy, 100f, 524861, 50);
+                FranklinTasks.StartTasks();
 
                 ChaseCreated = true;
             }
@@ -141,8 +144,8 @@ namespace StoryCallouts.Callouts
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Enabling Poppy AI");
 
-                Functions.SetPedResistanceChance(Poppy, 0f);
                 Functions.SetPursuitDisableAIForPed(Poppy, false);
+                Functions.SetPedAsStopped(Poppy, true);
 
                 PoppyAIEnabled = true;
             }

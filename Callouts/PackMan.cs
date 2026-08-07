@@ -58,7 +58,13 @@ namespace StoryCallouts.Callouts
             JB700.Mods.InstallModKit();
             JB700.Mods.ApplyAllMods();
 
-            JB700.AttachTo(Trailer, 0, new Vector3(0, -5, 3.4f), new Rotator());
+            NativeFunction.Natives.ATTACH_VEHICLE_ON_TO_TRAILER(
+                JB700, Trailer,
+                0f, 0f, 0f,
+                0f, -5f, 3.4f,
+                0f, 0f, 0f,
+                0f
+            );
             Franklin.WarpIntoVehicle(JB700, -1);
             Monroe = new Vehicle("monroe", new Vector3(-2187.83f, 4372.91f, 55.9f), 340)
             {
@@ -266,9 +272,9 @@ namespace StoryCallouts.Callouts
                         wheelLR.BurstTire();
                     if (distanceWheelRR < 0.5 && wheelRR.TireHealth == 1000)
                         wheelRR.BurstTire();
-                    }
                 }
             }
+        }
 
         private void MountedGunFiring()
         {
@@ -289,7 +295,7 @@ namespace StoryCallouts.Callouts
                 }
                 else if (copVehiclesInFront.Count > 0)
                     NativeFunction.Natives.SET_VEHICLE_SHOOT_AT_TARGET(Franklin, Game.LocalPlayer.Character, Game.LocalPlayer.Character.Position.X, Game.LocalPlayer.Character.Position.Y, Game.LocalPlayer.Character.Position.Z);
-                }
             }
         }
     }
+}

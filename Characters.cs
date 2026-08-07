@@ -570,7 +570,8 @@ namespace StoryCallouts
                     break;
 
                 default:
-                    //Game.DisplayNotification("NO VARIATIONS DEFINED FOR " + Forename);
+                    if (Settings.debug)
+                        Game.DisplayNotification("NO VARIATIONS DEFINED FOR " + Forename);
                     break;
             }
 
