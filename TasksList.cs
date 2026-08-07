@@ -34,6 +34,12 @@ namespace StoryCallouts
             _endBehavior = endBehavior;
         }
 
+        public void AddWaitTask(int timeoutSec = 30)
+        {
+            Wait waitTask = new Wait(_ped, timeoutSec);
+            _tasks.Add(waitTask);
+        }
+
         public void AddDriveTask(Vector3 position, int drivingSpeed = 80, int acceptedDistance = 20, VehicleDrivingFlags drivingFlags = VehicleDrivingFlags.Emergency, int timeoutSec = 60)
         {
             DriveTo drivetask = new DriveTo(_ped, position, drivingSpeed, drivingFlags, acceptedDistance, timeoutSec);
@@ -49,9 +55,14 @@ namespace StoryCallouts
             FollowInVehicle followInVehicleTask = new FollowInVehicle(_ped, target, distance, flags);
             _tasks.Add(followInVehicleTask);
         }
-        public void AddWalkTask(Vector3 position, int walkingSpeed = 3, float acceptedDistance = 1, bool followNavMesh = false, bool force = false, int heading = 0, int timeoutSec = 60)
+        public void AddWalkTask(Vector3 position, float walkingSpeed = 3, float acceptedDistance = 1, bool followNavMesh = false, bool force = false, int heading = 0, int timeoutSec = 60)
         {
             WalkTo walkTask = new WalkTo(_ped, position, walkingSpeed, acceptedDistance, followNavMesh, force, heading, timeoutSec);
+            _tasks.Add(walkTask);
+        }
+        public void AddWalkTaskRelativeEntity(Vector3 position, Entity relativeTo, float walkingSpeed = 3, float acceptedDistance = 1, bool followNavMesh = false, bool force = false, int heading = 0, int timeoutSec = 60)
+        {
+            WalkTo walkTask = new WalkTo(_ped, position, relativeTo, walkingSpeed, acceptedDistance, followNavMesh, force, heading, timeoutSec);
             _tasks.Add(walkTask);
         }
         public void AddWalkAimingTask(Vector3 position, Entity entityToAimAt, float acceptedDistance = 1, int walkingSpeed = 3, FiringPattern firingPattern = FiringPattern.BurstFire, int timeoutSec = 60)
@@ -74,9 +85,9 @@ namespace StoryCallouts
             ExitVehicle exitVehicleTask = new ExitVehicle(_ped, flags, timeoutSec);
             _tasks.Add(exitVehicleTask);
         }
-        public void AddClimbLadderTask(int timeoutSec = 60)
+        public void AddClimbLadderTask(Vector3 endPosition, int timeoutSec = 60)
         {
-            ClimbLadder climbLadderTask = new ClimbLadder(_ped, timeoutSec);
+            ClimbLadder climbLadderTask = new ClimbLadder(_ped, endPosition, timeoutSec);
             _tasks.Add(climbLadderTask);
         }
         public void AddClimbTask(int timeoutSec = 60)
@@ -211,6 +222,7 @@ namespace StoryCallouts
 
         public void AbortTasks()
         {
+            if (_taskFiber != null && _taskFiber.IsAlive)
             _taskFiber.Abort();
             if (_ped.Exists())
                 _ped.Tasks.Clear();
@@ -219,6 +231,11 @@ namespace StoryCallouts
                 DEBUG_BLIP.Delete();
 
             TaskFinished = true;
+        }
+
+        public int GetCurrentTaskIndex()
+        {
+            return _currentTaskIndex;
         }
     }
 }

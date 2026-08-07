@@ -13,6 +13,19 @@ namespace StoryCallouts
         public abstract void Execute();
     }
 
+    internal class Wait : Task
+    {
+        public Wait(Ped ped, int timeoutSec)
+        {
+            _ped = ped;
+            _timeoutSec = timeoutSec;
+        }
+        public override void Execute()
+        {
+            GameFiber.Wait(_timeoutSec * 1000);
+        }
+    }
+
     internal class DriveTo : Task
     {
         private readonly int _speed;
@@ -94,13 +107,14 @@ namespace StoryCallouts
 
     internal class WalkTo : Task
     {
-        private readonly int _speed;
+        private readonly float _speed;
         public readonly float _acceptedDistance;
         private readonly bool _followNavMesh;
         private readonly bool _force;
         private readonly int _heading;
+        private readonly Entity _EntityRelativePosition;
 
-        public WalkTo(Ped ped, Vector3 position, int walkingSpeed, float acceptedDistance, bool followNavMesh, bool force, int heading, int timeoutSec)
+        public WalkTo(Ped ped, Vector3 position, float walkingSpeed, float acceptedDistance, bool followNavMesh, bool force, int heading, int timeoutSec)
         {
             _ped = ped;
             Position = position;
@@ -111,11 +125,26 @@ namespace StoryCallouts
             _heading = heading;
             _timeoutSec = timeoutSec;
         }
+        public WalkTo(Ped ped, Vector3 position, Entity relativeTo, float walkingSpeed, float acceptedDistance, bool followNavMesh, bool force, int heading, int timeoutSec)
+        {
+            _ped = ped;
+            Position = position;
+            _speed = walkingSpeed;
+            _acceptedDistance = acceptedDistance;
+            _followNavMesh = followNavMesh;
+            _force = force;
+            _heading = heading;
+            _timeoutSec = timeoutSec;
+            _EntityRelativePosition = relativeTo;
+        }
 
         public override void Execute()
         {
             if (_ped.Exists())
             {
+                if (_EntityRelativePosition != null)
+                    Position = _EntityRelativePosition.GetOffsetPosition(Position);
+
                 int counterSec = 0;
                 Rage.Task task;
                 if (_followNavMesh)
@@ -129,18 +158,20 @@ namespace StoryCallouts
                     counterSec++;
                 }
                 while (counterSec < _timeoutSec * 10 && task != null && _ped.Exists() && _ped.IsAlive && (_ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress || _ped.Tasks.CurrentTaskStatus == TaskStatus.Interrupted) && _ped.DistanceTo(Position) > _acceptedDistance && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
-                if (_ped.Exists())
-                {
                     if (_force)
+                    {
+                    GameFiber.Wait(1000);
+                    if (_ped.Exists() && _ped.IsAlive)
                     {
                         _ped.Position = Position;
                         _ped.Heading = _heading;
                     }
+                }
+                if (_ped.Exists() && _ped.IsAlive)
                     _ped.Tasks.Clear();
                 }
             }
         }
-    }
 
     internal class WalkToAiming : Task
     {
@@ -249,16 +280,23 @@ namespace StoryCallouts
 
     internal class ClimbLadder : Task
     {
-        public ClimbLadder(Ped ped, int timeoutSec)
+        private readonly Vector3 _endPosition;
+
+        public ClimbLadder(Ped ped, Vector3 endPosition, int timeoutSec)
         {
             _ped = ped;
+            _endPosition = endPosition;
             _timeoutSec = timeoutSec;
         }
         public override void Execute()
         {
             if (_ped.Exists() && _ped.IsAlive)
+            {
                 _ped.Tasks.ClimbLadder().WaitForCompletion(_timeoutSec * 1000);
+                if (_ped.Exists() && _ped.IsAlive && _ped.DistanceTo(_endPosition) > 1f)
+                    _ped.Position = _endPosition;
         }
+    }
     }
     internal class Climb : Task
     {

@@ -56,7 +56,7 @@ namespace StoryCallouts.Callouts
 
             EscapeTasks = new TasksList(Franklin, EndBehavior.Nothing);
             EscapeTasks.AddWalkTask(new Vector3(-592.8911f, -1642.595f, 20.66263f), 2, 1, false, true, 146);
-            EscapeTasks.AddClimbLadderTask();
+            EscapeTasks.AddClimbLadderTask(new Vector3(-593.3156f, -1643.356f, 26.17645f));
             EscapeTasks.AddWalkTask(new Vector3(-605.5242f, -1667.384f, 25.71412f), 2, 1, false, true, 150);
             EscapeTasks.AddWalkTask(new Vector3(-597.491f, -1688.984f, 26.63565f), 2, 1, false, true, 213);
             EscapeTasks.AddWalkTask(new Vector3(-602.9593f, -1697.976f, 25.04387f), 2, 1, false, true, 130);

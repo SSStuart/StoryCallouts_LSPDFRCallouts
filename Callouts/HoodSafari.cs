@@ -89,7 +89,7 @@ namespace StoryCallouts.Callouts
                     FranklinTasks.AddFollowInVehicleTask(Trevor, 10);
                     FranklinTasks.AddExitVehicleTask();
                     FranklinTasks.AddWalkTask(new Vector3(767.1197f, -2919.813f, 0.07052082f), 2, 1, false, false, 180);
-                    FranklinTasks.AddClimbLadderTask();
+                    FranklinTasks.AddClimbLadderTask(new Vector3(767.135f, -2920.722f, 6.721441f));
                     break;
 
                 case 2:
@@ -109,7 +109,7 @@ namespace StoryCallouts.Callouts
             TrevorTasks.AddDriveTask(new Vector3(757.7037f, -2915.058f, 0.4871701f));
             TrevorTasks.AddExitVehicleTask();
             TrevorTasks.AddWalkTask(new Vector3(767.1197f, -2919.813f, 0.07052082f), 2, 1, false, false, 180);
-            TrevorTasks.AddClimbLadderTask();
+            TrevorTasks.AddClimbLadderTask(new Vector3(767.135f, -2920.722f, 6.721441f));
             TrevorTasks.AddWalkTask(new Vector3(775.9891f, -2959.658f, 5.800721f), 3, 5);
 
             LamarTasks.AddDriveTask(new Vector3(926.0121f, -2723.802f, 1.470533f));
