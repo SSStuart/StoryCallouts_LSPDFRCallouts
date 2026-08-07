@@ -2,7 +2,6 @@
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
 using Rage.Native;
-using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Object = Rage.Object;
@@ -773,7 +772,7 @@ namespace StoryCallouts.Callouts
                     ped.CurrentVehicle.SetRotationYaw(ped.CurrentVehicle.Rotation.Yaw - 1);
                 else if (ped.CurrentVehicle.Heading < trailer.Heading - 1)
                     ped.CurrentVehicle.SetRotationYaw(ped.CurrentVehicle.Rotation.Yaw + 1);
-                float lateralForce = 10 - Math.Min(Math.Max(ped.CurrentVehicle.DistanceTo2D(trailer.GetOffsetPositionFront(-5)) - 10, 0), 20) / 2;
+                float lateralForce = 10 - MathHelper.Clamp(0, ped.CurrentVehicle.DistanceTo2D(trailer.GetOffsetPositionFront(-5)) - 10, 20) / 2;
                 if (ped.DistanceTo2D(trailer.GetOffsetPosition(new Vector3(-2, -5, 0))) < ped.CurrentVehicle.DistanceTo2D(trailer.GetOffsetPosition(new Vector3(2, -5, 0))))
                     ped.CurrentVehicle.ApplyForce(new Vector3(lateralForce * 5, 0, 0), new Vector3(), true, true);
                 else

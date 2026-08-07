@@ -1,6 +1,5 @@
 ﻿using LSPD_First_Response.Mod.API;
 using Rage;
-using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -34,8 +33,6 @@ namespace StoryCallouts
             Game.LogTrivial($"Go on duty to fully load {pluginName}.");
 
             UpdateChecker.CheckForUpdates();
-
-            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(LSPDFRResolveEventHandler);
         }
         private static void OnOnDutyStateChangedHandler(bool OnDuty)
         {
@@ -105,35 +102,6 @@ namespace StoryCallouts
                 Functions.RegisterCallout(typeof(Callouts.RE_CountrysideRobbery));
             if (Settings.callout_RE_CountrysideGangFight)
                 Functions.RegisterCallout(typeof(Callouts.RE_CountrysideGangFight));
-        }
-
-
-        public static Assembly LSPDFRResolveEventHandler(object sender, ResolveEventArgs args)
-        {
-            foreach (Assembly assembly in Functions.GetAllUserPlugins())
-            {
-                if (args.Name.ToLower().Contains(assembly.GetName().Name.ToLower()))
-                {
-                    return assembly;
-                }
-            }
-            return null;
-        }
-
-        public static bool IsLSPDFRPluginRunning(string Plugin, Version minversion = null)
-        {
-            foreach (Assembly assembly in Functions.GetAllUserPlugins())
-            {
-                AssemblyName assemblyName = assembly.GetName();
-                if (assemblyName.Name.ToLower() == Plugin.ToLower())
-                {
-                    if (minversion == null || assemblyName.Version.CompareTo(minversion) >= 0)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
 
         public static Ped[] GetNearbyEnnemies(Vector3 position) =>

@@ -2,7 +2,6 @@
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
 using Rage.Native;
-using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Object = Rage.Object;
@@ -219,7 +218,7 @@ namespace StoryCallouts.Callouts
             }
 
             if (MilitaryTruckBlip.Exists())
-                MilitaryTruckBlip.Alpha = 1 - Math.Min(Math.Max(Trevor.DistanceTo(MilitaryTruck) - 50, 0), 50) / 50;
+                MilitaryTruckBlip.Alpha = 1 - MathHelper.Clamp(0, Trevor.DistanceTo(MilitaryTruck) - 50, 50) / 50;
 
             if (Game.IsKeyDown(Keys.End)
                 || (ChaseCreated && !Functions.IsPursuitStillRunning(Pursuit)))

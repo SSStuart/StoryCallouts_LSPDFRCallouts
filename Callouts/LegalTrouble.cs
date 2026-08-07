@@ -2,7 +2,6 @@
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
 using Rage.Native;
-using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Object = Rage.Object;
@@ -203,9 +202,9 @@ namespace StoryCallouts.Callouts
                 {
                     while (LandingJet.Exists() && LandingJet.DistanceTo2D(new Vector3(-1381.439f, -2289.579f, 50f)) > 50)
                     {
-                        float speedBoost = Math.Max(0, LandingJet.DistanceTo2D(new Vector3(-1381.439f, -2289.579f, 13.60108f))) / 20;
+                        float speedBoost = MathHelper.Max(0, LandingJet.DistanceTo2D(new Vector3(-1381.439f, -2289.579f, 13.60108f))) / 20;
                         LandingJet.ApplyForce(new Vector3(0f, speedBoost, 0f), new Vector3(), true, false);
-                        LandingJet.SetRotationPitch(Math.Min(-2f, LandingJet.Rotation.Pitch));
+                        LandingJet.SetRotationPitch(MathHelper.Min(-2f, LandingJet.Rotation.Pitch));
                         GameFiber.Yield();
                     }
                 });
