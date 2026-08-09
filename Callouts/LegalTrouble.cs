@@ -180,7 +180,7 @@ namespace StoryCallouts.Callouts
                 ChaseCreated = true;
             }
 
-            if (!ReelDetached && Molly.Exists() && (Molly.IsDead || Functions.IsPedGettingArrested(Molly) || Molly.IsRagdoll))
+            if (!ReelDetached && !MollyExitedCar && Molly.Exists() && (Molly.IsDead || Functions.IsPedGettingArrested(Molly) || Molly.IsRagdoll))
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Molly arrested/dead/ragdoll, detaching reel & enabling Michael AI");
 
@@ -224,7 +224,7 @@ namespace StoryCallouts.Callouts
                 MollyNowASuspect = true;
             }
 
-            if (!MollyExitedCar && (Molly.DistanceTo2D(new Vector3(-928.552f, -2916.578f, 13.39358f)) < 20 || Molly.IsDead))
+            if (!MollyExitedCar && !ReelDetached && (Molly.DistanceTo2D(new Vector3(-928.552f, -2916.578f, 13.39358f)) < 20 || Molly.IsDead))
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting Michael chase logic");
 
@@ -233,7 +233,7 @@ namespace StoryCallouts.Callouts
                 MollyExitedCar = true;
             }
 
-            if (!JetEngineOn && Molly.DistanceTo2D(new Vector3(-927.2167f, -2955.557f, 13.94507f)) < 5)
+            if (!JetEngineOn && Molly.Exists() && Molly.DistanceTo2D(new Vector3(-927.2167f, -2955.557f, 13.94507f)) < 5)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Turning on engine of big jet");
 
@@ -242,7 +242,7 @@ namespace StoryCallouts.Callouts
                 JetEngineOn = true;
             }
 
-            if (ChaseCreated && !MollyKilled && Molly.DistanceTo2D(new Vector3(-931.4089f, -2989.927f, 13.94507f)) < 3)
+            if (ChaseCreated && !MollyKilled && Molly.Exists() && Molly.DistanceTo2D(new Vector3(-931.4089f, -2989.927f, 13.94507f)) < 3)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Throwing Molly into jet reactor");
 
@@ -323,12 +323,16 @@ namespace StoryCallouts.Callouts
                 MichaelChaseFiber.Abort();
             });
 
-            Michael.Tasks.DriveToPosition(new Vector3(-970.6552f, -2976.935f, 13.94508f), 80, VehicleDrivingFlags.Emergency | VehicleDrivingFlags.StopAtDestination);
+            Vector3 target = new Vector3(-970.6552f, -2976.935f, 13.94508f);
+            if (FilmReel.DistanceTo2D(new Vector3(-928.7935f, -2988.739f, 13.55107f)) > 10)
+                target = FilmReel.Position;
+
+            Michael.Tasks.DriveToPosition(MichaelCar, target, 80, VehicleDrivingFlags.Emergency | VehicleDrivingFlags.StopAtDestination, 10);
 
             do
             {
                 GameFiber.Wait(500);
-            } while (Michael.DistanceTo2D(new Vector3(-970.6552f, -2976.935f, 13.94508f)) > 20 || Michael.Speed > 1);
+            } while (Michael.DistanceTo2D(target) > 20 || Michael.Speed > 1);
 
             Michael.Tasks.GoStraightToPosition(MichaelCar.GetOffsetPositionRight(-3), 2, 240, 0, 3000).WaitForCompletion(3000);
             Michael.Tasks.FireWeaponAt(Molly, 60000, FiringPattern.BurstFire);
@@ -336,7 +340,7 @@ namespace StoryCallouts.Callouts
             do
             {
                 GameFiber.Wait(500);
-            } while (Molly.Exists() && Molly.IsAlive && !Functions.IsPedGettingArrested(Molly));
+            } while (Molly.Exists() && Molly.IsAlive && !Functions.IsPedGettingArrested(Molly) && !Functions.IsPedArrested(Molly));
 
             Michael.Tasks.GoStraightToPosition(FilmReel.Position, 3, 240, 2, 60000);
 
@@ -354,7 +358,7 @@ namespace StoryCallouts.Callouts
             FilmReel.AttachTo(Michael, Michael.GetBoneIndex(PedBoneId.LeftHand), new Vector3(0.2f, 0, 0.05f), new Rotator(0, 0, 0));
             GameFiber.Wait(1000);
 
-            if (EscapeJet.Exists())
+            if (EscapeJet.Exists() && Michael.DistanceTo2D(EscapeJet) < 100)
             {
                 Michael.Tasks.GoStraightToPosition(EscapeJet.GetOffsetPosition(new Vector3(-2, 4, 0)), 3, 50, 1, 60000);
 
