@@ -223,7 +223,7 @@ namespace StoryCallouts
         public void AbortTasks()
         {
             if (_taskFiber != null && _taskFiber.IsAlive)
-            _taskFiber.Abort();
+                _taskFiber.Abort();
             if (_ped.Exists())
                 _ped.Tasks.Clear();
 

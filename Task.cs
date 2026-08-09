@@ -158,8 +158,8 @@ namespace StoryCallouts
                     counterSec++;
                 }
                 while (counterSec < _timeoutSec * 10 && task != null && _ped.Exists() && _ped.IsAlive && (_ped.Tasks.CurrentTaskStatus == TaskStatus.InProgress || _ped.Tasks.CurrentTaskStatus == TaskStatus.Interrupted) && _ped.DistanceTo(Position) > _acceptedDistance && !Functions.IsPedGettingArrested(_ped) && !Functions.IsPedArrested(_ped));
-                    if (_force)
-                    {
+                if (_force)
+                {
                     GameFiber.Wait(1000);
                     if (_ped.Exists() && _ped.IsAlive)
                     {
@@ -169,9 +169,9 @@ namespace StoryCallouts
                 }
                 if (_ped.Exists() && _ped.IsAlive)
                     _ped.Tasks.Clear();
-                }
             }
         }
+    }
 
     internal class WalkToAiming : Task
     {
@@ -215,7 +215,7 @@ namespace StoryCallouts
                 {
                     Ped[] enemies = Main.GetNearbyEnnemies(_ped.Position);
                     if (enemies.Length > 0 || (Game.LocalPlayer.Character.Exists() && Game.LocalPlayer.Character.IsAlive))
-                    _targetEntity = enemies.Length > 0 ? enemies[MathHelper.GetRandomInteger(enemies.Length)] : Game.LocalPlayer.Character;
+                        _targetEntity = enemies.Length > 0 ? enemies[MathHelper.GetRandomInteger(enemies.Length)] : Game.LocalPlayer.Character;
                     else
                         foundEnnemy = false;
                 }
@@ -295,8 +295,8 @@ namespace StoryCallouts
                 _ped.Tasks.ClimbLadder().WaitForCompletion(_timeoutSec * 1000);
                 if (_ped.Exists() && _ped.IsAlive && _ped.DistanceTo(_endPosition) > 1f)
                     _ped.Position = _endPosition;
+            }
         }
-    }
     }
     internal class Climb : Task
     {
