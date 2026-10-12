@@ -15,6 +15,7 @@ namespace StoryCallouts.Callouts
         private Ped Criminal1, Criminal2, StoryCharacter, Cop1, Cop2;
         private Vehicle CriminalCar, CopCar;
         private Object Briefcase1, Briefcase2;
+        private GameFiber BriefcasePickupFiber;
         private bool NearSpawnMessageSent, ChaseCreated, InitialCopsDead, CriminalsDead, PickedUpBriefcases, DroppedBriefcases;
         private int StoryCharacterVariant;
 
@@ -137,8 +138,8 @@ namespace StoryCallouts.Callouts
             }
 
             if (!InitialCopsDead &&
-                (!Cop1.Exists() || (Cop1.Exists() && Cop1.IsDead)) &&
-                (!Cop2.Exists() || (Cop2.Exists() && Cop2.IsDead)))
+                Cop1.Exists() && Cop1.IsDead &&
+                Cop2.Exists() && Cop2.IsDead)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Initials cops dead, enabling criminals AI");
 
@@ -148,30 +149,34 @@ namespace StoryCallouts.Callouts
                 InitialCopsDead = true;
             }
 
-            if (!InitialCopsDead && !CriminalsDead &&
+            if (ChaseCreated && !InitialCopsDead && !CriminalsDead &&
                 (!Criminal1.Exists() || Criminal1.IsDead || Functions.IsPedArrested(Criminal1)) &&
                 (!Criminal2.Exists() || Criminal2.IsDead || Functions.IsPedArrested(Criminal2)) &&
                 Briefcase1.Exists() && Briefcase2.Exists())
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Criminals dead/arrested, picking up briefcases");
 
-                GameFiber.StartNew(delegate
+                BriefcasePickupFiber = GameFiber.StartNew(delegate
                 {
                     GameFiber.Wait(3000);
 
-                    StoryCharacter.Tasks.GoToOffsetFromEntity(Briefcase1, 0.5f, 0f, 3f).WaitForCompletion();
+                    if (!Briefcase1.Exists() || !StoryCharacter.Exists())
+                        return;
+                    StoryCharacter.Tasks.GoToOffsetFromEntity(Briefcase1, 0.5f, 0f, 3f).WaitForCompletion(30000);
+                    if (!Briefcase1.Exists() || !StoryCharacter.Exists())
+                        return;
                     Briefcase1.AttachTo(StoryCharacter, StoryCharacter.GetBoneIndex(PedBoneId.LeftHand), new Vector3(0.15f, 0, 0), new Rotator(40, -90, -10));
-                    StoryCharacter.Tasks.GoToOffsetFromEntity(Briefcase2, 0.5f, 0f, 3f).WaitForCompletion();
-
-                    Pursuit = Functions.CreatePursuit();
-                    Functions.AddPedToPursuit(Pursuit, StoryCharacter);
-                    Functions.SetPursuitDisableAIForPed(StoryCharacter, true);
-                    Functions.SetPursuitIsActiveForPlayer(Pursuit, true);
-
+                    if (!Briefcase2.Exists() || !StoryCharacter.Exists())
+                        return;
+                    StoryCharacter.Tasks.GoToOffsetFromEntity(Briefcase2, 0.5f, 0f, 3f).WaitForCompletion(10000);
+                    if (!Briefcase2.Exists() || !StoryCharacter.Exists())
+                        return;
                     Briefcase2.AttachTo(StoryCharacter, StoryCharacter.GetBoneIndex(PedBoneId.RightHand), new Vector3(0.1f, 0, 0), new Rotator(-30, -90, -10));
                     StoryCharacter.Tasks.Flee(Game.LocalPlayer.Character, 200, -1);
 
-                    Functions.SetPursuitDisableAIForPed(StoryCharacter, false);
+                    Pursuit = Functions.CreatePursuit();
+                    Functions.AddPedToPursuit(Pursuit, StoryCharacter);
+                    Functions.SetPursuitIsActiveForPlayer(Pursuit, true);
 
                     PickedUpBriefcases = true;
                 });
@@ -206,6 +211,9 @@ namespace StoryCallouts.Callouts
 
             if (Pursuit != null && Functions.IsPursuitStillRunning(Pursuit))
                 Functions.ForceEndPursuit(Pursuit);
+
+            if (BriefcasePickupFiber != null && BriefcasePickupFiber.IsAlive)
+                BriefcasePickupFiber.Abort();
 
             if (EventBlip.Exists())
                 EventBlip.Delete();
