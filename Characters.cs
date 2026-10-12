@@ -654,6 +654,7 @@ namespace StoryCallouts
         public Color SecondaryColor { get; }
         public Color PearlescentColor { get; }
         public string Plate { get; }
+        private readonly string _ownerName;
 
         private readonly List<string> VehicleModels = new List<string>()
         {
@@ -707,13 +708,14 @@ namespace StoryCallouts
             "surfer"
         };
 
-        public VehicleDefinition(string model, Color primaryColor, Color secondaryColor, Color pearlescentColor, string plate)
+        public VehicleDefinition(string model, Color primaryColor, Color secondaryColor, Color pearlescentColor, string plate, string ownerName)
         {
             Model = model;
             PrimaryColor = primaryColor;
             SecondaryColor = secondaryColor;
             PearlescentColor = pearlescentColor;
             Plate = plate;
+            _ownerName = ownerName;
         }
 
         public Vehicle Create(Vector3 postion, int heading, Ped driver = null)
@@ -740,7 +742,10 @@ namespace StoryCallouts
                 LicensePlate = Plate,
             };
             if (driver)
+            {
+                Functions.SetVehicleOwnerName(vehicle, _ownerName ?? Functions.GetPersonaForPed(driver).FullName);
                 driver.WarpIntoVehicle(vehicle, -1);
+            }
 
             return vehicle;
         }
@@ -749,15 +754,15 @@ namespace StoryCallouts
     public static class Vehicles
     {
         public static readonly VehicleDefinition FranklinCar =
-            new VehicleDefinition("BUFFALO2", Color.FromArgb(240, 240, 240), Color.FromArgb(240, 240, 240), Color.FromArgb(0, 8, 8, 8), "FC1988");
+            new VehicleDefinition("BUFFALO2", Color.FromArgb(240, 240, 240), Color.FromArgb(240, 240, 240), Color.FromArgb(0, 8, 8, 8), "FC1988", "Franklin Clinton");
 
         public static readonly VehicleDefinition FranklinBike =
-            new VehicleDefinition("BAGGER", Color.FromArgb(0, 56, 5), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 42, 54, 37), "FC88");
+            new VehicleDefinition("BAGGER", Color.FromArgb(0, 56, 5), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 42, 54, 37), "FC88", "Franklin Clinton");
 
         public static readonly VehicleDefinition MichaelCar =
-            new VehicleDefinition("TAILGATER", Color.FromArgb(8, 8, 8), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 8, 8, 8), "5MDS003");
+            new VehicleDefinition("TAILGATER", Color.FromArgb(8, 8, 8), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 8, 8, 8), "5MDS003", "Michael De Santa");
 
         public static readonly VehicleDefinition TrevorCar =
-            new VehicleDefinition("BODHI2", Color.FromArgb(71, 14, 14), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 8, 8, 8), "BETTY 32");
+            new VehicleDefinition("BODHI2", Color.FromArgb(71, 14, 14), Color.FromArgb(8, 8, 8), Color.FromArgb(0, 8, 8, 8), "BETTY 32", "Trevor Philips");
     }
 }

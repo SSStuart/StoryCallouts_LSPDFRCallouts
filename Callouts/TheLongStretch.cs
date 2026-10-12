@@ -48,6 +48,7 @@ namespace StoryCallouts.Callouts
                 IsPersistent = true,
                 PrimaryColor = Color.FromArgb(0, 16, 41),
             };
+            Functions.SetVehicleOwnerName(LamarVehicle, "Lamar Davis");
             EscapeVehicle = new Vehicle("jackal", new Vector3(-593.7469f, -1711.722f, 23.18381f), 55)
             {
                 IsPersistent = true,

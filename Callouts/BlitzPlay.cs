@@ -49,6 +49,7 @@ namespace StoryCallouts.Callouts
                 Rotation = new Rotator(0, 80, 180),
                 IsPositionFrozen = true,
             };
+            Functions.SetVehicleOwnerName(ArmoredTruck, "Gruppe Sechs");
             ArmoredTruck.Position = new Vector3(889.13f, -2364.33f, 30.5f);
             ArmoredTruck.Doors[2].BreakOff();
             ArmoredTruck.Doors[3].BreakOff();

@@ -40,6 +40,7 @@ namespace StoryCallouts.Callouts
                 SecondaryColor = Color.FromArgb(143, 47, 85),
                 PearlescentColor = Color.FromArgb(240, 8, 8, 8)
             };
+            Functions.SetVehicleOwnerName(PoppyCar, "Poppy Mitchell");
             Poppy = Characters.Poppy.Create(PoppyCar.GetOffsetPositionRight(2), 0, this.GetType().Name);
             Poppy.WarpIntoVehicle(PoppyCar, -1);
 

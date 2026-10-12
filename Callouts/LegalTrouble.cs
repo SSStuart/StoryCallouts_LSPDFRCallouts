@@ -44,6 +44,7 @@ namespace StoryCallouts.Callouts
                 PearlescentColor = Color.FromArgb(0, 41, 44, 46),
                 IsEngineOn = true
             };
+            Functions.SetVehicleOwnerName(MollyCar, "Molly Schultz");
             Molly.WarpIntoVehicle(MollyCar, -1);
 
             MollyTasks = new TasksList(Molly);

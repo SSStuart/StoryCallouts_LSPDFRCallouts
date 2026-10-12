@@ -54,6 +54,7 @@ namespace StoryCallouts.Callouts
                 PrimaryColor = Color.FromArgb(41, 44, 46),
                 IsEngineOn = false
             };
+            Functions.SetVehicleOwnerName(JB700, "Richards Majestic Productions");
             // Add mounted weapons
             JB700.Mods.InstallModKit();
             JB700.Mods.ApplyAllMods();

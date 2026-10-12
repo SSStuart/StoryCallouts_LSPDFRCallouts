@@ -36,6 +36,7 @@ namespace StoryCallouts.Callouts
             {
                 IsEngineOn = true,
             };
+            Functions.SetVehicleOwnerName(BugstarsVan, "Bugstars Pest Control");
             Michael.WarpIntoVehicle(BugstarsVan, -1);
 
             EventBlip = new Blip(SpawnPoint)

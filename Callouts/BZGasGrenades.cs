@@ -67,6 +67,7 @@ namespace StoryCallouts.Callouts
             {
                 IsEngineOn = true,
             };
+            Functions.SetVehicleOwnerName(HumaneVan, "Humane Labs and Research");
             HumaneDriver.WarpIntoVehicle(HumaneVan, -1);
 
             HumaneVanBlip = new Blip(HumaneVan)
