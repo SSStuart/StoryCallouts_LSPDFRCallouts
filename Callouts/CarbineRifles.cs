@@ -87,7 +87,8 @@ namespace StoryCallouts.Callouts
 
             Michael = Characters.Michael.Create(SwatTruck.GetOffsetPositionFront(-10), 0, this.GetType().Name);
             Michael.Inventory.GiveNewWeapon("WEAPON_MICROSMG", 100, true);
-            Michael.Health = 300;
+            if (Michael.Health < 300)
+                Michael.Health = 300;
 
             MichaelCar = Vehicles.MichaelCar.Create(SwatTruck.GetOffsetPositionFront(-15), SpawnHeading, Michael);
             MichaelCar.IsEngineOn = true;

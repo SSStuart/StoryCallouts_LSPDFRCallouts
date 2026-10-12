@@ -1,6 +1,7 @@
 ﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
+using Rage.Native;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
@@ -122,14 +123,18 @@ namespace StoryCallouts.Callouts
 
             Ballas1 = new Ped("G_M_Y_BALLAORIG_01", new Vector3(4.157356f, -1837.544f, 24.76185f), 135)
             {
-                RelationshipGroup = RelationshipGroup.AmbientGangBallas
+                RelationshipGroup = RelationshipGroup.AmbientGangBallas,
+                Health = (int)(200 * Settings.healthMultiplier)
             };
+            NativeFunction.Natives.SET_PED_CONFIG_FLAG(Ballas1, 107, Settings.disablePedRagdollWhenShot);
             Ballas1.Inventory.GiveNewWeapon("WEAPON_SMG", 200, true);
 
             Ballas2 = new Ped("G_M_Y_BALLAORIG_01", new Vector3(-14.11972f, -1814.12f, 25.90099f), 135)
             {
-                RelationshipGroup = RelationshipGroup.AmbientGangBallas
+                RelationshipGroup = RelationshipGroup.AmbientGangBallas,
+                Health = (int)(200 * Settings.healthMultiplier)
             };
+            NativeFunction.Natives.SET_PED_CONFIG_FLAG(Ballas2, 107, Settings.disablePedRagdollWhenShot);
             Ballas2.Inventory.GiveNewWeapon("WEAPON_CARBINERIFLE", 200, true);
 
             MCClip = Characters.MCClip.Create(new Vector3(-122.669f, -1858.916f, 1.45896f), 263, this.GetType().Name);

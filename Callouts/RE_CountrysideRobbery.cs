@@ -1,6 +1,7 @@
 ﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
+using Rage.Native;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
@@ -38,15 +39,17 @@ namespace StoryCallouts.Callouts
             Criminal1 = new Ped("A_M_Y_GENSTREET_01", new Vector3(326.88f, 2624.54f, 44.50f), 49f)
             {
                 BlockPermanentEvents = true,
-                Health = 400,
+                Health = (int)(200 * Settings.healthMultiplier)
             };
+            NativeFunction.Natives.SET_PED_CONFIG_FLAG(Criminal1, 107, Settings.disablePedRagdollWhenShot);
             Criminal1.Inventory.GiveNewWeapon("WEAPON_PISTOL", 100, true);
 
             Criminal2 = new Ped("A_M_Y_GENSTREET_01", new Vector3(328.9166f, 2626.354f, 44.49976f), 50f)
             {
                 BlockPermanentEvents = true,
-                Health = 400,
+                Health = (int)(200 * Settings.healthMultiplier)
             };
+            NativeFunction.Natives.SET_PED_CONFIG_FLAG(Criminal2, 107, Settings.disablePedRagdollWhenShot);
             Criminal2.Inventory.GiveNewWeapon("WEAPON_PISTOL", 100, true);
 
             CriminalCar = new Vehicle("PHOENIX", new Vector3(327.205f, 2626.989f, 43.82396f), 34f);

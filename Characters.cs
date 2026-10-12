@@ -49,7 +49,13 @@ namespace StoryCallouts
                 {
                     IsPersistent = true,
                     BlockPermanentEvents = blockPermanentEvents,
+                    Health = (int)(200 * Settings.healthMultiplier)
                 };
+                if (Settings.disablePedRagdollWhenShot)
+                {
+                    // Prevent ragdoll when shot
+                    NativeFunction.Natives.SET_PED_CONFIG_FLAG(randomPed, 107, true);
+                }
 
                 return randomPed;
             }
@@ -57,7 +63,13 @@ namespace StoryCallouts
             {
                 IsPersistent = true,
                 BlockPermanentEvents = blockPermanentEvents,
+                Health = (int)(200 * Settings.healthMultiplier)
             };
+            if (Settings.disablePedRagdollWhenShot)
+            {
+                // Prevent ragdoll when shot
+                NativeFunction.Natives.SET_PED_CONFIG_FLAG(character, 107, true);
+            }
             Functions.SetPersonaForPed(character, new Persona(Forename, Surname, Gender, Birthdate, Model));
 
             // Set model variations

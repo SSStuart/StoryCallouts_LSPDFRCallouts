@@ -1,6 +1,7 @@
 ﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
+using Rage.Native;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
@@ -52,8 +53,10 @@ namespace StoryCallouts.Callouts
 
             Robber = new Ped("G_M_Y_MEXGOON_02", new Vector3(65.74f, -1564.75f, 29.46f), 216f)
             {
-                BlockPermanentEvents = true
+                BlockPermanentEvents = true,
+                Health = (int)(200 * Settings.healthMultiplier)
             };
+            NativeFunction.Natives.SET_PED_CONFIG_FLAG(Robber, 107, Settings.disablePedRagdollWhenShot);
             Robber.Inventory.GiveNewWeapon("WEAPON_APPISTOL", 50, true);
 
             ShopKeeper = new Ped("MP_M_SHOPKEEP_01", new Vector3(68.46f, -1569.78f, 29.60f), 50f)

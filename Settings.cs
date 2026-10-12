@@ -6,6 +6,9 @@ namespace StoryCallouts
     {
         internal static bool useStoryModeCharacters = true;
 
+        internal static bool disablePedRagdollWhenShot = false;
+        internal static float healthMultiplier = 1.0f;
+
         internal static bool callout_Prologue = false;
         internal static bool callout_FranklinAndLamar = true;
         internal static bool callout_TheLongStretch = true;
@@ -51,6 +54,12 @@ namespace StoryCallouts
             ini.Create();
             useStoryModeCharacters = ini.ReadBoolean("General", "useStoryModeCharacters", true);
             Game.LogTrivial($"- Use story mode characters: {(useStoryModeCharacters ? "Yes" : "No")}");
+
+            disablePedRagdollWhenShot = ini.ReadBoolean("Difficulty", "disablePedRagdollWhenShot", false);
+            Game.LogTrivial($"- Disable suspects ragdoll (when shot): {(disablePedRagdollWhenShot ? "Yes" : "No")}");
+
+            healthMultiplier = (float)ini.ReadDouble("Difficulty", "healthMultiplier", 1.0f);
+            Game.LogTrivial($"- Suspects health multiplier: {healthMultiplier}");
 
             callout_Prologue = ini.ReadBoolean("Callouts", "Prologue", true);
             Game.LogTrivial($"- Callout 'Prologue' {(callout_Prologue ? "[x] enabled" : "[ ] disabled")}");
