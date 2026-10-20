@@ -42,6 +42,7 @@ namespace StoryCallouts.Callouts
                 Health = (int)(200 * Settings.healthMultiplier)
             };
             NativeFunction.Natives.SET_PED_CONFIG_FLAG(Criminal1, 107, Settings.disablePedRagdollWhenShot);
+            NativeFunction.Natives.SET_PED_SUFFERS_CRITICAL_HITS(Criminal1, !Settings.disableHeadShots);
             Criminal1.Inventory.GiveNewWeapon("WEAPON_PISTOL", 100, true);
 
             Criminal2 = new Ped("A_M_Y_GENSTREET_01", new Vector3(328.9166f, 2626.354f, 44.49976f), 50f)
@@ -50,6 +51,7 @@ namespace StoryCallouts.Callouts
                 Health = (int)(200 * Settings.healthMultiplier)
             };
             NativeFunction.Natives.SET_PED_CONFIG_FLAG(Criminal2, 107, Settings.disablePedRagdollWhenShot);
+            NativeFunction.Natives.SET_PED_SUFFERS_CRITICAL_HITS(Criminal2, !Settings.disableHeadShots);
             Criminal2.Inventory.GiveNewWeapon("WEAPON_PISTOL", 100, true);
 
             CriminalCar = new Vehicle("PHOENIX", new Vector3(327.205f, 2626.989f, 43.82396f), 34f);

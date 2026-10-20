@@ -57,6 +57,7 @@ namespace StoryCallouts.Callouts
                 Health = (int)(200 * Settings.healthMultiplier)
             };
             NativeFunction.Natives.SET_PED_CONFIG_FLAG(Robber, 107, Settings.disablePedRagdollWhenShot);
+            NativeFunction.Natives.SET_PED_SUFFERS_CRITICAL_HITS(Robber, !Settings.disableHeadShots);
             Robber.Inventory.GiveNewWeapon("WEAPON_APPISTOL", 50, true);
 
             ShopKeeper = new Ped("MP_M_SHOPKEEP_01", new Vector3(68.46f, -1569.78f, 29.60f), 50f)

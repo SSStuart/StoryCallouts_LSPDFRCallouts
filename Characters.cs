@@ -52,10 +52,9 @@ namespace StoryCallouts
                     Health = (int)(200 * Settings.healthMultiplier)
                 };
                 if (Settings.disablePedRagdollWhenShot)
-                {
-                    // Prevent ragdoll when shot
                     NativeFunction.Natives.SET_PED_CONFIG_FLAG(randomPed, 107, true);
-                }
+                if (Settings.disableHeadShots)
+                    NativeFunction.Natives.SET_PED_SUFFERS_CRITICAL_HITS(randomPed, false);
 
                 return randomPed;
             }
@@ -66,10 +65,10 @@ namespace StoryCallouts
                 Health = (int)(200 * Settings.healthMultiplier)
             };
             if (Settings.disablePedRagdollWhenShot)
-            {
-                // Prevent ragdoll when shot
                 NativeFunction.Natives.SET_PED_CONFIG_FLAG(character, 107, true);
-            }
+            if (Settings.disableHeadShots)
+                NativeFunction.Natives.SET_PED_SUFFERS_CRITICAL_HITS(character, false);
+
             Functions.SetPersonaForPed(character, new Persona(Forename, Surname, Gender, Birthdate, Model));
 
             // Set model variations

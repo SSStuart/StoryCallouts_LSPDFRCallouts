@@ -127,6 +127,7 @@ namespace StoryCallouts.Callouts
                 Health = (int)(200 * Settings.healthMultiplier)
             };
             NativeFunction.Natives.SET_PED_CONFIG_FLAG(Ballas1, 107, Settings.disablePedRagdollWhenShot);
+            NativeFunction.Natives.SET_PED_SUFFERS_CRITICAL_HITS(Ballas1, !Settings.disableHeadShots);
             Ballas1.Inventory.GiveNewWeapon("WEAPON_SMG", 200, true);
 
             Ballas2 = new Ped("G_M_Y_BALLAORIG_01", new Vector3(-14.11972f, -1814.12f, 25.90099f), 135)
@@ -135,6 +136,7 @@ namespace StoryCallouts.Callouts
                 Health = (int)(200 * Settings.healthMultiplier)
             };
             NativeFunction.Natives.SET_PED_CONFIG_FLAG(Ballas2, 107, Settings.disablePedRagdollWhenShot);
+            NativeFunction.Natives.SET_PED_SUFFERS_CRITICAL_HITS(Ballas2, !Settings.disableHeadShots);
             Ballas2.Inventory.GiveNewWeapon("WEAPON_CARBINERIFLE", 200, true);
 
             MCClip = Characters.MCClip.Create(new Vector3(-122.669f, -1858.916f, 1.45896f), 263, this.GetType().Name);

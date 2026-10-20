@@ -47,6 +47,7 @@ namespace StoryCallouts.Callouts
                 Health = (int)(200 * Settings.healthMultiplier)
             };
             NativeFunction.Natives.SET_PED_CONFIG_FLAG(Biker1, 107, Settings.disablePedRagdollWhenShot);
+            NativeFunction.Natives.SET_PED_SUFFERS_CRITICAL_HITS(Biker1, !Settings.disableHeadShots);
             Biker1.Inventory.GiveNewWeapon("WEAPON_SAWNOFFSHOTGUN", 20, true);
 
             Biker2 = new Ped("G_M_Y_LOST_01", new Vector3(970.44f, 3615.29f, 32.67f), 306f)
@@ -57,6 +58,7 @@ namespace StoryCallouts.Callouts
                 Health = (int)(200 * Settings.healthMultiplier)
             };
             NativeFunction.Natives.SET_PED_CONFIG_FLAG(Biker2, 107, Settings.disablePedRagdollWhenShot);
+            NativeFunction.Natives.SET_PED_SUFFERS_CRITICAL_HITS(Biker2, !Settings.disableHeadShots);
             Biker2.Inventory.GiveNewWeapon("WEAPON_PISTOL", 50, true);
 
             Bike1 = new Vehicle("hexer", new Vector3(968.24f, 3611.80f, 32.26f), 297f);
@@ -142,6 +144,7 @@ namespace StoryCallouts.Callouts
                             Health = (int)(200 * Settings.healthMultiplier)
                         };
                         NativeFunction.Natives.SET_PED_CONFIG_FLAG(Biker, 107, Settings.disablePedRagdollWhenShot);
+                        NativeFunction.Natives.SET_PED_SUFFERS_CRITICAL_HITS(Biker, !Settings.disableHeadShots);
                         Biker.Inventory.GiveNewWeapon("WEAPON_PISTOL", 50, true);
                         Biker.WarpIntoVehicle(Bike, -1);
                         BackupBikers.Add(Biker);
