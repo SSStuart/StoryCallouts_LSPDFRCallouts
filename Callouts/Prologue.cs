@@ -49,7 +49,7 @@ namespace StoryCallouts.Callouts
                 BlockPermanentEvents = true,
             };
 
-            EscapeVehicle = new Vehicle("rancherxl2", new Vector3(5418.41f, -5118.01f, 79.80f), 106)
+            EscapeVehicle = new Vehicle("RANCHERXL2", new Vector3(5418.41f, -5118.01f, 79.80f), 106)
             {
                 IsEngineOn = true,
                 IsPersistent = true,
@@ -116,7 +116,7 @@ namespace StoryCallouts.Callouts
                 Functions.SetPursuitDisableAIForPed(Brad, true);
                 Functions.SetPursuitIsActiveForPlayer(Pursuit, true);
 
-                RoadblockVehicle = new Vehicle("policeold1", new Vector3(3500.8f, -4868.237f, 111.4071f), 340)
+                RoadblockVehicle = new Vehicle("POLICEOLD1", new Vector3(3500.8f, -4868.237f, 111.4071f), 340)
                 {
                     IsPersistent = true,
                     IsSirenOn = true,

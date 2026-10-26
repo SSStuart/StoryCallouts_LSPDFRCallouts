@@ -122,7 +122,7 @@ namespace StoryCallouts.Callouts
 
             if (EmergencyVehSite1 != 0)
             {
-                EmergencyVeh1 = new Vehicle(EmergencyVehSite1 == 1 ? "firetruk" : "ambulance", new Vector3(35.38736f, -718.4564f, 44.14671f), 160)
+                EmergencyVeh1 = new Vehicle(EmergencyVehSite1 == 1 ? Settings.theBureauRaid_firetruckVehicle : Settings.theBureauRaid_ambulanceVehicle, new Vector3(35.38736f, -718.4564f, 44.14671f), 160)
                 {
                     IsSirenOn = true,
                     IsSirenSilent = true,
@@ -130,7 +130,7 @@ namespace StoryCallouts.Callouts
             }
             if (EmergencyVehSite2 != 0)
             {
-                EmergencyVeh2 = new Vehicle(EmergencyVehSite2 == 1 ? "firetruk" : "ambulance", new Vector3(-14.7093f, -777.6899f, 44.30624f), 316)
+                EmergencyVeh2 = new Vehicle(EmergencyVehSite2 == 1 ? Settings.theBureauRaid_firetruckVehicle : Settings.theBureauRaid_ambulanceVehicle, new Vector3(-14.7093f, -777.6899f, 44.30624f), 316)
                 {
                     IsSirenOn = true,
                     IsSirenSilent = true,

@@ -1,6 +1,7 @@
 ﻿using LSPD_First_Response.Mod.API;
 using LSPD_First_Response.Mod.Callouts;
 using Rage;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace StoryCallouts.Callouts
@@ -13,7 +14,8 @@ namespace StoryCallouts.Callouts
         private int SpawnHeading;
         private Blip EventBlip;
         private LHandle Pursuit;
-        private Ped Michael, Swat1, Swat2, Swat3, Swat4;
+        private Ped Michael, SwatDriver;
+        private List<Ped> SwatPassengers;
         private Vehicle MichaelCar, SwatTruck;
         private bool NearSpawnMessageSent, ChaseCreated;
 
@@ -66,24 +68,24 @@ namespace StoryCallouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            SwatTruck = new Vehicle("fbi2", SpawnPoint, SpawnHeading)
+            SwatTruck = new Vehicle(Settings.carbineRifles_swatVehicle, SpawnPoint, SpawnHeading)
             {
                 IsEngineOn = true,
                 IsSirenOn = true,
             };
 
-            Swat1 = new Ped("S_M_Y_SWAT_01", SpawnPoint.Around2D(3), SpawnHeading);
-            Swat1.Inventory.GiveNewWeapon("WEAPON_SMG", 200, true);
-            Swat1.WarpIntoVehicle(SwatTruck, -1);
-            Swat2 = new Ped("S_M_Y_SWAT_01", SpawnPoint.Around2D(3), SpawnHeading);
-            Swat2.Inventory.GiveNewWeapon("WEAPON_SMG", 200, true);
-            Swat2.WarpIntoVehicle(SwatTruck, 0);
-            Swat3 = new Ped("S_M_Y_SWAT_01", SpawnPoint.Around2D(3), SpawnHeading);
-            Swat3.Inventory.GiveNewWeapon("WEAPON_SMG", 200, true);
-            Swat3.WarpIntoVehicle(SwatTruck, 1);
-            Swat4 = new Ped("S_M_Y_SWAT_01", SpawnPoint.Around2D(3), SpawnHeading);
-            Swat4.Inventory.GiveNewWeapon("WEAPON_SMG", 200, true);
-            Swat4.WarpIntoVehicle(SwatTruck, 2);
+            SwatDriver = new Ped("S_M_Y_SWAT_01", SpawnPoint.Around2D(3), SpawnHeading);
+            SwatDriver.Inventory.GiveNewWeapon("WEAPON_SMG", 200, true);
+            SwatDriver.WarpIntoVehicle(SwatTruck, -1);
+            SwatPassengers = new List<Ped>();
+            for (int seat = 0; seat < MathHelper.Min(SwatTruck.PassengerCapacity, 3); seat++)
+            {
+                Ped SwatPassenger = new Ped("S_M_Y_SWAT_01", SpawnPoint.Around2D(3), SpawnHeading);
+                SwatPassenger.Inventory.GiveNewWeapon("WEAPON_SMG", 200, true);
+                SwatPassenger.WarpIntoVehicle(SwatTruck, seat);
+                
+                SwatPassengers.Add(SwatPassenger);
+            }
 
             Michael = Characters.Michael.Create(SwatTruck.GetOffsetPositionFront(-10), 0, this.GetType().Name);
             Michael.Inventory.GiveNewWeapon("WEAPON_MICROSMG", 100, true);
@@ -130,7 +132,7 @@ namespace StoryCallouts.Callouts
                 GameFiber.StartNew(delegate
                 {
                     Michael.Tasks.LeaveVehicle(LeaveVehicleFlags.LeaveDoorOpen).WaitForCompletion(2000);
-                    Michael.Tasks.TakeCoverFrom(Swat1, 1000).WaitForCompletion(5000);
+                    Michael.Tasks.TakeCoverFrom(SwatDriver, 1000).WaitForCompletion(5000);
                     Michael.Tasks.FireWeaponAt(SwatTruck, 5000, FiringPattern.BurstFireInCover);
                     Functions.SetPursuitDisableAIForPed(Michael, false);
                 });
@@ -138,10 +140,9 @@ namespace StoryCallouts.Callouts
                 Pursuit = Functions.CreatePursuit();
                 Functions.AddPedToPursuit(Pursuit, Michael);
                 Functions.SetPursuitDisableAIForPed(Michael, true);
-                Functions.AddCopToPursuit(Pursuit, Swat1);
-                Functions.AddCopToPursuit(Pursuit, Swat2);
-                Functions.AddCopToPursuit(Pursuit, Swat3);
-                Functions.AddCopToPursuit(Pursuit, Swat4);
+                Functions.AddCopToPursuit(Pursuit, SwatDriver);
+                foreach (Ped SwatPassenger in SwatPassengers)
+                    Functions.AddCopToPursuit(Pursuit, SwatPassenger);
                 Functions.SetPursuitIsActiveForPlayer(Pursuit, true);
 
                 ChaseCreated = true;
@@ -180,17 +181,6 @@ namespace StoryCallouts.Callouts
             if (!SwatTruck.Exists() || SwatTruck.IsUpsideDown || SwatTruck.EngineHealth <= 300)
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Truck not driveable, ending");
-
-                if (SwatTruck.Exists())
-                    SwatTruck.Dismiss();
-                if (Swat1.Exists())
-                    Swat1.Dismiss();
-                if (Swat2.Exists())
-                    Swat2.Dismiss();
-                if (Swat3.Exists())
-                    Swat3.Dismiss();
-                if (Swat4.Exists())
-                    Swat4.Dismiss();
             }
             else
             {
@@ -212,17 +202,15 @@ namespace StoryCallouts.Callouts
                         SwatTruck.IsEngineOn = false;
                     }
                 }
-
-                if (SwatTruck.Exists())
-                    SwatTruck.Dismiss();
-                if (Swat1.Exists())
-                    Swat1.Dismiss();
-                if (Swat2.Exists())
-                    Swat2.Dismiss();
-                if (Swat3.Exists())
-                    Swat3.Dismiss();
-                if (Swat4.Exists())
-                    Swat4.Dismiss();
+            }
+            if (SwatTruck.Exists())
+                SwatTruck.Dismiss();
+            if (SwatDriver.Exists())
+                SwatDriver.Dismiss();
+            foreach (Ped SwatPassenger in SwatPassengers)
+            {
+                if (SwatPassenger.Exists())
+                    SwatPassenger.Dismiss();
             }
 
             Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Post-end logic ended");

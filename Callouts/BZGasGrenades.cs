@@ -63,7 +63,7 @@ namespace StoryCallouts.Callouts
                 Health = 400,
             };
 
-            HumaneVan = new Vehicle("boxville3", SpawnPoint, SpawnHeading)
+            HumaneVan = new Vehicle("BOXVILLE3", SpawnPoint, SpawnHeading)
             {
                 IsEngineOn = true,
             };

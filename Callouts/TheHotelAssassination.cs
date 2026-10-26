@@ -47,7 +47,7 @@ namespace StoryCallouts.Callouts
 
             FranklinCar = Vehicles.FranklinCar.Create(new Vector3(-1259.304f, -227.9357f, 46.69148f), 126);
 
-            VIPVehicle = new Vehicle("FBI2", new Vector3(-1223.938f, -195.462f, 38.79724f), 157)
+            VIPVehicle = new Vehicle(Settings.theHotelAssassination_vipVehicle, new Vector3(-1223.938f, -195.462f, 38.79724f), 157)
             {
                 IsEngineOn = true,
             };

@@ -61,8 +61,8 @@ namespace StoryCallouts.Callouts
             NativeFunction.Natives.SET_PED_SUFFERS_CRITICAL_HITS(Biker2, !Settings.disableHeadShots);
             Biker2.Inventory.GiveNewWeapon("WEAPON_PISTOL", 50, true);
 
-            Bike1 = new Vehicle("hexer", new Vector3(968.24f, 3611.80f, 32.26f), 297f);
-            Bike2 = new Vehicle("hexer", new Vector3(970.87f, 3625.59f, 31.82f), 212f);
+            Bike1 = new Vehicle("HEXER", new Vector3(968.24f, 3611.80f, 32.26f), 297f);
+            Bike2 = new Vehicle("HEXER", new Vector3(970.87f, 3625.59f, 31.82f), 212f);
 
             BackupBikes = new List<Vehicle>();
             BackupBikers = new List<Ped>();
@@ -133,7 +133,7 @@ namespace StoryCallouts.Callouts
 
                     for (int backup = 0; backup < 4; backup++)
                     {
-                        Vehicle Bike = new Vehicle("hexer", new Vector3(724f + backup * 2, 3570f, 32.77562f), 350f);
+                        Vehicle Bike = new Vehicle("HEXER", new Vector3(724f + backup * 2, 3570f, 32.77562f), 350f);
                         BackupBikes.Add(Bike);
 
                         int pedVariation = MathHelper.GetRandomInteger(3) + 1;

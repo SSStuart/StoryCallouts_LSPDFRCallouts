@@ -143,7 +143,7 @@ namespace StoryCallouts.Callouts
                 else
                 {
                     Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Van far from warehouse, spawning taxi");
-                    Taxi = new Vehicle("taxi", World.GetNextPositionOnStreet(BugstarsVan.Position.Around2D(200)));
+                    Taxi = new Vehicle("TAXI", World.GetNextPositionOnStreet(BugstarsVan.Position.Around2D(200)));
                     TaxiDriver = new Ped("a_m_y_beachvesp_02", Taxi.GetOffsetPositionFront(5), 0);
                     TaxiDriver.WarpIntoVehicle(Taxi, -1);
                     BugstarsEmployee = new Ped("s_m_y_pestcont_01", Taxi.GetOffsetPositionFront(4), 0)

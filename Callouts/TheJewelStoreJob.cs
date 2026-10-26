@@ -39,7 +39,7 @@ namespace StoryCallouts.Callouts
         {
             Franklin = Characters.Franklin.Create(new Vector3(1012.071f, -178.5481f, 40.89464f), 0, this.GetType().Name);
 
-            FranklinBike = new Vehicle((DriverVariant == 0 ? "sanchez" : "bati2"), new Vector3(1016.769f, -179.7228f, 40.30211f), 204)
+            FranklinBike = new Vehicle((DriverVariant == 0 ? "SANCHEZ" : "BATI2"), new Vector3(1016.769f, -179.7228f, 40.30211f), 204)
             {
                 IsPersistent = true,
                 IsEngineOn = true
@@ -52,7 +52,7 @@ namespace StoryCallouts.Callouts
             Driver.KeepTasks = true;
             Driver.CanBeKnockedOffBikes = false;
 
-            DriverBike = new Vehicle((DriverVariant == 0 ? "sanchez" : "bati2"), new Vector3(1016.887f, -177.229f, 39.95674f), 236)
+            DriverBike = new Vehicle((DriverVariant == 0 ? "SANCHEZ" : "BATI2"), new Vector3(1016.887f, -177.229f, 39.95674f), 236)
             {
                 IsPersistent = true,
                 IsEngineOn = true
@@ -67,7 +67,7 @@ namespace StoryCallouts.Callouts
             Gunman.KeepTasks = true;
             Gunman.CanBeKnockedOffBikes = false;
 
-            GunmanBike = new Vehicle((DriverVariant == 0 ? "sanchez" : "bati2"), new Vector3(1019.758f, -177.3154f, 40.21076f), 234)
+            GunmanBike = new Vehicle((DriverVariant == 0 ? "SANCHEZ" : "BATI2"), new Vector3(1019.758f, -177.3154f, 40.21076f), 234)
             {
                 IsPersistent = true,
                 IsEngineOn = true
@@ -82,7 +82,7 @@ namespace StoryCallouts.Callouts
                 Characters.Christian.Create(new Vector3(1091.209f, -241.3812f, 57.58831f), 0, this.GetType().Name) :
                 Characters.Rickie.Create(new Vector3(1091.209f, -241.3812f, 57.58831f), 0, this.GetType().Name));
 
-            Truck = new Vehicle("benson", new Vector3(1093.894f, -241.3573f, 57.52023f), 143)
+            Truck = new Vehicle("BENSON", new Vector3(1093.894f, -241.3573f, 57.52023f), 143)
             {
                 IsPersistent = true,
                 IsEngineOn = true
@@ -96,7 +96,7 @@ namespace StoryCallouts.Callouts
                 BlockPermanentEvents = true,
             };
 
-            CopCar = new Vehicle("police", new Vector3(1045.042f, -275.975f, 50.36977f), 163);
+            CopCar = new Vehicle(Settings.theJewelStoreJob_copVehicle, new Vector3(1045.042f, -275.975f, 50.36977f), 163);
 
             VehicleDrivingFlags beeLineDrivingFlags = VehicleDrivingFlags.DriveAroundObjects | VehicleDrivingFlags.DriveAroundVehicles | VehicleDrivingFlags.IgnorePathFinding;
 

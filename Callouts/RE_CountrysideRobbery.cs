@@ -68,7 +68,7 @@ namespace StoryCallouts.Callouts
                 _ => Characters.Trevor.Create(new Vector3(317.0602f, 2613.423f, 44.47596f), 297, this.GetType().Name),
             };
 
-            CopCar = new Vehicle("sheriff", new Vector3(325.7083f, 2640.782f, 44.19189f), 157f)
+            CopCar = new Vehicle(Settings.countrysideRobbery_copVehicle, new Vector3(325.7083f, 2640.782f, 44.19189f), 157f)
             {
                 IsSirenOn = true
             };

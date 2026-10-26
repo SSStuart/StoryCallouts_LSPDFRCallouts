@@ -43,13 +43,13 @@ namespace StoryCallouts.Callouts
             Stretch.KeepTasks = true;
             Stretch.Inventory.GiveNewWeapon("WEAPON_PISTOL", 300, true);
 
-            LamarVehicle = new Vehicle("emperor", new Vector3(-616.1136f, -1604.719f, 26.25291f), 197)
+            LamarVehicle = new Vehicle("EMPEROR", new Vector3(-616.1136f, -1604.719f, 26.25291f), 197)
             {
                 IsPersistent = true,
                 PrimaryColor = Color.FromArgb(0, 16, 41),
             };
             Functions.SetVehicleOwnerName(LamarVehicle, "Lamar Davis");
-            EscapeVehicle = new Vehicle("jackal", new Vector3(-593.7469f, -1711.722f, 23.18381f), 55)
+            EscapeVehicle = new Vehicle("JACKAL", new Vector3(-593.7469f, -1711.722f, 23.18381f), 55)
             {
                 IsPersistent = true,
                 PrimaryColor = Color.FromArgb(8, 8, 8),

@@ -33,7 +33,7 @@ namespace StoryCallouts.Callouts
         public override bool OnCalloutAccepted()
         {
             Franklin = Characters.Franklin.Create(SpawnPoint, 0, this.GetType().Name);
-            FranklinVehicle = new Vehicle("rapidgt2", SpawnPoint, -20)
+            FranklinVehicle = new Vehicle("RAPIDGT2", SpawnPoint, -20)
             {
                 IsPersistent = true,
                 PrimaryColor = System.Drawing.Color.DarkRed,
@@ -43,7 +43,7 @@ namespace StoryCallouts.Callouts
             Franklin.WarpIntoVehicle(FranklinVehicle, -1);
 
             Lamar = Characters.Lamar.Create(SpawnPoint + new Vector3(-5, 0, 0), 0, this.GetType().Name);
-            LamarVehicle = new Vehicle("ninef2", SpawnPoint + new Vector3(-5, 0, 0), -20)
+            LamarVehicle = new Vehicle("NINEF2", SpawnPoint + new Vector3(-5, 0, 0), -20)
             {
                 IsPersistent = true,
                 PrimaryColor = System.Drawing.Color.White,

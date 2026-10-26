@@ -100,7 +100,7 @@ namespace StoryCallouts.Callouts
         {
             Michael = Characters.Michael.Create(new Vector3(133.2909f, -1180.953f, 29.08216f), 0, this.GetType().Name + "Subtle");
 
-            MichaelGauntlet = new Vehicle("gauntlet", new Vector3(133.2909f, -1186.953f, 29.08216f), 180f);
+            MichaelGauntlet = new Vehicle("GAUNTLET", new Vector3(133.2909f, -1186.953f, 29.08216f), 180f);
             ModGauntlet(MichaelGauntlet);
             Michael.WarpIntoVehicle(MichaelGauntlet, -1);
             MichaelDriveTask = new TasksList(Michael);
@@ -110,14 +110,14 @@ namespace StoryCallouts.Callouts
 
             Trevor = Characters.Trevor.Create(new Vector3(130.2066f, -1180.806f, 29.08948f), 0, this.GetType().Name + "Subtle");
 
-            TrevorGauntlet = new Vehicle("gauntlet", new Vector3(130.2066f, -1186.806f, 29.08948f), 180f);
+            TrevorGauntlet = new Vehicle("GAUNTLET", new Vector3(130.2066f, -1186.806f, 29.08948f), 180f);
             ModGauntlet(TrevorGauntlet);
             Trevor.WarpIntoVehicle(TrevorGauntlet, -1);
             TrevorDriveTask = new TasksList(Trevor);
 
             Franklin = Characters.Franklin.Create(new Vector3(136.334f, -1180.996f, 29.08496f), 0, this.GetType().Name + "Subtle");
 
-            FranklinGauntlet = new Vehicle("gauntlet", new Vector3(136.334f, -1186.996f, 29.08496f), 180f);
+            FranklinGauntlet = new Vehicle("GAUNTLET", new Vector3(136.334f, -1186.996f, 29.08496f), 180f);
             ModGauntlet(FranklinGauntlet);
             Franklin.WarpIntoVehicle(FranklinGauntlet, -1);
             FranklinDriveTask = new TasksList(Franklin);
@@ -126,7 +126,7 @@ namespace StoryCallouts.Callouts
                 Characters.Eddie.Create(new Vector3(127.192f, -1180.693f, 29.08446f), 0, this.GetType().Name + "Subtle") :
                 Characters.Karim.Create(new Vector3(127.192f, -1180.693f, 29.08446f), 0, this.GetType().Name + "Subtle");
 
-            DriverGauntlet = new Vehicle("gauntlet", new Vector3(127.192f, -1186.693f, 29.08446f), 180f);
+            DriverGauntlet = new Vehicle("GAUNTLET", new Vector3(127.192f, -1186.693f, 29.08446f), 180f);
             ModGauntlet(DriverGauntlet);
             Driver.WarpIntoVehicle(DriverGauntlet, -1);
             DriverDriveTask = new TasksList(Driver);
@@ -152,11 +152,11 @@ namespace StoryCallouts.Callouts
                 DriveTask.AddDriveTask(new Vector3(-1249.016f, -699.9026f, 10.38302f), 20);
             }
 
-            Truck1 = new Vehicle("packer", new Vector3(-1230.416f, -681.7884f, 11.04869f), 118)
+            Truck1 = new Vehicle("PACKER", new Vector3(-1230.416f, -681.7884f, 11.04869f), 118)
             {
                 IsEngineOn = true,
             };
-            Truck1Trailer = new Vehicle("trailers3", new Vector3(-1223.39f, -678.23f, 13.2f), 118);
+            Truck1Trailer = new Vehicle("TRAILERS3", new Vector3(-1223.39f, -678.23f, 13.2f), 118);
             Truck1.Trailer = Truck1Trailer;
 
             Truck1Driver = new Ped(Truck1.GetOffsetPositionFront(4))
@@ -166,11 +166,11 @@ namespace StoryCallouts.Callouts
             };
             Truck1Driver.WarpIntoVehicle(Truck1, -1);
 
-            Truck2 = new Vehicle("packer", new Vector3(-1275.187f, -700.8675f, 11.05006f), 110)
+            Truck2 = new Vehicle("PACKER", new Vector3(-1275.187f, -700.8675f, 11.05006f), 110)
             {
                 IsEngineOn = true,
             };
-            Truck2Trailer = new Vehicle("trailers3", new Vector3(-1267.806f, -698.1442f, 13.19924f), 110);
+            Truck2Trailer = new Vehicle("TRAILERS3", new Vector3(-1267.806f, -698.1442f, 13.19924f), 110);
             Truck2.Trailer = Truck2Trailer;
 
             Truck2Driver = new Ped(Truck2.GetOffsetPositionFront(4))
@@ -225,7 +225,7 @@ namespace StoryCallouts.Callouts
             Franklin.RelationshipGroup = RelationshipGroup.Gang1;
             FranklinDiversionEscapeTask = new TasksList(Franklin, EndBehavior.Nothing);
 
-            DiversionEscapeVehicle = new Vehicle("intruder", new Vector3(-166.1553f, -621.9838f, 32.06397f), 68f);
+            DiversionEscapeVehicle = new Vehicle("INTRUDER", new Vector3(-166.1553f, -621.9838f, 32.06397f), 68f);
             DiversionEscapeVehicle.Mods.InstallModKit();
             DiversionEscapeVehicle.Mods.EngineModIndex = DiversionEscapeVehicle.Mods.EngineModCount - 1;
             DiversionEscapeVehicle.Mods.BrakesModIndex = DiversionEscapeVehicle.Mods.BrakesModCount - 1;
@@ -286,14 +286,14 @@ namespace StoryCallouts.Callouts
             {
                 Game.LogTrivial($"[{Main.pluginName} - '{this.GetType().Name}'] Starting chase");
 
-                Backup1 = new Vehicle("police", new Vector3(146.7486f, -803.7667f, 30.56549f), 320f)
+                Backup1 = new Vehicle(Settings.theBigScoreSubtle_roadblockVehicle, new Vector3(146.7486f, -803.7667f, 30.56549f), 320f)
                 {
                     IsEngineOn = true,
                     IsSirenOn = true,
                     IsSirenSilent = true,
                     LockStatus = VehicleLockStatus.Locked
                 };
-                Backup2 = new Vehicle("police", new Vector3(245.6158f, -610.837f, 41.58808f), 220f)
+                Backup2 = new Vehicle(Settings.theBigScoreSubtle_roadblockVehicle, new Vector3(245.6158f, -610.837f, 41.58808f), 220f)
                 {
                     IsEngineOn = true,
                     IsSirenOn = true,
@@ -772,7 +772,7 @@ namespace StoryCallouts.Callouts
                     ped.CurrentVehicle.SetRotationYaw(ped.CurrentVehicle.Rotation.Yaw - 1);
                 else if (ped.CurrentVehicle.Heading < trailer.Heading - 1)
                     ped.CurrentVehicle.SetRotationYaw(ped.CurrentVehicle.Rotation.Yaw + 1);
-                float lateralForce = 10 - MathHelper.Clamp(0, ped.CurrentVehicle.DistanceTo2D(trailer.GetOffsetPositionFront(-5)) - 10, 20) / 2;
+                float lateralForce = 10 - MathHelper.Clamp(ped.CurrentVehicle.DistanceTo2D(trailer.GetOffsetPositionFront(-5)) - 10, 0, 20) / 2;
                 if (ped.DistanceTo2D(trailer.GetOffsetPosition(new Vector3(-2, -5, 0))) < ped.CurrentVehicle.DistanceTo2D(trailer.GetOffsetPosition(new Vector3(2, -5, 0))))
                     ped.CurrentVehicle.ApplyForce(new Vector3(lateralForce * 5, 0, 0), new Vector3(), true, true);
                 else

@@ -77,7 +77,7 @@ namespace StoryCallouts.Callouts
             Gunman.CanRagdoll = false;
             GunmanTask = new TasksList(Gunman, EndBehavior.Nothing);
 
-            BackupCar1 = new Vehicle("SHERIFF", new Vector3(-124.57f, 6441.20f, 31.11f), 25f)
+            BackupCar1 = new Vehicle(Settings.thePaletoScore_copVehicle, new Vector3(-124.57f, 6441.20f, 31.11f), 25f)
             {
                 IsSirenOn = true,
                 IsSirenSilent = true,
@@ -96,7 +96,7 @@ namespace StoryCallouts.Callouts
             NativeFunction.Natives.SET_PED_PROP_INDEX(BackupCop2, 1, 1, 0, true, 0);
             BackupCop1.WarpIntoVehicle(BackupCar1, 0);
 
-            BackupCar2 = new Vehicle("SHERIFF", new Vector3(-132.16f, 6447.40f, 31.09f), 281f)
+            BackupCar2 = new Vehicle(Settings.thePaletoScore_copVehicle, new Vector3(-132.16f, 6447.40f, 31.09f), 281f)
             {
                 IsSirenOn = true,
                 IsSirenSilent = true,

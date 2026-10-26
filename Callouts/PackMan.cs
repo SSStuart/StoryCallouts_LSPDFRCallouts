@@ -41,15 +41,15 @@ namespace StoryCallouts.Callouts
             Trevor = Characters.Trevor.Create(new Vector3(-2184.719f, 4389.535f, 55.9315f), 0, this.GetType().Name);
             Lamar = Characters.Lamar.Create(new Vector3(-2180.466f, 4388.823f, 56.02013f), 0, this.GetType().Name);
 
-            Truck = new Vehicle("packer", new Vector3(-2183.17f, 4387.66f, 55.86f), 340)
+            Truck = new Vehicle("PACKER", new Vector3(-2183.17f, 4387.66f, 55.86f), 340)
             {
                 PrimaryColor = Color.FromArgb(74, 16, 0),
             };
             Trevor.WarpIntoVehicle(Truck, -1);
             Lamar.WarpIntoVehicle(Truck, 0);
-            Trailer = new Vehicle("tr4", new Vector3(-2187.36f, 4375.00f, 55.5f), 340);
+            Trailer = new Vehicle("TR4", new Vector3(-2187.36f, 4375.00f, 55.5f), 340);
             Truck.Trailer = Trailer;
-            JB700 = new Vehicle("jb7002", new Vector3(-2187.83f, 4372.91f, 59.20f), 340)
+            JB700 = new Vehicle("JB7002", new Vector3(-2187.83f, 4372.91f, 59.20f), 340)
             {
                 PrimaryColor = Color.FromArgb(41, 44, 46),
                 IsEngineOn = false
@@ -67,7 +67,7 @@ namespace StoryCallouts.Callouts
                 0f
             );
             Franklin.WarpIntoVehicle(JB700, -1);
-            Monroe = new Vehicle("monroe", new Vector3(-2187.83f, 4372.91f, 55.9f), 340)
+            Monroe = new Vehicle("MONROE", new Vector3(-2187.83f, 4372.91f, 55.9f), 340)
             {
                 PrimaryColor = Color.FromArgb(217, 166, 0),
             };

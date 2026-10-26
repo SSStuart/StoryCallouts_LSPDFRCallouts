@@ -37,6 +37,16 @@ namespace StoryCallouts
         internal static bool callout_RE_CountrysideRobbery = true;
         internal static bool callout_RE_CountrysideGangFight = true;
 
+        internal static string carbineRifles_swatVehicle = "FBI2";
+        internal static string theJewelStoreJob_copVehicle = "POLICE";
+        internal static string theHotelAssassination_vipVehicle = "FBI2";
+        internal static string grassRootsThePickup_unmarkedVehicle = "POLICE4";
+        internal static string thePaletoScore_copVehicle = "SHERIFF";
+        internal static string theBureauRaid_ambulanceVehicle = "AMBULANCE";
+        internal static string theBureauRaid_firetruckVehicle = "FIRETRUK";
+        internal static string theBigScoreSubtle_roadblockVehicle = "POLICE";
+        internal static string countrysideRobbery_copVehicle = "SHERIFF";
+
         internal static bool forceInteriorsEnabled = false;
 
         internal static bool debug = false;
@@ -56,6 +66,7 @@ namespace StoryCallouts
             useStoryModeCharacters = ini.ReadBoolean("General", "useStoryModeCharacters", true);
             Game.LogTrivial($"- Use story mode characters: {(useStoryModeCharacters ? "Yes" : "No")}");
 
+
             disableHeadShots = ini.ReadBoolean("Difficulty", "disableHeadShots", false);
             Game.LogTrivial($"- Disable suspects head shots: {(disableHeadShots ? "Yes" : "No")}");
 
@@ -65,6 +76,7 @@ namespace StoryCallouts
             healthMultiplier = (float)ini.ReadDouble("Difficulty", "healthMultiplier", 1.0f);
             Game.LogTrivial($"- Suspects health multiplier: {healthMultiplier}");
 
+            
             callout_Prologue = ini.ReadBoolean("Callouts", "Prologue", true);
             Game.LogTrivial($"- Callout 'Prologue' {(callout_Prologue ? "[x] enabled" : "[ ] disabled")}");
             enabledCallouts += callout_Prologue ? 1 : 0;
@@ -169,6 +181,35 @@ namespace StoryCallouts
             Game.LogTrivial($"- Callout 'RandomEvent_CountrysideGangFight' {(callout_RE_CountrysideGangFight ? "[x] enabled" : "[ ] disabled")}");
             enabledCallouts += callout_RE_CountrysideGangFight ? 1 : 0;
 
+
+            carbineRifles_swatVehicle = ini.ReadString("Vehicles", "carbineRifles_swatVehicle", "FBI2");
+            Game.LogTrivial($"- 'CarbineRifles' Swat vehicle: {carbineRifles_swatVehicle.ToUpperInvariant()}");
+
+            theJewelStoreJob_copVehicle = ini.ReadString("Vehicles", "theJewelStoreJob_copVehicle", "POLICE");
+            Game.LogTrivial($"- 'TheJewelStoreJob' cop vehicle: {theJewelStoreJob_copVehicle.ToUpperInvariant()}");
+
+            theHotelAssassination_vipVehicle = ini.ReadString("Vehicles", "theHotelAssassination_vipVehicle", "FBI2");
+            Game.LogTrivial($"- 'TheHotelAssassination' VIP vehicle: {theHotelAssassination_vipVehicle.ToUpperInvariant()}");
+
+            grassRootsThePickup_unmarkedVehicle = ini.ReadString("Vehicles", "grassRootsThePickup_unmarkedVehicle", "POLICE4");
+            Game.LogTrivial($"- 'GrassRoots_ThePickup' unmarked vehicle: {grassRootsThePickup_unmarkedVehicle.ToUpperInvariant()}");
+
+            thePaletoScore_copVehicle = ini.ReadString("Vehicles", "thePaletoScore_copVehicle", "SHERIFF");
+            Game.LogTrivial($"- 'ThePaletoScore' cop vehicle: {thePaletoScore_copVehicle.ToUpperInvariant()}");
+
+            theBureauRaid_ambulanceVehicle = ini.ReadString("Vehicles", "theBureauRaid_ambulanceVehicle", "AMBULANCE");
+            Game.LogTrivial($"- 'TheBureauRaid' ambulance vehicle: {theBureauRaid_ambulanceVehicle.ToUpperInvariant()}");
+
+            theBureauRaid_firetruckVehicle = ini.ReadString("Vehicles", "theBureauRaid_firetruckVehicle", "FIRETRUK");
+            Game.LogTrivial($"- 'TheBureauRaid' firetruck vehicle: {theBureauRaid_firetruckVehicle.ToUpperInvariant()}");
+
+            theBigScoreSubtle_roadblockVehicle = ini.ReadString("Vehicles", "theBigScoreSubtle_roadblockVehicle", "POLICE");
+            Game.LogTrivial($"- 'TheBigScore' (Subtle) roadblock vehicle: {theBigScoreSubtle_roadblockVehicle.ToUpperInvariant()}");
+
+            countrysideRobbery_copVehicle = ini.ReadString("Vehicles", "countrysideRobbery_copVehicle", "SHERIFF");
+            Game.LogTrivial($"- 'RandomEvent_CountrysideRobbery' cop vehicle: {countrysideRobbery_copVehicle.ToUpperInvariant()}");
+
+
             forceInteriorsEnabled = ini.ReadBoolean("Interiors", "forceInteriorsEnabled", false);
             Game.LogTrivial($"- Force enable interiors : {(forceInteriorsEnabled ? "Yes" : "No")}");
 
@@ -238,6 +279,25 @@ namespace StoryCallouts
                 ini.Write("Callouts", "RandomEvent_CountrysideRobbery", true);
             if (!ini.DoesKeyExist("Callouts", "RandomEvent_CountrysideGangFight"))
                 ini.Write("Callouts", "RandomEvent_CountrysideGangFight", true);
+
+            if (!ini.DoesKeyExist("Vehicles", "carbineRifles_swatVehicle"))
+                ini.Write("Vehicles", "carbineRifles_swatVehicle", "FBI2");
+            if (!ini.DoesKeyExist("Vehicles", "theJewelStoreJob_copVehicle"))
+                ini.Write("Vehicles", "theJewelStoreJob_copVehicle", "POLICE");
+            if (!ini.DoesKeyExist("Vehicles", "theHotelAssassination_vipVehicle"))
+                ini.Write("Vehicles", "theHotelAssassination_vipVehicle", "FBI2");
+            if (!ini.DoesKeyExist("Vehicles", "grassRootsThePickup_unmarkedVehicle"))
+                ini.Write("Vehicles", "grassRootsThePickup_unmarkedVehicle", "POLICE4");
+            if (!ini.DoesKeyExist("Vehicles", "thePaletoScore_copVehicle"))
+                ini.Write("Vehicles", "thePaletoScore_copVehicle", "SHERIFF");
+            if (!ini.DoesKeyExist("Vehicles", "theBureauRaid_ambulanceVehicle"))
+                ini.Write("Vehicles", "theBureauRaid_ambulanceVehicle", "AMBULANCE");
+            if (!ini.DoesKeyExist("Vehicles", "theBureauRaid_firetruckVehicle"))
+                ini.Write("Vehicles", "theBureauRaid_firetruckVehicle", "FIRETRUK");
+            if (!ini.DoesKeyExist("Vehicles", "theBigScoreSubtle_roadblockVehicle"))
+                ini.Write("Vehicles", "theBigScoreSubtle_roadblockVehicle", "POLICE");
+            if (!ini.DoesKeyExist("Vehicles", "countrysideRobbery_copVehicle"))
+                ini.Write("Vehicles", "countrysideRobbery_copVehicle", "SHERIFF");
 
             if (!ini.DoesKeyExist("Interiors", "forceInteriorsEnabled"))
                 ini.Write("Interiors", "forceInteriorsEnabled", true);

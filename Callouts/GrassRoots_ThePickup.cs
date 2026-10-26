@@ -44,7 +44,7 @@ namespace StoryCallouts.Callouts
             Drugs = new Object("prop_weed_tub_01b", new Vector3(1197.543f, -1255.969f, 35.22673f));
             Drugs.AttachTo(Truck, 0, new Vector3(0, -1, 0.6f), new Rotator());
 
-            PoliceCar1 = new Vehicle("POLICE4", new Vector3(1195.28f, -1312.74f, 34.75f), 282f);
+            PoliceCar1 = new Vehicle(Settings.grassRootsThePickup_unmarkedVehicle, new Vector3(1195.28f, -1312.74f, 34.75f), 282f);
             Cop1 = new Ped("A_M_Y_BUSINESS_01", PoliceCar1.Position.Around2D(5), 0);
             Cop1.WarpIntoVehicle(PoliceCar1, -1);
             Functions.SetPedAsCop(Cop1);
@@ -52,7 +52,7 @@ namespace StoryCallouts.Callouts
             Cop2.WarpIntoVehicle(PoliceCar1, 0);
             Functions.SetPedAsCop(Cop2);
 
-            PoliceCar2 = new Vehicle("POLICE4", new Vector3(1162.71f, -1357.86f, 34.35f), 266f);
+            PoliceCar2 = new Vehicle(Settings.grassRootsThePickup_unmarkedVehicle, new Vector3(1162.71f, -1357.86f, 34.35f), 266f);
             Cop3 = new Ped("A_M_Y_BUSINESS_01", PoliceCar2.Position.Around2D(5), 0);
             Cop3.WarpIntoVehicle(PoliceCar2, -1);
             Functions.SetPedAsCop(Cop3);

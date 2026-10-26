@@ -34,7 +34,7 @@ namespace StoryCallouts.Callouts
             Michael.Inventory.GiveNewWeapon("WEAPON_PISTOL", 100, true);
 
             Truck = new Vehicle("PACKER", new Vector3(919.29f, -1553.88f, 30.85f), 167f);
-            Trailer = new Vehicle("armytrailer2", new Vector3(921.170f, -1545.62f, 32.62f), 167f);
+            Trailer = new Vehicle("ARMYTRAILER2", new Vector3(921.170f, -1545.62f, 32.62f), 167f);
             Truck.Trailer = Trailer;
 
             Michael.WarpIntoVehicle(Truck, -1);
