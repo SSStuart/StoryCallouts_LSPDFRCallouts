@@ -45,12 +45,23 @@ namespace StoryCallouts
         {
             if (!Settings.useStoryModeCharacters)
             {
-                Ped randomPed = new Ped(PedModels[MathHelper.GetRandomInteger(PedModels.Count)], postion, heading)
+                Ped randomPed = new Ped((callout == "ThePaletoScore" && Forename != "Franklin" ? "mp_m_freemode_01" : PedModels[MathHelper.GetRandomInteger(PedModels.Count)]), postion, heading)
                 {
                     IsPersistent = true,
                     BlockPermanentEvents = blockPermanentEvents,
                     Health = (int)(200 * Settings.healthMultiplier)
                 };
+                if (callout == "ThePaletoScore" && Forename != "Franklin")
+                {
+                    randomPed.SetVariation(0, MathHelper.GetRandomInteger(0, 16), 0);
+                    randomPed.SetVariation(1, 122, 0);
+                    randomPed.SetVariation(3, 1, 0);
+                    randomPed.SetVariation(4, 84, 0);
+                    randomPed.SetVariation(6, 25, 0);
+                    randomPed.SetVariation(8, 97, 0);
+                    randomPed.SetVariation(11, 320, 0);
+                    NativeFunction.Natives.SET_PED_PROP_INDEX(randomPed, 0, 123, 0, true, 0);
+                }
                 if (Settings.disablePedRagdollWhenShot)
                     NativeFunction.Natives.SET_PED_CONFIG_FLAG(randomPed, 107, true);
                 if (Settings.disableHeadShots)
